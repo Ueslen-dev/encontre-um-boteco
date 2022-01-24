@@ -1,20 +1,29 @@
+import ButtonLink from 'components/ButtonLink';
+
 import * as S from './styles';
 
-const Main = ({
-  title = 'React Avançado',
-  description = 'TypeScript, ReactJs, NextJs e Styled Components'
-}) => (
+const Main = () => (
   <S.Wrapper>
-    <S.Logo
-      src="/img/logo.svg"
-      alt="Imagem de átomo e React Avançado escrito ao lado."
-    />
-    <S.Title>{title}</S.Title>
-    <S.Description>{description}</S.Description>
-    <S.Illustration
-      src="/img/hero-illustration.svg"
-      alt="Um desenvolvedor de frente para uma tela com código."
-    />
+    <S.LogoFigure>
+      <S.Logo
+        src="/assets/img/logo.svg"
+        alt="Imagem de duas garrafas de cerveja amarela com garfo espetando
+      uma linguiça no meio."
+      />
+    </S.LogoFigure>
+    <S.Content>
+      <S.ButtonsContain>
+        <ButtonLink name="Encontrar um boteco" link="/" />
+        <ButtonLink
+          name="Cadastrar um boteco"
+          link="/"
+          type="buttonOutlineWhite"
+        />
+      </S.ButtonsContain>
+      <S.TotalPub>
+        Total de <strong>325</strong> botecos cadastrados
+      </S.TotalPub>
+    </S.Content>
   </S.Wrapper>
 );
 export default Main;

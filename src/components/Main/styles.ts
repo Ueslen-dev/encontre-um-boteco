@@ -1,34 +1,44 @@
 import styled from 'styled-components';
+import { device } from 'utils/device';
+
+const { tablet } = device;
 
 export const Wrapper = styled.main`
-  background-color: #06092b;
-  color: #fff;
-  width: 100%;
-  height: 100%;
-  padding: 3rem;
-  text-align: center;
+  background: no-repeat url('/assets/img/bg.svg');
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
+export const LogoFigure = styled.figure`
+  text-align: center;
+`;
+
 export const Logo = styled.img`
-  width: 40rem;
+  width: 70%;
   margin-bottom: 2rem;
+  @media ${tablet} {
+    width: 80%;
+  }
 `;
 
-export const Title = styled.h1`
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+export const Content = styled.section`
+  margin-top: 40px;
+  text-align: center;
 `;
 
-export const Description = styled.h2`
-  font-size: 1.8rem;
-  font-weight: 400;
+export const ButtonsContain = styled.div`
+  @media ${tablet} {
+    display: flex;
+    gap: 20px;
+  }
 `;
 
-export const Illustration = styled.img`
-  margin-top: 3rem;
-  width: min(30rem, 100%);
+export const TotalPub = styled.p`
+  font-size: var(--paragraph-font-size);
+  margin-top: 25px;
 `;
