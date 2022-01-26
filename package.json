@@ -10,9 +10,7 @@
     "prepare": "husky install",
     "test": "jest",
     "test:watch": "yarn test --watch",
-    "generate": "yarn plop --plopfile ./generators/plopfile.js",
-    "storybook": "start-storybook -s ./public -p 6006",
-    "build-storybook": "build-storybook -s ./public"
+    "generate": "yarn plop --plopfile ./generators/plopfile.js"
   },
   "lint-staged": {
     "src/**/*": [
@@ -21,6 +19,7 @@
     ]
   },
   "dependencies": {
+    "antd": "^4.18.5",
     "lint": "eslint src",
     "next": "11.0.0",
     "next-pwa": "^5.2.23",
@@ -31,11 +30,6 @@
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-typescript": "^7.14.5",
-    "@storybook/addon-actions": "^6.3.3",
-    "@storybook/addon-essentials": "^6.3.3",
-    "@storybook/addon-knobs": "^6.3.0",
-    "@storybook/addon-links": "^6.3.3",
-    "@storybook/react": "^6.3.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@types/jest": "^26.0.23",
