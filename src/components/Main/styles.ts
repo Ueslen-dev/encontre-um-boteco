@@ -31,7 +31,7 @@ export const Content = styled.section`
   text-align: center;
 `;
 
-export const ButtonsContain = styled.div`
+export const ButtonsContainer = styled.div`
   @media ${tablet} {
     display: flex;
     gap: 20px;
@@ -39,6 +39,6 @@ export const ButtonsContain = styled.div`
 `;
 
 export const TotalPub = styled.p`
-  font-size: var(--paragraph-font-size);
+  font-size: var(--font-size-small);
   margin-top: 25px;
 `;

@@ -15,8 +15,9 @@ const GlobalStyles = createGlobalStyle`
   --white-color-snow: #EEEEEE;
   --white-color: #fff;
   --mobile-device: 760px;
-  --paragraph-font-size: 1.8rem;
-  --button-font-size: 2.2rem;
+  --font-size-larger: 2.2rem;
+  --font-size-small: 1.8rem;
+  --font-weight-medium: 600;
 }
 
 * {
@@ -41,16 +42,13 @@ body {
   font-family: ---apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.buttonOutlineWhite {
-  background-color: var(--yellow-color-lighter);
-  border: 3px solid var(--white-color);
-  &:hover {
-    background: rgba(0,0,0,0.1);
-  }
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
 
-  a {
-    color: var(--white-color);
-  }
+.ant-modal-body {
+  padding: 10px 24px;
 }
 `;
 

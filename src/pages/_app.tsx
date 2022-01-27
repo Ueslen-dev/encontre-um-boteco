@@ -2,6 +2,11 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ConfigProvider } from 'antd';
 import ptBR from 'antd/lib/locale/pt_BR';
+import 'antd/dist/antd.css';
+
+import { ModalProvider } from 'context/ModalContext';
+
+import Modal from 'components/Modal';
 
 import GlobalStyles from 'styles/global';
 
@@ -22,10 +27,13 @@ const App = ({ Component, pageProps }: AppProps) => {
           com amigos."
         />
       </Head>
-      <ConfigProvider locale={ptBR}>
-        <GlobalStyles />
-        <Component {...pageProps} />
-      </ConfigProvider>
+      <ModalProvider>
+        <ConfigProvider locale={ptBR}>
+          <GlobalStyles />
+          <Modal />
+          <Component {...pageProps} />
+        </ConfigProvider>
+      </ModalProvider>
     </>
   );
 };

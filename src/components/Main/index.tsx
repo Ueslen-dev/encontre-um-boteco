@@ -1,4 +1,4 @@
-import ButtonLink from 'components/ButtonLink';
+import Button from 'components/Button';
 
 import * as S from './styles';
 
@@ -12,14 +12,10 @@ const Main = () => (
       />
     </S.LogoFigure>
     <S.Content>
-      <S.ButtonsContain>
-        <ButtonLink name="Encontrar um boteco" link="/" />
-        <ButtonLink
-          name="Cadastrar um boteco"
-          link="/"
-          type="buttonOutlineWhite"
-        />
-      </S.ButtonsContain>
+      <S.ButtonsContainer>
+        <Button name="Encontrar um boteco" />
+        <Button name="Cadastrar um boteco" href="/" type="outlineWhite" />
+      </S.ButtonsContainer>
       <S.TotalPub>
         Total de <strong>325</strong> botecos cadastrados
       </S.TotalPub>
