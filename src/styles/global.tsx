@@ -48,7 +48,12 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .ant-modal-body {
-  padding: 10px 24px;
+  padding: 35px 24px;
+}
+
+.ant-modal-content {
+  border: 4px solid var( --yellow-color);
+  border-radius: 5px;
 }
 
 .antd-select-option {

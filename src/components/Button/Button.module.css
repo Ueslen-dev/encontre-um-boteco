@@ -43,6 +43,14 @@
   background-color: var(--green-color);
 }
 
+.primary {
+  background-color: var(--yellow-color);
+}
+
+.primary:hover {
+  background-color: var(--yellow-color-lighter);
+}
+
 .small {
   font-size: 14px;
   padding: 8px 25px;

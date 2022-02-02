@@ -32,7 +32,7 @@ const Modal = () => {
           <Button
             name={confirm.name}
             size="small"
-            type="success"
+            type="primary"
             onClick={confirm.action}
           />
         )}
