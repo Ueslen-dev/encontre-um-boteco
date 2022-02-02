@@ -12,12 +12,27 @@ interface ModalContextInterface {
   handleModal: (modal: Modal) => void;
 }
 
+const INITIAL_STATE = {
+  isVisible: false,
+  content: '',
+  title: '',
+  subtitle: '',
+  confirm: {
+    action: null,
+    name: ''
+  },
+  cancel: {
+    action: null,
+    name: ''
+  }
+};
+
 const ModalContext = createContext<ModalContextInterface>(
   {} as ModalContextInterface
 );
 
 const ModalProvider = ({ children }: provider) => {
-  const [modalContext, setModalContext] = useState<Modal | null>(null);
+  const [modalContext, setModalContext] = useState<Modal>(INITIAL_STATE);
 
   const handleModal = useCallback(
     (content) => {

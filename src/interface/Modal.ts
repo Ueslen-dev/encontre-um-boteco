@@ -1,6 +1,14 @@
-import { children } from 'types/children';
-
 export interface Modal {
   isVisible: boolean;
-  content: children;
+  content?: string | React.ReactNode;
+  title?: string;
+  subtitle?: string;
+  confirm?: {
+    action: () => void;
+    name: string;
+  };
+  cancel?: {
+    action: () => void;
+    name: string;
+  };
 }

@@ -50,6 +50,12 @@ h1, h2, h3, h4, h5, h6, p {
 .ant-modal-body {
   padding: 10px 24px;
 }
+
+.antd-select-option {
+  color: var(--grey-color-lighter);
+  font-weight: var(--font-weight-medium);
+}
+
 `;
 
 export default GlobalStyles;

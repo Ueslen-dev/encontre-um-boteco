@@ -32,7 +32,7 @@
 }
 
 .neutral {
-  background-color: var(--grey-color-lighter);
+  background-color: #ddd;
 }
 
 .success {

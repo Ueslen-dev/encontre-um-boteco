@@ -1,3 +1,4 @@
+import renderHTML from 'html-react-parser';
 import { Modal as ModalAntd } from 'antd';
 import useModal from 'hooks/useModal';
 
@@ -6,24 +7,43 @@ import Button from 'components/Button';
 import * as S from './styles';
 
 const Modal = () => {
-  const { modalContext } = useModal();
+  const { modalContext, handleModal } = useModal();
+  const { isVisible, content, title, subtitle, confirm, cancel } = modalContext;
 
-  console.log(modalContext, 'quem é modal');
+  const closeModal = () => handleModal({ isVisible: false });
 
   return (
-    <ModalAntd visible={true} footer={false} centered>
+    <ModalAntd
+      visible={isVisible}
+      footer={false}
+      centered
+      onCancel={closeModal}
+      width={600}
+    >
       <S.Content>
         <S.Header>
-          <S.Title>Escolha o estado e a cidade</S.Title>
-          <S.Subtitle>Para poder prosseguir</S.Subtitle>
+          <S.Title>{title}</S.Title>
+          <S.Subtitle>{subtitle}</S.Subtitle>
         </S.Header>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        {typeof content === 'string' ? renderHTML(content) : content}
       </S.Content>
       <S.Actions>
-        <Button name="Cancelar" size="small" type="neutral" />
-        <Button name="Confirmar" size="small" type="success" />
+        {confirm && (
+          <Button
+            name={confirm.name}
+            size="small"
+            type="success"
+            onClick={confirm.action}
+          />
+        )}
+        {cancel && (
+          <Button
+            name={cancel.name}
+            size="small"
+            type="neutral"
+            onClick={cancel.action}
+          />
+        )}
       </S.Actions>
     </ModalAntd>
   );

@@ -17,8 +17,9 @@ export const Subtitle = styled.p`
 `;
 
 export const Actions = styled.section`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 15px;
   border-top: 1px solid #f0f0f0;
   padding-top: 15px;
 `;
