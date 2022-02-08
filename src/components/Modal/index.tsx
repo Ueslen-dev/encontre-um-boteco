@@ -41,7 +41,7 @@ const Modal = () => {
             name={cancel.name}
             size="small"
             type="neutral"
-            onClick={cancel.action}
+            onClick={!cancel.action ? closeModal : cancel.action}
           />
         )}
       </S.Actions>
