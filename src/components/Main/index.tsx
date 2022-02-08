@@ -1,4 +1,5 @@
 import useModal from 'hooks/useModal';
+import useLocaleService from 'hooks/useLocaleService';
 
 import Button from 'components/Button';
 import SelectStateAndCity from './SelectStateAndCity';
@@ -7,6 +8,9 @@ import * as S from './styles';
 
 const Main = () => {
   const { handleModal } = useModal();
+  const { localeContext } = useLocaleService();
+
+  console.log(localeContext, 'dados');
 
   const openModal = () => {
     const modalProps = {

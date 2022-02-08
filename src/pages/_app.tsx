@@ -5,6 +5,7 @@ import ptBR from 'antd/lib/locale/pt_BR';
 import 'antd/dist/antd.css';
 
 import { ModalProvider } from 'context/ModalContext';
+import { LocaleProvider } from 'context/LocaleContext';
 
 import Modal from 'components/Modal';
 
@@ -27,13 +28,15 @@ const App = ({ Component, pageProps }: AppProps) => {
           com amigos."
         />
       </Head>
-      <ModalProvider>
-        <ConfigProvider locale={ptBR}>
-          <GlobalStyles />
-          <Modal />
-          <Component {...pageProps} />
-        </ConfigProvider>
-      </ModalProvider>
+      <LocaleProvider>
+        <ModalProvider>
+          <ConfigProvider locale={ptBR}>
+            <GlobalStyles />
+            <Modal />
+            <Component {...pageProps} />
+          </ConfigProvider>
+        </ModalProvider>
+      </LocaleProvider>
     </>
   );
 };

@@ -31,7 +31,7 @@ const Modal = () => {
         {confirm && (
           <Button
             name={confirm.name}
-            size="small"
+            size="medium"
             type="primary"
             onClick={confirm.action}
           />
@@ -39,7 +39,7 @@ const Modal = () => {
         {cancel && (
           <Button
             name={cancel.name}
-            size="small"
+            size="medium"
             type="neutral"
             onClick={!cancel.action ? closeModal : cancel.action}
           />

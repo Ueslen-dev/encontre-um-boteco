@@ -15,7 +15,7 @@ const GlobalStyles = createGlobalStyle`
   --white-color-snow: #EEEEEE;
   --white-color: #fff;
   --mobile-device: 760px;
-  --font-size-larger: 2.2rem;
+  --font-size-larger: 2.4rem;
   --font-size-small: 1.8rem;
   --font-weight-medium: 600;
 }
