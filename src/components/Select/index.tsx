@@ -1,17 +1,53 @@
+import { useState, useEffect, useCallback } from 'react';
 import _ from 'lodash';
 import { Select as SelectAntd } from 'antd';
+
+import { children } from 'types/children';
 
 import * as S from './styles';
 
 type props = {
-  options: { value: string | number; name: string }[];
+  options: unknown[];
   onChange?: () => void;
   placeholder?: string;
-  remainProps?: React.ReactNode;
+  optionValue: string;
+  optionName: string;
+  remainProps?: children;
 };
 
-const Select = ({ options, onChange, placeholder, ...remainProps }: props) => {
+type selectOptions = {
+  name: string;
+  value: string | number;
+};
+
+const Select = ({
+  options,
+  onChange,
+  placeholder,
+  optionValue,
+  optionName,
+  ...remainProps
+}: props) => {
+  const [selectOptions, setSelectOptions] = useState<selectOptions[]>([]);
+
   const { Option } = SelectAntd;
+
+  const mountSelectOptions = useCallback(() => {
+    if (!_.isEmpty(options)) {
+      const result = options.map((option) => {
+        return {
+          name: option[optionName],
+          value: option[optionValue]
+        };
+      });
+
+      return setSelectOptions(result);
+    }
+  }, [optionName, optionValue, options]);
+
+  useEffect(() => {
+    mountSelectOptions();
+  }, [mountSelectOptions]);
 
   return (
     <S.Wrapper>
@@ -24,8 +60,8 @@ const Select = ({ options, onChange, placeholder, ...remainProps }: props) => {
         }
         {...remainProps}
       >
-        {!_.isEmpty(options) &&
-          options.map((option) => (
+        {!_.isEmpty(selectOptions) &&
+          selectOptions.map((option) => (
             <Option
               key={option.value}
               value={option.value}

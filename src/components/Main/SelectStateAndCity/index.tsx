@@ -1,22 +1,30 @@
 import Select from 'components/Select';
 
+import { State } from 'interfaces/State';
+import { City } from 'interfaces/City';
+
 import * as S from './styles';
 
 type props = {
-  states: string;
-  citys: string;
+  states: State[];
+  citys: City[];
 };
 
 export const SelectStateAndCity = ({ states, citys }: props) => {
-  const mock = {
-    s: [{ name: 'Bahia', value: 1 }],
-    c: [{ name: 'Salvador', value: 1 }]
-  };
-
   return (
     <S.Wrapper>
-      <Select placeholder="Estado" options={mock.s} />
-      <Select placeholder="Cidade" options={mock.c} />
+      <Select
+        placeholder="Estado"
+        optionValue="id"
+        optionName="nome"
+        options={states}
+      />
+      <Select
+        placeholder="Cidade"
+        optionValue="id"
+        optionName="nome"
+        options={citys}
+      />
     </S.Wrapper>
   );
 };

@@ -24,7 +24,7 @@ const useLocaleService = () => {
         setLocale('error', err);
       })
       .finally(() => {
-        setLocale('selectedState', false);
+        setLocale('isFetching', false);
       });
   };
 

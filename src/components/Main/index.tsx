@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { State } from 'interfaces/State';
 
@@ -17,22 +16,27 @@ const Main = () => {
   const state = 'states';
   const cache = 'statesCache';
   const endpoint = '/localidades/estados';
+  const hour = 3600000;
 
-  useQuery<State[]>(cache, async () => await fetchData(state, endpoint));
-
-  useEffect(() => {
-    console.log(localeContext, 'dados context');
-  }, [localeContext]);
+  useQuery<State[]>(cache, async () => await fetchData(state, endpoint), {
+    refetchOnWindowFocus: false,
+    staleTime: hour //1 hour
+  });
 
   const openModal = () => {
     const modalProps = {
       isVisible: true,
-      content: <SelectStateAndCity />,
+      content: (
+        <SelectStateAndCity
+          states={localeContext.states}
+          citys={localeContext.states}
+        />
+      ),
       title: 'Selecione um estado e uma cidade',
       subtitle: 'Após selecionar clique em confirmar',
       confirm: {
         name: 'Confirmar',
-        action: () => teste()
+        action: null
       },
       cancel: {
         name: 'Cancelar',
