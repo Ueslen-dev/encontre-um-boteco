@@ -9,13 +9,15 @@ type provider = {
 
 interface LocaleContextInterface {
   localeContext: Locale;
-  handleLocale: (locale: Locale) => void;
+  setLocale: (state: string, content: unknown) => void;
 }
 
 const INITIAL_STATE = {
-  currentState: {},
+  selectedState: 0,
   states: [],
-  citys: []
+  citys: [],
+  isFetching: false,
+  error: null
 };
 
 const LocaleContext = createContext<LocaleContextInterface>(
@@ -25,19 +27,24 @@ const LocaleContext = createContext<LocaleContextInterface>(
 const LocaleProvider = ({ children }: provider) => {
   const [localeContext, setLocaleContext] = useState<Locale>(INITIAL_STATE);
 
-  const handleLocale = useCallback(
-    (content: Locale) => {
-      setLocaleContext(content);
+  const setLocale = useCallback(
+    (state: string, content: unknown) => {
+      setLocaleContext((values) => {
+        return {
+          ...values,
+          [state]: content
+        };
+      });
     },
     [setLocaleContext]
   );
 
   const state = useMemo(
     () => ({
-      handleLocale,
+      setLocale,
       localeContext
     }),
-    [localeContext, handleLocale]
+    [localeContext, setLocale]
   );
 
   return (

@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useQuery } from 'react-query';
+import { State } from 'interfaces/State';
+
 import useModal from 'hooks/useModal';
 import useLocaleService from 'hooks/useLocaleService';
 
@@ -8,19 +12,27 @@ import * as S from './styles';
 
 const Main = () => {
   const { handleModal } = useModal();
-  const { localeContext } = useLocaleService();
+  const { fetchData, localeContext } = useLocaleService();
 
-  console.log(localeContext, 'dados');
+  const state = 'states';
+  const cache = 'statesCache';
+  const endpoint = '/localidades/estados';
+
+  useQuery<State[]>(cache, async () => await fetchData(state, endpoint));
+
+  useEffect(() => {
+    console.log(localeContext, 'dados context');
+  }, [localeContext]);
 
   const openModal = () => {
     const modalProps = {
       isVisible: true,
       content: <SelectStateAndCity />,
       title: 'Selecione um estado e uma cidade',
-      subtitle: 'Após selecionar clique em confirmar para filtrar',
+      subtitle: 'Após selecionar clique em confirmar',
       confirm: {
         name: 'Confirmar',
-        action: null
+        action: () => teste()
       },
       cancel: {
         name: 'Cancelar',

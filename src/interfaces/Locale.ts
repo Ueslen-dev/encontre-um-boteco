@@ -1,7 +1,10 @@
 import { State } from './State';
+import { City } from './City';
 
-export interface Locale extends State {
-  currentState?: State;
+export interface Locale {
+  selectedState?: number;
   states?: State[];
-  citys?: { id: number; nome: string }[];
+  citys?: City[];
+  isFetching?: boolean;
+  error: Error | null;
 }

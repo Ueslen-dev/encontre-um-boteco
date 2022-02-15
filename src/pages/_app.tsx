@@ -1,11 +1,13 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { QueryClientProvider } from 'react-query';
 import { ConfigProvider } from 'antd';
 import ptBR from 'antd/lib/locale/pt_BR';
 import 'antd/dist/antd.css';
 
 import { ModalProvider } from 'context/ModalContext';
 import { LocaleProvider } from 'context/LocaleContext';
+import { queryClient } from 'services/queryClient';
 
 import Modal from 'components/Modal';
 
@@ -28,15 +30,17 @@ const App = ({ Component, pageProps }: AppProps) => {
           com amigos."
         />
       </Head>
-      <LocaleProvider>
-        <ModalProvider>
-          <ConfigProvider locale={ptBR}>
-            <GlobalStyles />
-            <Modal />
-            <Component {...pageProps} />
-          </ConfigProvider>
-        </ModalProvider>
-      </LocaleProvider>
+      <QueryClientProvider client={queryClient}>
+        <LocaleProvider>
+          <ModalProvider>
+            <ConfigProvider locale={ptBR}>
+              <GlobalStyles />
+              <Modal />
+              <Component {...pageProps} />
+            </ConfigProvider>
+          </ModalProvider>
+        </LocaleProvider>
+      </QueryClientProvider>
     </>
   );
 };

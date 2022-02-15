@@ -6,10 +6,11 @@ export const Content = styled.main`
 
 export const Header = styled.header`
   margin-bottom: 25px;
+  text-align: center;
 `;
 
 export const Title = styled.h1`
-  font-size: var(--font-size-larger);
+  font-size: 3rem;
 `;
 
 export const Subtitle = styled.p`
