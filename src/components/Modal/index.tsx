@@ -27,24 +27,31 @@ const Modal = () => {
         </S.Header>
         {typeof content === 'string' ? renderHTML(content) : content}
       </S.Content>
-      <S.Actions>
-        {confirm && (
-          <Button
-            name={confirm.name}
-            size="medium"
-            type="primary"
-            onClick={confirm.action}
-          />
-        )}
-        {cancel && (
-          <Button
-            name={cancel.name}
-            size="medium"
-            type="neutral"
-            onClick={!cancel.action ? closeModal : cancel.action}
-          />
-        )}
-      </S.Actions>
+      {confirm ||
+        (cancel && (
+          <S.Actions>
+            {confirm && (
+              <Button
+                name={confirm.name}
+                size="medium"
+                type="primary"
+                onClick={!confirm.href && confirm.action}
+                href={!confirm.action && confirm.href}
+              />
+            )}
+            {cancel && (
+              <Button
+                name={cancel.name}
+                size="medium"
+                type="neutral"
+                onClick={
+                  !cancel.href && !cancel.action ? closeModal : cancel.action
+                }
+                href={!cancel.action && cancel.href}
+              />
+            )}
+          </S.Actions>
+        ))}
     </ModalAntd>
   );
 };

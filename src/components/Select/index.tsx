@@ -1,19 +1,23 @@
-import { useState, useEffect, useCallback } from 'react';
+import {
+  ChangeEvent,
+  useState,
+  useEffect,
+  useCallback,
+  InputHTMLAttributes
+} from 'react';
 import _ from 'lodash';
 import { Select as SelectAntd } from 'antd';
 
-import { children } from 'types/children';
-
 import * as S from './styles';
 
-type props = {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   options: unknown[];
-  onChange?: () => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   optionValue: string;
   optionName: string;
-  remainProps?: children;
-};
+  loading?: boolean;
+}
 
 type selectOptions = {
   name: string;
@@ -26,8 +30,9 @@ const Select = ({
   placeholder,
   optionValue,
   optionName,
+  loading,
   ...remainProps
-}: props) => {
+}: Props) => {
   const [selectOptions, setSelectOptions] = useState<selectOptions[]>([]);
 
   const { Option } = SelectAntd;
@@ -55,6 +60,7 @@ const Select = ({
         showSearch
         placeholder={placeholder}
         onChange={onChange}
+        loading={loading}
         filterOption={(input: string, option: { children: string }) =>
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }

@@ -19,11 +19,13 @@ const INITIAL_STATE = {
   subtitle: '',
   confirm: {
     action: null,
-    name: ''
+    name: '',
+    href: null
   },
   cancel: {
     action: null,
-    name: ''
+    name: '',
+    href: null
   }
 };
 

@@ -1,14 +1,18 @@
+import { MouseEvent } from 'react';
+import { children } from 'types/children';
 export interface Modal {
   isVisible: boolean;
-  content?: string | React.ReactNode;
+  content?: string | children;
   title?: string;
   subtitle?: string;
   confirm?: {
-    action: () => void;
+    action?: (event: MouseEvent<HTMLButtonElement>) => void;
     name: string;
+    href?: string;
   };
   cancel?: {
-    action: () => void;
+    action?: (event: MouseEvent<HTMLButtonElement>) => void;
     name: string;
+    href?: string;
   };
 }

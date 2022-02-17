@@ -13,7 +13,8 @@ interface LocaleContextInterface {
 }
 
 const INITIAL_STATE = {
-  selectedState: 0,
+  selectedState: null,
+  selectedCity: null,
   states: [],
   citys: [],
   isFetching: false,
