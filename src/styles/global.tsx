@@ -14,7 +14,6 @@ const GlobalStyles = createGlobalStyle`
   --pink-color-dark: #D12852;
   --white-color-snow: #EEEEEE;
   --white-color: #fff;
-  --mobile-device: 760px;
   --font-size-larger: 2.4rem;
   --font-size-small: 1.8rem;
   --font-weight-medium: 600;
@@ -36,6 +35,8 @@ html {
 
 html,body,#__next {
   height: 100%;
+  overflow-x: hidden;
+  background: var(--white-color-snow);
 }
 
 body {

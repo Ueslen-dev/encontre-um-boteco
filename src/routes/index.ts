@@ -1,9 +1,7 @@
-const basePath = '/botecos';
-
 const routes = {
   home: '/',
-  pubs: basePath,
-  pubCreate: `${basePath}/cadastrar`
+  pubs: '/botecos',
+  pubCreate: '/cadastrar'
 };
 
 export default routes;
