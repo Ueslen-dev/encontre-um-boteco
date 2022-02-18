@@ -1,6 +1,6 @@
 import { createContext, useState, useMemo, useCallback } from 'react';
 
-import { Modal } from 'interface/Modal';
+import { Modal } from 'interfaces/Modal';
 import { children } from 'types/children';
 
 type provider = {
@@ -19,11 +19,13 @@ const INITIAL_STATE = {
   subtitle: '',
   confirm: {
     action: null,
-    name: ''
+    name: '',
+    href: null
   },
   cancel: {
     action: null,
-    name: ''
+    name: '',
+    href: null
   }
 };
 
@@ -35,7 +37,7 @@ const ModalProvider = ({ children }: provider) => {
   const [modalContext, setModalContext] = useState<Modal>(INITIAL_STATE);
 
   const handleModal = useCallback(
-    (content) => {
+    (content: Modal) => {
       setModalContext(content);
     },
     [setModalContext]

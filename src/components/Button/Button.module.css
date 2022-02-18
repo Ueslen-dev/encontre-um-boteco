@@ -51,6 +51,11 @@
   background-color: var(--yellow-color-lighter);
 }
 
+.medium {
+  font-size: 18px;
+  padding: 16px 25px;
+}
+
 .small {
   font-size: 14px;
   padding: 8px 25px;

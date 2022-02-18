@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import Link from 'next/link';
 
 import styles from './Button.module.css';
@@ -7,10 +8,11 @@ type Props = {
   type?: string;
   href?: string;
   size?: string;
-  onClick?: () => void;
+  disabled?: boolean;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
-const Button = ({ name, type, href, size, onClick }: Props) => {
+const Button = ({ name, type, href, size, onClick, disabled }: Props) => {
   const RenderButton = () =>
     href ? (
       <div className={`${styles.buttonReset} ${styles[type]} ${styles[size]}`}>
@@ -20,6 +22,7 @@ const Button = ({ name, type, href, size, onClick }: Props) => {
       <button
         onClick={onClick}
         className={`${styles.buttonReset} ${styles[type]} ${styles[size]}`}
+        disabled={disabled}
       >
         {name}
       </button>

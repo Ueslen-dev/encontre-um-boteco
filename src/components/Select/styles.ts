@@ -4,7 +4,7 @@ export const Wrapper = styled.main`
   width: 100%;
 
   .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    padding: 8px;
+    padding: 13px;
     border: 2px solid var(--grey-color-lighter);
     border-radius: 5px;
   }
@@ -13,7 +13,7 @@ export const Wrapper = styled.main`
   .ant-select-show-search.ant-select:not(.ant-select-customize-input)
     .ant-select-selector
     input {
-    height: 50px;
+    height: 60px;
     color: var(--grey-color-lighter);
     font-weight: var(--font-weight-medium);
     font-size: 15px;
