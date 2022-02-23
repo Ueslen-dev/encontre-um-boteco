@@ -7,30 +7,30 @@ import { LocaleContext } from 'context/LocaleContext';
 const useLocaleService = () => {
   const context = useContext(LocaleContext);
 
-  const { localeContext, setLocale } = context;
+  const { localeContext, setLocaleStore } = context;
 
   const fetchData = async (state: string, endpoint: string) => {
-    setLocale('isFetching', true);
+    setLocaleStore('isFetching', true);
 
     return await ibgeAPI
       .get(endpoint)
       .then((response) => {
         const { data } = response;
-        setLocale(state, data);
+        setLocaleStore(state, data);
 
         return data;
       })
       .catch((err) => {
-        setLocale('error', err);
+        setLocaleStore('error', err);
       })
       .finally(() => {
-        setLocale('isFetching', false);
+        setLocaleStore('isFetching', false);
       });
   };
 
   return {
     localeContext,
-    setLocale,
+    setLocaleStore,
     fetchData
   };
 };

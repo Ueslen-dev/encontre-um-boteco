@@ -14,7 +14,7 @@ import * as S from './styles';
 
 export const SelectStateAndCity = () => {
   const router = useRouter();
-  const { localeContext, setLocale, fetchData } = useLocaleService();
+  const { localeContext, setLocaleStore, fetchData } = useLocaleService();
   const { handleModal } = useModal();
 
   const { states, citys, isFetching, selectedCity } = localeContext;
@@ -24,11 +24,11 @@ export const SelectStateAndCity = () => {
       const endpoint = `/localidades/estados/${value}/municipios`;
       const state = 'citys';
 
-      setLocale(key, value);
+      setLocaleStore(key, value);
       fetchData(state, endpoint);
     }
 
-    setLocale(key, value);
+    setLocaleStore(key, value);
   };
 
   const redirectToPage = () => {
