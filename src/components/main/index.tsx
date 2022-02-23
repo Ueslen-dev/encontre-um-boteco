@@ -34,7 +34,7 @@ const Main = () => {
 
   return (
     <S.Wrapper>
-      <Logo size="80%" />
+      <Logo size="350" />
       <S.Content>
         <S.ButtonsContainer>
           <Button name="Encontrar um boteco" onClick={openModal} />

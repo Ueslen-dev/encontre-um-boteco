@@ -1,7 +1,11 @@
+import { ReactElement, ReactNode } from 'react';
+import type { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+
 import { QueryClientProvider } from 'react-query';
 import { ConfigProvider } from 'antd';
+
 import ptBR from 'antd/lib/locale/pt_BR';
 import 'antd/dist/antd.css';
 
@@ -13,7 +17,17 @@ import Modal from 'components/Modal';
 
 import GlobalStyles from 'styles/global';
 
-const App = ({ Component, pageProps }: AppProps) => {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout || ((page: ReactElement) => page);
+
   return (
     <>
       <Head>
@@ -36,7 +50,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <ConfigProvider locale={ptBR}>
               <GlobalStyles />
               <Modal />
-              <Component {...pageProps} />
+              {getLayout(<Component {...pageProps} />)}
             </ConfigProvider>
           </ModalProvider>
         </LocaleProvider>

@@ -15,7 +15,7 @@ export const Wrapper = styled.main`
 `;
 
 export const Content = styled.section`
-  margin-top: 40px;
+  margin-top: 20px;
   text-align: center;
 `;
 
