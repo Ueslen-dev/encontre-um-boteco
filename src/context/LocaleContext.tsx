@@ -26,7 +26,8 @@ const LocaleContext = createContext<LocaleContextInterface>(
 );
 
 const LocaleProvider = ({ children }: provider) => {
-  const [localeContext, setLocaleStoreContext] = useState<Locale>(INITIAL_STATE);
+  const [localeContext, setLocaleStoreContext] =
+    useState<Locale>(INITIAL_STATE);
 
   const setLocaleStore = useCallback(
     (state: string, content: unknown) => {

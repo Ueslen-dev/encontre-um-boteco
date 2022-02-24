@@ -1,11 +1,13 @@
 import type { ReactElement } from 'react';
+
 import Header from 'components/Header';
 import Wrapper from 'components/Wrapper';
+import RegistrationForm from 'components/RegistrationForm';
 
 export const PubCreate = () => {
   return (
     <Wrapper>
-      <h1>Registro</h1>
+      <RegistrationForm />
     </Wrapper>
   );
 };

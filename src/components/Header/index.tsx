@@ -25,7 +25,7 @@ const Header = ({ title }: Props) => {
         </S.ArrowFigure>
         <S.HeaderContainer>
           <S.Title>{title}</S.Title>
-          <Logo size="45%" />
+          <Logo size="200" />
         </S.HeaderContainer>
       </Container>
     </S.Wrapper>

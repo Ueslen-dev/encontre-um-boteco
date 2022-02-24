@@ -24,7 +24,7 @@ const Home = ({ states }: Props) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const response = await getStates();
-  const hour = 60 * 60 * 4; //5 hour
+  const hour = 60 * 60 * 4; //4 hour
 
   return {
     props: {

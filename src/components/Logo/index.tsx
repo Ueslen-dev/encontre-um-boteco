@@ -8,11 +8,10 @@ import routes from 'routes';
 import * as S from './styles';
 
 type Props = {
-  size?: string;
-  responsiveSize?: string;
+  size: string;
 };
 
-const Logo = ({ size, responsiveSize }: Props) => {
+const Logo = ({ size }: Props) => {
   const router = useRouter();
 
   const returnToHome = () => router.push(routes.home);
@@ -21,19 +20,10 @@ const Logo = ({ size, responsiveSize }: Props) => {
     <S.LogoFigure onClick={returnToHome}>
       <Image
         src={logoImage}
-        alt="Picture of the author"
-        width={size}
-        // height={500} automatically provided
-        // blurDataURL="data:..." automatically provided
-        // placeholder="blur" // Optional blur-up while loading
-      />
-      {/*  <S.Logo
-        src="/assets/img/logo.svg"
         alt="Imagem de duas garrafas de cerveja amarela com garfo espetando
   uma linguiça no meio."
-        size={size}
-        responsiveSize={responsiveSize}
-      /> */}
+        height={size}
+      />
     </S.LogoFigure>
   );
 };

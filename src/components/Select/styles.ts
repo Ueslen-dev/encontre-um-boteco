@@ -4,16 +4,16 @@ export const Wrapper = styled.main`
   width: 100%;
 
   .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    padding: 13px;
+    padding: 18px;
     border: 2px solid var(--grey-color-lighter);
-    border-radius: 5px;
+    border-radius: 10px;
   }
 
   .ant-select:not(.ant-select-customize-input) .ant-select-selector,
   .ant-select-show-search.ant-select:not(.ant-select-customize-input)
     .ant-select-selector
     input {
-    height: 60px;
+    height: 70px;
     color: var(--grey-color-lighter);
     font-weight: var(--font-weight-medium);
     font-size: 15px;

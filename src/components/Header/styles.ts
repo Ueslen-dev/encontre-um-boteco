@@ -6,11 +6,11 @@ const { tablet } = device;
 export const Wrapper = styled.main`
   width: 100vw;
   background: var(--yellow-color-lighter);
-  padding: 50px 20px 100px 20px;
+  padding: 20px 20px 80px 20px;
 `;
 
 export const ArrowFigure = styled.figure`
-  margin-bottom: 50px;
+  margin-top: 20px;
   cursor: pointer;
 `;
 
