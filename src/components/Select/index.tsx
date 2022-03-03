@@ -6,11 +6,14 @@ import {
   InputHTMLAttributes
 } from 'react';
 import _ from 'lodash';
-import { Select as SelectAntd } from 'antd';
+import { Select as SelectAntd, Form } from 'antd';
 
 import * as S from './styles';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  required?: boolean;
+  label?: string;
   options: unknown[];
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
@@ -25,6 +28,9 @@ type selectOptions = {
 };
 
 const Select = ({
+  name,
+  required,
+  label,
   options,
   onChange,
   placeholder,
@@ -56,27 +62,39 @@ const Select = ({
 
   return (
     <S.Wrapper>
-      <SelectAntd
-        showSearch
-        placeholder={placeholder}
-        onChange={onChange}
-        loading={loading}
-        filterOption={(input: string, option: { children: string }) =>
-          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-        }
-        {...remainProps}
+      <Form.Item
+        name={name}
+        rules={[
+          {
+            required
+          }
+        ]}
       >
-        {!_.isEmpty(selectOptions) &&
-          selectOptions.map((option) => (
-            <Option
-              key={option.value}
-              value={option.value}
-              className="antd-select-option"
-            >
-              {option.name}
-            </Option>
-          ))}
-      </SelectAntd>
+        <S.Label>
+          {label} {required && <span>*</span>}
+        </S.Label>
+        <SelectAntd
+          showSearch
+          placeholder={placeholder}
+          onChange={onChange}
+          loading={loading}
+          filterOption={(input: string, option: { children: string }) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+          {...remainProps}
+        >
+          {!_.isEmpty(selectOptions) &&
+            selectOptions.map((option) => (
+              <Option
+                key={option.value}
+                value={option.value}
+                className="antd-select-option"
+              >
+                {option.name}
+              </Option>
+            ))}
+        </SelectAntd>
+      </Form.Item>
     </S.Wrapper>
   );
 };

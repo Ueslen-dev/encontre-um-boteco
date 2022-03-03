@@ -34,6 +34,10 @@ export const Wrapper = styled.main`
     > .ant-steps-item-title::after {
     background-color: var(--yellow-color);
   }
+
+  .steps-content {
+    margin-top: 40px;
+  }
 `;
 
 export const Ttile = styled.h1`

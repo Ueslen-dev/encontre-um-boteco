@@ -40,6 +40,7 @@ export const SelectStateAndCity = () => {
     <S.Wrapper>
       <S.SelectsGroup>
         <Select
+          name="state"
           placeholder="Estado"
           optionValue="id"
           optionName="nome"
@@ -48,6 +49,7 @@ export const SelectStateAndCity = () => {
         />
         <Select
           disabled={_.isEmpty(citys)}
+          name="city"
           placeholder="Cidade"
           optionValue="id"
           optionName="nome"
