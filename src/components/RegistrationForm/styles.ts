@@ -53,4 +53,27 @@ export const Subtitle = styled.p`
   margin-bottom: 30px;
 `;
 
-export const StepsAction = styled.section``;
+export const StepsAction = styled.section`
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 30px;
+  gap: 20px;
+  align-items: center;
+
+  .previousButton {
+    background: var(--grey-color-light) !important;
+    border-color: var(--grey-color-light) !important;
+  }
+
+  .ant-btn-icon-only.ant-btn-lg {
+    width: 50px;
+    height: 50px;
+    background: var(--yellow-color);
+    border-color: var(--yellow-color);
+  }
+
+  .icon {
+    font-size: 20px;
+  }
+`;

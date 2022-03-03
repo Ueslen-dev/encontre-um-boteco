@@ -1,13 +1,20 @@
 import { useState } from 'react';
-import { Steps, Button, message, Form } from 'antd';
+import { Steps, Button as ButtonAntd, message, Form } from 'antd';
 
 import { GiBeerStein as GiBeerSteinIcon } from 'react-icons/gi';
+
 import {
   IoIosChatboxes as IoIosChatboxesIcon,
   IoIosHome as IoIosHomeIcon
 } from 'react-icons/io';
 
+import {
+  RightOutlined as RightOutlinedIcon,
+  LeftOutlined as LeftOutlinedIcon
+} from '@ant-design/icons';
+
 import Container from 'components/Container';
+import Button from 'components/Button';
 
 import PrincipalInformation from './Steps/PrincipalInformation';
 import ContactInformation from './Steps/ContactInformation';
@@ -55,23 +62,34 @@ const RegistrationForm = () => {
         </Steps>
         <Form className="steps-content">{steps[current].content}</Form>
         <S.StepsAction>
-          {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => next()}>
-              Next
-            </Button>
+          {current > 0 && (
+            <ButtonAntd
+              type="primary"
+              shape="circle"
+              icon={<LeftOutlinedIcon className="icon" />}
+              onClick={() => prev()}
+              size="large"
+              className="previousButton"
+            />
           )}
+
+          {current < steps.length - 1 && (
+            <ButtonAntd
+              type="primary"
+              shape="circle"
+              icon={<RightOutlinedIcon className="icon" />}
+              onClick={() => next()}
+              size="large"
+            />
+          )}
+
           {current === steps.length - 1 && (
             <Button
               type="primary"
               onClick={() => message.success('Processing complete!')}
-            >
-              Done
-            </Button>
-          )}
-          {current > 0 && (
-            <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-              Previous
-            </Button>
+              name="Cadastrar"
+              size="medium"
+            />
           )}
         </S.StepsAction>
       </S.Wrapper>
