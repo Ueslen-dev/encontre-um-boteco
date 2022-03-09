@@ -63,7 +63,7 @@ const Select = ({
   return (
     <S.Wrapper>
       <Form.Item
-        name={name}
+        name={['pub', name]}
         rules={[
           {
             required

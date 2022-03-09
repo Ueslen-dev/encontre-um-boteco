@@ -5,7 +5,7 @@ import * as S from './styles';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  required?: boolean;
+  rules?: { [key: string]: unknown };
   label?: string;
   placeholder: string;
   value?: string;
@@ -13,23 +13,16 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({
   name,
-  required,
+  rules,
   label,
   placeholder,
   value,
   ...remainProps
 }: Props) => (
   <S.Wrapper>
-    <Form.Item
-      name={name}
-      rules={[
-        {
-          required
-        }
-      ]}
-    >
+    <Form.Item name={['pub', name]} rules={[rules]}>
       <S.Label>
-        {label} {required && <span>*</span>}
+        {label} {rules?.required && <span>*</span>}
       </S.Label>
       <InputAntd placeholder={placeholder} value={value} {...remainProps} />
     </Form.Item>

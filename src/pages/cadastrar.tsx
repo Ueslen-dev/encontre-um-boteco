@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
 import { GetStaticProps } from 'next';
+import { useEffect } from 'react';
+import type { ReactElement } from 'react';
 
-import Main from 'components/Main';
+import Header from 'components/Header';
+import Wrapper from 'components/Wrapper';
+import RegistrationForm from 'components/RegistrationForm';
 
 import { State } from 'interfaces/State';
 
@@ -12,7 +15,7 @@ type Props = {
   states?: State[];
 };
 
-const Home = ({ states }: Props) => {
+export const PubCreate = ({ states }: Props) => {
   const { setLocaleStore } = useLocaleService();
 
   useEffect(() => {
@@ -21,7 +24,20 @@ const Home = ({ states }: Props) => {
     setLocaleStore(state, states);
   }, [setLocaleStore, states]);
 
-  return <Main />;
+  return (
+    <Wrapper>
+      <RegistrationForm />
+    </Wrapper>
+  );
+};
+
+PubCreate.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <>
+      <Header title="Preencha o formulário abaixo para cadastrar um novo boteco" />
+      {page}
+    </>
+  );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -36,4 +52,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default Home;
+export default PubCreate;

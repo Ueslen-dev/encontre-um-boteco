@@ -1,33 +1,42 @@
-import { MouseEvent } from 'react';
-import Link from 'next/link';
+import { MouseEvent, InputHTMLAttributes } from 'react';
+import { useRouter } from 'next/router';
 
 import styles from './Button.module.css';
 
-type Props = {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   type?: string;
   href?: string;
-  size?: string;
+  buttonSize?: string | number;
   disabled?: boolean;
+  htmlType?: 'button' | 'submit' | 'reset';
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-};
+}
 
-const Button = ({ name, type, href, size, onClick, disabled }: Props) => {
-  const RenderButton = () =>
-    href ? (
-      <div className={`${styles.buttonReset} ${styles[type]} ${styles[size]}`}>
-        <Link href={href}>{name}</Link>
-      </div>
-    ) : (
-      <button
-        onClick={onClick}
-        className={`${styles.buttonReset} ${styles[type]} ${styles[size]}`}
-        disabled={disabled}
-      >
-        {name}
-      </button>
-    );
+const Button = ({
+  name,
+  type,
+  href,
+  buttonSize,
+  onClick,
+  disabled,
+  htmlType,
+  ...remainProps
+}: Props) => {
+  const router = useRouter();
 
-  return <RenderButton />;
+  const redirectToPage = () => router.push(href);
+
+  return (
+    <button
+      onClick={href ? redirectToPage : onClick}
+      className={`${styles.buttonReset} ${styles[type]} ${styles[buttonSize]}`}
+      disabled={disabled}
+      type={htmlType}
+      {...remainProps}
+    >
+      {name}
+    </button>
+  );
 };
 export default Button;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Steps, Button as ButtonAntd, message, Form } from 'antd';
+import { Steps, Button as ButtonAntd, Form } from 'antd';
 
 import { GiBeerStein as GiBeerSteinIcon } from 'react-icons/gi';
 
@@ -60,7 +60,9 @@ const RegistrationForm = () => {
             <Step key={step.title} title={step.title} icon={step.icon} />
           ))}
         </Steps>
-        <Form className="steps-content">{steps[current].content}</Form>
+        <Form name="pub" className="steps-content">
+          {steps[current].content}
+        </Form>
         <S.StepsAction>
           {current > 0 && (
             <ButtonAntd
@@ -86,9 +88,9 @@ const RegistrationForm = () => {
           {current === steps.length - 1 && (
             <Button
               type="primary"
-              onClick={() => message.success('Processing complete!')}
               name="Cadastrar"
-              size="medium"
+              buttonSize="medium"
+              htmlType="submit"
             />
           )}
         </S.StepsAction>

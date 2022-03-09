@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 
@@ -14,22 +13,12 @@ import * as S from './styles';
 
 export const SelectStateAndCity = () => {
   const router = useRouter();
-  const { localeContext, setLocaleStore, fetchData } = useLocaleService();
+
+  const { localeContext, handleLocale } = useLocaleService();
   const { handleModal } = useModal();
 
-  const { states, citys, isFetching, selectedCity } = localeContext;
-
-  const handleChange = (key: string, value: ChangeEvent<HTMLInputElement>) => {
-    if (key === 'selectedState') {
-      const endpoint = `/localidades/estados/${value}/municipios`;
-      const state = 'citys';
-
-      setLocaleStore(key, value);
-      fetchData(state, endpoint);
-    }
-
-    setLocaleStore(key, value);
-  };
+  const { states, citys, isFetching, selectedCity, selectedState } =
+    localeContext;
 
   const redirectToPage = () => {
     router.push(routes.pubs);
@@ -45,7 +34,8 @@ export const SelectStateAndCity = () => {
           optionValue="id"
           optionName="nome"
           options={states}
-          onChange={(value) => handleChange('selectedState', value)}
+          onChange={(value) => handleLocale('selectedState', value)}
+          value={selectedState}
         />
         <Select
           disabled={_.isEmpty(citys)}
@@ -54,8 +44,9 @@ export const SelectStateAndCity = () => {
           optionValue="id"
           optionName="nome"
           options={citys}
-          onChange={(value) => handleChange('selectedCity', value)}
+          onChange={(value) => handleLocale('selectedCity', value)}
           loading={isFetching}
+          value={selectedCity}
         />
       </S.SelectsGroup>
 
