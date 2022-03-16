@@ -3,20 +3,20 @@ import _ from 'lodash';
 import Input from 'components/Input';
 import Select from 'components/Select';
 
-import useLocaleService from 'hooks/useLocaleService';
+import useLocale from 'hooks/useLocale';
+import usePub from 'hooks/usePub';
 
 import * as S from './styles';
 
 const PrincipalInformation = () => {
-  const { localeContext, handleLocale } = useLocaleService();
+  const step = 'principalInformation';
+
+  const { localeContext } = useLocale();
+  const { pubContext, handlePub } = usePub();
+
+  console.log(pubContext, 'dados context');
 
   const maxLength = 60;
-
-  const inputRules = {
-    pubName: {
-      required: true
-    }
-  };
 
   return (
     <>
@@ -29,7 +29,7 @@ const PrincipalInformation = () => {
           label="Qual o estado do boteco?"
           required
           options={localeContext.states}
-          onChange={(value) => handleLocale('selectedState', value)}
+          onChange={(value) => handlePub(step, 'state', value)}
           value={localeContext.selectedState}
         />
         <Select
@@ -41,7 +41,7 @@ const PrincipalInformation = () => {
           label="Qual a cidade do boteco?"
           required
           options={localeContext.citys}
-          onChange={(value) => handleLocale('selectedCity', value)}
+          onChange={(value) => handlePub(step, 'city', value)}
           loading={localeContext.isFetching}
           value={localeContext.selectedCity}
         />
@@ -52,7 +52,9 @@ const PrincipalInformation = () => {
           placeholder="Digite o nome do boteco"
           label="Qual o nome do boteco?"
           maxLength={maxLength}
-          rules={inputRules.pubName}
+          required
+          onChange={(event) => handlePub(step, 'name', event)}
+          value={pubContext[step].name.value}
         />
       </S.InputGroup>
     </>

@@ -4,7 +4,7 @@ import ibgeAPI from 'services/ibgeApi';
 
 import { LocaleContext } from 'context/LocaleContext';
 
-const useLocaleService = () => {
+const useLocale = () => {
   const context = useContext(LocaleContext);
 
   const { localeContext, setLocaleStore } = context;
@@ -50,4 +50,4 @@ const useLocaleService = () => {
   };
 };
 
-export default useLocaleService;
+export default useLocale;

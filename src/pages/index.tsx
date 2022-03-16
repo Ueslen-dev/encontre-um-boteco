@@ -5,7 +5,7 @@ import Main from 'components/Main';
 
 import { State } from 'interfaces/State';
 
-import useLocaleService from 'hooks/useLocaleService';
+import useLocale from 'hooks/useLocale';
 import { getStates } from 'services/ibgeApi';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Home = ({ states }: Props) => {
-  const { setLocaleStore } = useLocaleService();
+  const { setLocaleStore } = useLocale();
 
   useEffect(() => {
     const state = 'states';

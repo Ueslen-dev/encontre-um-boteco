@@ -5,7 +5,7 @@ import Select from 'components/Select';
 import Button from 'components/Button';
 
 import useModal from 'hooks/useModal';
-import useLocaleService from 'hooks/useLocaleService';
+import useLocale from 'hooks/useLocale';
 
 import routes from 'routes';
 
@@ -14,7 +14,7 @@ import * as S from './styles';
 export const SelectStateAndCity = () => {
   const router = useRouter();
 
-  const { localeContext, handleLocale } = useLocaleService();
+  const { localeContext, handleLocale } = useLocale();
   const { handleModal } = useModal();
 
   const { states, citys, isFetching, selectedCity, selectedState } =

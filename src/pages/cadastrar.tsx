@@ -8,7 +8,9 @@ import RegistrationForm from 'components/RegistrationForm';
 
 import { State } from 'interfaces/State';
 
-import useLocaleService from 'hooks/useLocaleService';
+import useLocale from 'hooks/useLocale';
+import { PubProvider } from 'context/PubContext';
+
 import { getStates } from 'services/ibgeApi';
 
 type Props = {
@@ -16,7 +18,7 @@ type Props = {
 };
 
 export const PubCreate = ({ states }: Props) => {
-  const { setLocaleStore } = useLocaleService();
+  const { setLocaleStore } = useLocale();
 
   useEffect(() => {
     const state = 'states';
@@ -25,9 +27,11 @@ export const PubCreate = ({ states }: Props) => {
   }, [setLocaleStore, states]);
 
   return (
-    <Wrapper>
-      <RegistrationForm />
-    </Wrapper>
+    <PubProvider>
+      <Wrapper>
+        <RegistrationForm />
+      </Wrapper>
+    </PubProvider>
   );
 };
 

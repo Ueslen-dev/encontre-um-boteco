@@ -45,9 +45,18 @@ const RegistrationForm = () => {
 
   const [current, setCurrent] = useState(0);
 
-  const next = () => setCurrent(current + 1);
-  const prev = () => setCurrent(current - 1);
+  const next = () => {
+    /*     const st = {
+      0: true,
+      1: false,
+      2: false
+    };
 
+    return st[current] &&  */
+    setCurrent(current + 1);
+  };
+  const prev = () => setCurrent(current - 1);
+  console.log(current);
   return (
     <Container>
       <S.Wrapper>
