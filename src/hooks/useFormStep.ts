@@ -1,15 +1,19 @@
-const MOCK_VALUES = {
-  state: 2,
-  city: 3,
-  name: 'Teste boteco'
-};
-
-const isString = (value: string) => !!value && /.*\S.*/.test(value);
-const isSelected = (value: string) => !!value;
+import usePub from 'hooks/usePub';
 
 export const useFormStep = () => {
-  const validateInput = () => {
-    Object.keys(MOCK_VALUES).map((key) => console.log(key, 'retorno'));
+  const { pubContext, setPubStore } = usePub();
+
+  const validateInput = (step: string) => {
+    const currentStep = pubContext[step];
+
+    Object.keys(currentStep).map((key) => {
+      const isValid = currentStep[key]?.value !== '' && true;
+
+      setPubStore(step, key, currentStep[key]?.value, isValid);
+      /* console.log(currentStep[key], 'retorno');
+      console.log(isValid, 'verificando se é válido');
+      console.log(key, 'estado'); */
+    });
   };
 
   return {

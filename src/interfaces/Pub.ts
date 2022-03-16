@@ -12,7 +12,6 @@ export interface Pub {
       value: string;
       isValid: boolean;
     };
-    stepIsValid: boolean;
   };
   contactInformation: {
     responsible: {
@@ -31,7 +30,6 @@ export interface Pub {
       value: string;
       isValid: boolean;
     };
-    stepIsValid: boolean;
   };
   locationInformation: {
     address: {
@@ -46,6 +44,5 @@ export interface Pub {
       value: string;
       isValid: boolean;
     };
-    stepIsValid: boolean;
   };
 }

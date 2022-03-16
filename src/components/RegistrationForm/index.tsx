@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Steps, Button as ButtonAntd, Form } from 'antd';
 
 import { GiBeerStein as GiBeerSteinIcon } from 'react-icons/gi';
@@ -20,11 +20,17 @@ import PrincipalInformation from './Steps/PrincipalInformation';
 import ContactInformation from './Steps/ContactInformation';
 import LocationInformation from './Steps/LocationInformation';
 
+import usePub from 'hooks/usePub';
+import useFormStep from 'hooks/useFormStep';
+
 import * as S from './styles';
 
 const { Step } = Steps;
 
 const RegistrationForm = () => {
+  const { pubContext } = usePub();
+  const { validateInput } = useFormStep();
+
   const steps = [
     {
       title: 'Boteco novo, uhuu!',
@@ -53,10 +59,15 @@ const RegistrationForm = () => {
     };
 
     return st[current] &&  */
+    validateInput('principalInformation');
     setCurrent(current + 1);
   };
   const prev = () => setCurrent(current - 1);
-  console.log(current);
+
+  useEffect(() => {
+    console.log(pubContext, 'dados dentro da index');
+  }, [pubContext]);
+
   return (
     <Container>
       <S.Wrapper>

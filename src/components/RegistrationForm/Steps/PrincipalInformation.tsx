@@ -14,7 +14,7 @@ const PrincipalInformation = () => {
   const { localeContext } = useLocale();
   const { pubContext, handlePub } = usePub();
 
-  console.log(pubContext, 'dados context');
+  /* console.log(pubContext, 'dados dentro do form'); */
 
   const maxLength = 60;
 

@@ -12,10 +12,10 @@ interface PubContextInterface {
   setPubStore: (
     step: string,
     state: string,
-    value: unknown,
-    isValid?: boolean,
-    stepIsValid?: boolean
+    value?: unknown,
+    isValid?: boolean
   ) => void;
+  handleValidat: (step: string, state: string, isValid?: boolean) => void;
 }
 
 const INITIAL_STATE = {
@@ -31,8 +31,7 @@ const INITIAL_STATE = {
     name: {
       value: '',
       isValid: false
-    },
-    stepIsValid: false
+    }
   },
   contactInformation: {
     responsible: {
@@ -50,8 +49,7 @@ const INITIAL_STATE = {
     instagram: {
       value: '',
       isValid: false
-    },
-    stepIsValid: false
+    }
   },
   locationInformation: {
     address: {
@@ -65,8 +63,7 @@ const INITIAL_STATE = {
     photo: {
       value: '',
       isValid: false
-    },
-    stepIsValid: false
+    }
   }
 };
 
@@ -78,13 +75,7 @@ const PubProvider = ({ children }: Provider) => {
   const [pubContext, setPubContext] = useState<Pub>(INITIAL_STATE);
 
   const setPubStore = useCallback(
-    (
-      step: string,
-      state: string,
-      value: unknown,
-      isValid?: boolean,
-      stepIsValid?: boolean
-    ) => {
+    (step: string, state: string, value?: unknown, isValid?: boolean) => {
       setPubContext((values) => {
         return {
           ...values,
@@ -93,8 +84,25 @@ const PubProvider = ({ children }: Provider) => {
             [state]: {
               value: value,
               isValid: isValid
-            },
-            stepIsValid: stepIsValid
+            }
+          }
+        };
+      });
+    },
+    [setPubContext]
+  );
+
+  const handleValidat = useCallback(
+    (step: string, state: string, isValid?: boolean) => {
+      console.log(step, state, isValid, 'dados retornados');
+      setPubContext((values) => {
+        return {
+          ...values,
+          [step]: {
+            ...values[step],
+            [state]: {
+              isValid: isValid
+            }
           }
         };
       });
@@ -105,9 +113,10 @@ const PubProvider = ({ children }: Provider) => {
   const state = useMemo(() => {
     return {
       pubContext,
-      setPubStore
+      setPubStore,
+      handleValidat
     };
-  }, [pubContext, setPubStore]);
+  }, [pubContext, setPubStore, handleValidat]);
 
   return <PubContext.Provider value={state}>{children}</PubContext.Provider>;
 };
