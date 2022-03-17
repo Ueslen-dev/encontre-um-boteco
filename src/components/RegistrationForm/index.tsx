@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Steps, Button as ButtonAntd, Form } from 'antd';
 
 import { GiBeerStein as GiBeerSteinIcon } from 'react-icons/gi';
@@ -29,7 +29,15 @@ const { Step } = Steps;
 
 const RegistrationForm = () => {
   const { pubContext } = usePub();
-  const { validateInput } = useFormStep();
+  const { validateStep } = useFormStep();
+
+  const formsSteps = useMemo(() => {
+    return {
+      0: 'principalInformation',
+      1: 'contactInformation',
+      2: 'locationInformation'
+    };
+  }, []);
 
   const steps = [
     {
@@ -51,21 +59,14 @@ const RegistrationForm = () => {
 
   const [current, setCurrent] = useState(0);
 
-  const next = () => {
-    /*     const st = {
-      0: true,
-      1: false,
-      2: false
-    };
-
-    return st[current] &&  */
-    validateInput('principalInformation');
-    setCurrent(current + 1);
-  };
   const prev = () => setCurrent(current - 1);
+  const next = () => {
+    const stepIsValid = validateStep(formsSteps[current]);
+    return stepIsValid && setCurrent(current + 1);
+  };
 
   useEffect(() => {
-    console.log(pubContext, 'dados dentro da index');
+    console.log(pubContext, 'retorno pub context');
   }, [pubContext]);
 
   return (

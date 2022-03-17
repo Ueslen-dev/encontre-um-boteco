@@ -15,17 +15,16 @@ interface PubContextInterface {
     value?: unknown,
     isValid?: boolean
   ) => void;
-  handleValidat: (step: string, state: string, isValid?: boolean) => void;
 }
 
 const INITIAL_STATE = {
   principalInformation: {
     state: {
-      value: '',
+      value: null,
       isValid: false
     },
     city: {
-      value: '',
+      value: null,
       isValid: false
     },
     name: {
@@ -92,31 +91,12 @@ const PubProvider = ({ children }: Provider) => {
     [setPubContext]
   );
 
-  const handleValidat = useCallback(
-    (step: string, state: string, isValid?: boolean) => {
-      console.log(step, state, isValid, 'dados retornados');
-      setPubContext((values) => {
-        return {
-          ...values,
-          [step]: {
-            ...values[step],
-            [state]: {
-              isValid: isValid
-            }
-          }
-        };
-      });
-    },
-    [setPubContext]
-  );
-
   const state = useMemo(() => {
     return {
       pubContext,
-      setPubStore,
-      handleValidat
+      setPubStore
     };
-  }, [pubContext, setPubStore, handleValidat]);
+  }, [pubContext, setPubStore]);
 
   return <PubContext.Provider value={state}>{children}</PubContext.Provider>;
 };

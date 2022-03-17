@@ -8,31 +8,33 @@ export const usePub = () => {
   const context = useContext(PubContext);
   const { handleLocale } = useLocale();
 
-  const { pubContext, setPubStore, handleValidat } = context;
+  const { pubContext, setPubStore } = context;
 
   const handlePub = (
     step: string,
     state: string,
-    value?: ChangeEvent<HTMLInputElement>,
-    isValid = false
+    value?: ChangeEvent<HTMLInputElement>
   ) => {
-    if (state === 'city') {
-      setPubStore(step, state, value, isValid);
-      return handleLocale('selectedCity', value);
-    }
+    const hasSelectedValue = value && true;
+
+    if (state === 'city')
+      return setPubStore(step, state, value, hasSelectedValue);
+
     if (state === 'state') {
-      setPubStore(step, state, value, isValid);
+      setPubStore(step, state, value, hasSelectedValue);
       return handleLocale('selectedState', value);
     }
 
-    setPubStore(step, state, (value.target as HTMLInputElement).value, isValid);
+    const inputValue = (value.target as HTMLInputElement).value;
+    const hasValueInserted = inputValue !== '' && true;
+
+    setPubStore(step, state, inputValue, hasValueInserted);
   };
 
   return {
     pubContext,
     setPubStore,
-    handlePub,
-    handleValidat
+    handlePub
   };
 };
 

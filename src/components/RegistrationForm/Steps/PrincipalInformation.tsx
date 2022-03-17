@@ -30,7 +30,7 @@ const PrincipalInformation = () => {
           required
           options={localeContext.states}
           onChange={(value) => handlePub(step, 'state', value)}
-          value={localeContext.selectedState}
+          value={pubContext[step].state.value}
         />
         <Select
           name="city"
@@ -43,7 +43,7 @@ const PrincipalInformation = () => {
           options={localeContext.citys}
           onChange={(value) => handlePub(step, 'city', value)}
           loading={localeContext.isFetching}
-          value={localeContext.selectedCity}
+          value={pubContext[step].city.value}
         />
       </S.InputGroup>
       <S.InputGroup>
