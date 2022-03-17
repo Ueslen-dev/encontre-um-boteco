@@ -5,8 +5,8 @@ export const Wrapper = styled.main`
 
   .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     padding: 18px;
-    border: 2px solid var(--grey-color-lighter);
     border-radius: 10px;
+    border: 2px solid var(--grey-color-lighter);
   }
 
   .ant-select:not(.ant-select-customize-input) .ant-select-selector,
@@ -55,4 +55,10 @@ export const Label = styled.div`
   span {
     color: var(--pink-color);
   }
+`;
+
+export const ErrorText = styled.div`
+  color: var(--pink-color);
+  font-size: 1.5rem;
+  margin-top: 5px;
 `;

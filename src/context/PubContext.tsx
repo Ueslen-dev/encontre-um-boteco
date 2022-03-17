@@ -15,6 +15,7 @@ interface PubContextInterface {
     value?: unknown,
     isValid?: boolean
   ) => void;
+  setStepFormHasTouched: (step: string, hasTouched: boolean) => void;
 }
 
 const INITIAL_STATE = {
@@ -30,7 +31,8 @@ const INITIAL_STATE = {
     name: {
       value: '',
       isValid: false
-    }
+    },
+    hasTouched: false
   },
   contactInformation: {
     responsible: {
@@ -48,7 +50,8 @@ const INITIAL_STATE = {
     instagram: {
       value: '',
       isValid: false
-    }
+    },
+    hasTouched: false
   },
   locationInformation: {
     address: {
@@ -62,7 +65,8 @@ const INITIAL_STATE = {
     photo: {
       value: '',
       isValid: false
-    }
+    },
+    hasTouched: false
   }
 };
 
@@ -91,12 +95,28 @@ const PubProvider = ({ children }: Provider) => {
     [setPubContext]
   );
 
+  const setStepFormHasTouched = useCallback(
+    (step: string, hasTouched: boolean) => {
+      setPubContext((values) => {
+        return {
+          ...values,
+          [step]: {
+            ...values[step],
+            hasTouched
+          }
+        };
+      });
+    },
+    [setPubContext]
+  );
+
   const state = useMemo(() => {
     return {
       pubContext,
-      setPubStore
+      setPubStore,
+      setStepFormHasTouched
     };
-  }, [pubContext, setPubStore]);
+  }, [pubContext, setPubStore, setStepFormHasTouched]);
 
   return <PubContext.Provider value={state}>{children}</PubContext.Provider>;
 };

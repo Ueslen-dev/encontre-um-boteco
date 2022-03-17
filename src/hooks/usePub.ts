@@ -8,7 +8,7 @@ export const usePub = () => {
   const context = useContext(PubContext);
   const { handleLocale } = useLocale();
 
-  const { pubContext, setPubStore } = context;
+  const { pubContext, setPubStore, setStepFormHasTouched } = context;
 
   const handlePub = (
     step: string,
@@ -34,7 +34,8 @@ export const usePub = () => {
   return {
     pubContext,
     setPubStore,
-    handlePub
+    handlePub,
+    setStepFormHasTouched
   };
 };
 

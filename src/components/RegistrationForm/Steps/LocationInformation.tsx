@@ -1,12 +1,14 @@
 import Input from 'components/Input';
 import DraggerUpload from 'components/DraggerUpload';
 
+import usePub from 'hooks/usePub';
+
 import * as S from './styles';
 
 const LocationInformation = () => {
-  const inputRules = {
-    required: true
-  };
+  const step = 'locationInformation';
+
+  const { pubContext, handlePub } = usePub();
 
   return (
     <>
@@ -16,15 +18,19 @@ const LocationInformation = () => {
         gap="50px"
       >
         <Input
-          name="adress"
+          name="address"
           placeholder="Digite o endereço do boteco"
           label="Qual o endereço do boteco?"
-          rules={inputRules}
+          required
+          onChange={(value) => handlePub(step, 'address', value)}
+          value={pubContext[step].address.value}
         />
         <Input
           name="reference"
           placeholder="Digite um ponto de referência"
           label="Existe algum ponto de referência?"
+          onChange={(value) => handlePub(step, 'reference', value)}
+          value={pubContext[step].reference.value}
         />
       </S.InputGroup>
       <S.InputGroup>

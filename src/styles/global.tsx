@@ -63,6 +63,12 @@ h1, h2, h3, h4, h5, h6, p {
   font-weight: var(--font-weight-medium);
 }
 
+.errorField {
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector, input {
+    border-color: var(--pink-color) !important;
+  }
+}
+
 `;
 
 export default GlobalStyles;

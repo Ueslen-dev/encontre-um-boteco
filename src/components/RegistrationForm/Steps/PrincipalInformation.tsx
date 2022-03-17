@@ -5,6 +5,7 @@ import Select from 'components/Select';
 
 import useLocale from 'hooks/useLocale';
 import usePub from 'hooks/usePub';
+import useFormStep from 'hooks/useFormStep';
 
 import * as S from './styles';
 
@@ -13,8 +14,7 @@ const PrincipalInformation = () => {
 
   const { localeContext } = useLocale();
   const { pubContext, handlePub } = usePub();
-
-  /* console.log(pubContext, 'dados dentro do form'); */
+  const { checkInputError } = useFormStep();
 
   const maxLength = 60;
 
@@ -31,6 +31,8 @@ const PrincipalInformation = () => {
           options={localeContext.states}
           onChange={(value) => handlePub(step, 'state', value)}
           value={pubContext[step].state.value}
+          hasError={checkInputError(step, 'state')}
+          errorText="Erro no select"
         />
         <Select
           name="city"
@@ -44,17 +46,21 @@ const PrincipalInformation = () => {
           onChange={(value) => handlePub(step, 'city', value)}
           loading={localeContext.isFetching}
           value={pubContext[step].city.value}
+          hasError={checkInputError(step, 'city')}
+          errorText="Erro no select"
         />
       </S.InputGroup>
       <S.InputGroup>
         <Input
-          name="pubName"
+          name="name"
           placeholder="Digite o nome do boteco"
           label="Qual o nome do boteco?"
           maxLength={maxLength}
           required
           onChange={(event) => handlePub(step, 'name', event)}
           value={pubContext[step].name.value}
+          hasError={checkInputError(step, 'name')}
+          errorText="Erro no name"
         />
       </S.InputGroup>
     </>

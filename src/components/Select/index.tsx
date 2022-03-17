@@ -20,6 +20,8 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   optionValue: string;
   optionName: string;
   loading?: boolean;
+  hasError?: boolean;
+  errorText?: string;
 }
 
 type selectOptions = {
@@ -37,6 +39,8 @@ const Select = ({
   optionValue,
   optionName,
   loading,
+  hasError,
+  errorText,
   ...remainProps
 }: Props) => {
   const [selectOptions, setSelectOptions] = useState<selectOptions[]>([]);
@@ -73,27 +77,31 @@ const Select = ({
         <S.Label>
           {label} {required && <span>*</span>}
         </S.Label>
-        <SelectAntd
-          showSearch
-          placeholder={placeholder}
-          onChange={onChange}
-          loading={loading}
-          filterOption={(input: string, option: { children: string }) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
-          {...remainProps}
-        >
-          {!_.isEmpty(selectOptions) &&
-            selectOptions.map((option) => (
-              <Option
-                key={option.value}
-                value={option.value}
-                className="antd-select-option"
-              >
-                {option.name}
-              </Option>
-            ))}
-        </SelectAntd>
+        <div className={hasError && 'errorField'}>
+          <SelectAntd
+            showSearch
+            placeholder={placeholder}
+            onChange={onChange}
+            loading={loading}
+            filterOption={(input: string, option: { children: string }) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+            {...remainProps}
+          >
+            {!_.isEmpty(selectOptions) &&
+              selectOptions.map((option) => (
+                <Option
+                  key={option.value}
+                  value={option.value}
+                  className="antd-select-option"
+                >
+                  {option.name}
+                </Option>
+              ))}
+          </SelectAntd>
+        </div>
+
+        {hasError && <S.ErrorText>{errorText}</S.ErrorText>}
       </Form.Item>
     </S.Wrapper>
   );

@@ -9,6 +9,8 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   placeholder: string;
   value?: string;
+  hasError?: boolean;
+  errorText?: string;
 }
 
 const Input = ({
@@ -17,6 +19,8 @@ const Input = ({
   label,
   placeholder,
   value,
+  hasError,
+  errorText,
   ...remainProps
 }: Props) => (
   <S.Wrapper>
@@ -24,7 +28,11 @@ const Input = ({
       <S.Label>
         {label} {required && <span>*</span>}
       </S.Label>
-      <InputAntd placeholder={placeholder} value={value} {...remainProps} />
+      <div className={hasError && 'errorField'}>
+        <InputAntd placeholder={placeholder} value={value} {...remainProps} />
+      </div>
+
+      {hasError && <S.ErrorText>{errorText}</S.ErrorText>}
     </Form.Item>
   </S.Wrapper>
 );

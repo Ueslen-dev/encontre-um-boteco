@@ -36,3 +36,9 @@ export const Label = styled.div`
     color: var(--pink-color);
   }
 `;
+
+export const ErrorText = styled.div`
+  color: var(--pink-color);
+  font-size: 1.5rem;
+  margin-top: 5px;
+`;

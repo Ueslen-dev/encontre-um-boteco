@@ -29,7 +29,7 @@ const { Step } = Steps;
 
 const RegistrationForm = () => {
   const { pubContext } = usePub();
-  const { validateStep } = useFormStep();
+  const { validateStep, checkStepFormHasBeenTouched } = useFormStep();
 
   const formsSteps = useMemo(() => {
     return {
@@ -62,12 +62,15 @@ const RegistrationForm = () => {
   const prev = () => setCurrent(current - 1);
   const next = () => {
     const stepIsValid = validateStep(formsSteps[current]);
+    checkStepFormHasBeenTouched(formsSteps[current], true);
+
     return stepIsValid && setCurrent(current + 1);
   };
 
   useEffect(() => {
+    /* checkStepFormHasBeenTouched(formsSteps[current], false); */
     console.log(pubContext, 'retorno pub context');
-  }, [pubContext]);
+  }, [pubContext, checkStepFormHasBeenTouched, formsSteps, current]);
 
   return (
     <Container>
