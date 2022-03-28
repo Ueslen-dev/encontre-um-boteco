@@ -60,11 +60,13 @@ const RegistrationForm = () => {
   const [current, setCurrent] = useState(0);
 
   const prev = () => setCurrent(current - 1);
-  const next = () => {
+  const next = (type?: string) => {
     const stepIsValid = validateStep(formsSteps[current]);
     checkStepFormHasBeenTouched(formsSteps[current], true);
 
-    return stepIsValid && setCurrent(current + 1);
+    return type === 'submit'
+      ? stepIsValid && console.log('cadastrado')
+      : stepIsValid && setCurrent(current + 1);
   };
 
   useEffect(() => {
@@ -115,6 +117,7 @@ const RegistrationForm = () => {
               name="Cadastrar"
               buttonSize="medium"
               htmlType="submit"
+              onClick={() => next('submit')}
             />
           )}
         </S.StepsAction>

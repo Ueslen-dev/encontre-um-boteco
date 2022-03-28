@@ -3,6 +3,8 @@ import Input from 'components/Input';
 import usePub from 'hooks/usePub';
 import useFormStep from 'hooks/useFormStep';
 
+import messagesForFormSteps from './messagesForFormSteps';
+
 import * as S from './styles';
 
 const ContactInformation = () => {
@@ -30,7 +32,7 @@ const ContactInformation = () => {
           onChange={(event) => handlePub(step, 'responsible', event)}
           value={pubContext[step].responsible.value}
           hasError={checkInputError(step, 'responsible')}
-          errorText="Erro no responsible"
+          errorText={messagesForFormSteps.LABEL_RESPONSIBLE_IS_EMPTY}
         />
         <Input
           name="email"
@@ -40,7 +42,7 @@ const ContactInformation = () => {
           onChange={(event) => handlePub(step, 'email', event)}
           value={pubContext[step].email.value}
           hasError={checkInputError(step, 'email')}
-          errorText="Erro no email"
+          errorText={messagesForFormSteps.LABEL_EMAIL_IS_EMPTY}
         />
       </S.InputGroup>
       <S.InputGroup
@@ -56,7 +58,7 @@ const ContactInformation = () => {
           onChange={(event) => handlePub(step, 'whatsapp', event)}
           value={pubContext[step].whatsapp.value}
           hasError={checkInputError(step, 'whatsapp')}
-          errorText="Erro no whatsapp"
+          errorText={messagesForFormSteps.LABEL_WHATSAPP_IS_EMPTY}
         />
         <Input
           name="instagram"
@@ -66,7 +68,7 @@ const ContactInformation = () => {
           onChange={(event) => handlePub(step, 'instagram', event)}
           value={pubContext[step].instagram.value}
           hasError={checkInputError(step, 'instagram')}
-          errorText="Erro no instagram"
+          errorText={messagesForFormSteps.LABEL_INSTAGRAM_IS_EMPTY}
         />
       </S.InputGroup>
     </>

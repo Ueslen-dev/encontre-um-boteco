@@ -2,6 +2,9 @@ import Input from 'components/Input';
 import DraggerUpload from 'components/DraggerUpload';
 
 import usePub from 'hooks/usePub';
+import useFormStep from 'hooks/useFormStep';
+
+import messagesForFormSteps from './messagesForFormSteps';
 
 import * as S from './styles';
 
@@ -9,6 +12,7 @@ const LocationInformation = () => {
   const step = 'locationInformation';
 
   const { pubContext, handlePub } = usePub();
+  const { checkInputError } = useFormStep();
 
   return (
     <>
@@ -24,6 +28,8 @@ const LocationInformation = () => {
           required
           onChange={(value) => handlePub(step, 'address', value)}
           value={pubContext[step].address.value}
+          hasError={checkInputError(step, 'address')}
+          errorText={messagesForFormSteps.LABEL_ADDRESS_IS_EMPTY}
         />
         <Input
           name="reference"
@@ -31,6 +37,9 @@ const LocationInformation = () => {
           label="Existe algum ponto de referência?"
           onChange={(value) => handlePub(step, 'reference', value)}
           value={pubContext[step].reference.value}
+          hasError={checkInputError(step, 'reference')}
+          errorText={messagesForFormSteps.LABEL_REFERENCE_IS_EMPTY}
+          required
         />
       </S.InputGroup>
       <S.InputGroup>

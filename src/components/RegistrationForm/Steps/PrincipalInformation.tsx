@@ -7,6 +7,8 @@ import useLocale from 'hooks/useLocale';
 import usePub from 'hooks/usePub';
 import useFormStep from 'hooks/useFormStep';
 
+import messagesForFormSteps from './messagesForFormSteps';
+
 import * as S from './styles';
 
 const PrincipalInformation = () => {
@@ -32,7 +34,7 @@ const PrincipalInformation = () => {
           onChange={(value) => handlePub(step, 'state', value)}
           value={pubContext[step].state.value}
           hasError={checkInputError(step, 'state')}
-          errorText="Erro no select"
+          errorText={messagesForFormSteps.LABEL_STATE_IS_EMPTY}
         />
         <Select
           name="city"
@@ -47,7 +49,7 @@ const PrincipalInformation = () => {
           loading={localeContext.isFetching}
           value={pubContext[step].city.value}
           hasError={checkInputError(step, 'city')}
-          errorText="Erro no select"
+          errorText={messagesForFormSteps.LABEL_CITY_IS_EMPTY}
         />
       </S.InputGroup>
       <S.InputGroup>
@@ -60,7 +62,7 @@ const PrincipalInformation = () => {
           onChange={(event) => handlePub(step, 'name', event)}
           value={pubContext[step].name.value}
           hasError={checkInputError(step, 'name')}
-          errorText="Erro no name"
+          errorText={messagesForFormSteps.LABEL_NAME_IS_EMPTY}
         />
       </S.InputGroup>
     </>
