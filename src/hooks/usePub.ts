@@ -22,43 +22,46 @@ export const usePub = () => {
   ) => {
     const hasSelectedValue = value && true;
 
-    if (state === 'city')
-      return setPubStore(step, state, value, hasSelectedValue);
+    const inputValue =
+      state !== 'city' &&
+      state !== 'state' &&
+      (value.target as HTMLInputElement).value;
+    const hasValueInserted = inputValue && inputValue !== '' && true;
 
-    if (state === 'state') {
-      setPubStore(step, state, value, hasSelectedValue);
-      return handleLocale('selectedState', value);
-    }
+    const validatFieldType = {
+      city: () => setPubStore(step, state, value, hasSelectedValue),
+      state: () => {
+        setPubStore(step, state, value, hasSelectedValue);
+        return handleLocale('selectedState', value);
+      },
+      whatsapp: () => {
+        const whatsappFormated = formatMobileNumber(inputValue);
 
-    const inputValue = (value.target as HTMLInputElement).value;
-    const hasValueInserted = inputValue !== '' && true;
+        const maxNumberLengthFormated = 15;
+        const hasPhoneNumber =
+          whatsappFormated.length === maxNumberLengthFormated;
 
-    if (state === 'whatsapp') {
-      const whatsappFormated = formatMobileNumber(inputValue);
+        return setPubStore(step, state, whatsappFormated, hasPhoneNumber);
+      },
+      instagram: () => {
+        const instagramFormated = formatInstagram(inputValue);
 
-      const maxNumberLengthFormated = 15;
-      const hasPhoneNumber =
-        whatsappFormated.length === maxNumberLengthFormated;
+        const maxLengthInstagram = 3;
+        const isValidInstagram = instagramFormated.length >= maxLengthInstagram;
 
-      return setPubStore(step, state, whatsappFormated, hasPhoneNumber);
-    }
+        return setPubStore(step, state, instagramFormated, isValidInstagram);
+      },
+      email: () => {
+        const isValidEmail = formatEmail(inputValue);
 
-    if (state === 'instagram') {
-      const instagramFormated = formatInstagram(inputValue);
+        return setPubStore(step, state, inputValue, isValidEmail);
+      },
+      default: () => setPubStore(step, state, inputValue, hasValueInserted)
+    };
 
-      const maxLengthInstagram = 3;
-      const isValidInstagram = instagramFormated.length >= maxLengthInstagram;
+    const validatField = validatFieldType[state];
 
-      return setPubStore(step, state, instagramFormated, isValidInstagram);
-    }
-
-    if (state === 'email') {
-      const isValidEmail = formatEmail(inputValue);
-
-      return setPubStore(step, state, inputValue, isValidEmail);
-    }
-
-    setPubStore(step, state, inputValue, hasValueInserted);
+    return validatField ? validatField() : validatFieldType.default();
   };
 
   return {
