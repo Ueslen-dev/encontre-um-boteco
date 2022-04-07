@@ -64,7 +64,8 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .errorField {
-  .ant-select:not(.ant-select-customize-input) .ant-select-selector, input {
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector,
+  .ant-upload.ant-upload-drag, input {
     border-color: var(--pink-color) !important;
   }
 }

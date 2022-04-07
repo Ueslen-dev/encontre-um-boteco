@@ -8,7 +8,7 @@ export const messagesForFormSteps = {
   LABEL_INSTAGRAM_IS_EMPTY: 'Diz pra gente qual é o Instagram do boteco.',
   LABEL_ADDRESS_IS_EMPTY: 'Ei, diz pra gente onde fica o boteco.',
   LABEL_REFERENCE_IS_EMPTY: 'Ajuda a gente, diz aí um ponto de referência.',
-  LABEL_PHOTO_IS_EMPTY: 'Por favor, manda pra gente uma foto do boteco.'
+  LABEL_PHOTO_IS_EMPTY: 'Por favor, manda uma foto do boteco pra gente.'
 };
 
 export default messagesForFormSteps;

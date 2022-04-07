@@ -25,6 +25,7 @@ export const usePub = () => {
     const inputValue =
       state !== 'city' &&
       state !== 'state' &&
+      state !== 'photo' &&
       (value.target as HTMLInputElement).value;
     const hasValueInserted = inputValue && inputValue !== '' && true;
 
@@ -55,6 +56,16 @@ export const usePub = () => {
         const isValidEmail = formatEmail(inputValue);
 
         return setPubStore(step, state, inputValue, isValidEmail);
+      },
+      photo: () => {
+        console.log(value, 'recebido do dragger');
+
+        console.log(
+          (value.target as HTMLInputElement)?.fileList,
+          'value format'
+        );
+
+        setPubStore(step, state, inputValue, hasValueInserted);
       },
       default: () => setPubStore(step, state, inputValue, hasValueInserted)
     };

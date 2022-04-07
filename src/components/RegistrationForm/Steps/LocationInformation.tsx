@@ -43,7 +43,12 @@ const LocationInformation = () => {
         />
       </S.InputGroup>
       <S.InputGroup>
-        <DraggerUpload />
+        <DraggerUpload
+          required
+          errorText={messagesForFormSteps.LABEL_PHOTO_IS_EMPTY}
+          hasError={checkInputError(step, 'photo')}
+          onChange={(value) => handlePub(step, 'photo', value)}
+        />
       </S.InputGroup>
     </>
   );

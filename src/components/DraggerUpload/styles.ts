@@ -40,4 +40,14 @@ export const Wrapper = styled.main`
   .ant-upload-list-item-error .ant-upload-list-item-name {
     color: var(--pink-color);
   }
+
+  .ant-upload-text span {
+    color: var(--pink-color);
+  }
+`;
+
+export const ErrorText = styled.div`
+  color: var(--pink-color);
+  font-size: 1.5rem;
+  margin-top: 5px;
 `;
