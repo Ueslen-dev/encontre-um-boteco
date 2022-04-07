@@ -1,6 +1,11 @@
 import { useContext, ChangeEvent } from 'react';
 
 import { PubContext } from 'context/PubContext';
+import {
+  formatMobileNumber,
+  formatInstagram,
+  formatEmail
+} from 'utils/formattingValues';
 
 import useLocale from './useLocale';
 
@@ -27,6 +32,31 @@ export const usePub = () => {
 
     const inputValue = (value.target as HTMLInputElement).value;
     const hasValueInserted = inputValue !== '' && true;
+
+    if (state === 'whatsapp') {
+      const whatsappFormated = formatMobileNumber(inputValue);
+
+      const maxNumberLengthFormated = 15;
+      const hasPhoneNumber =
+        whatsappFormated.length === maxNumberLengthFormated;
+
+      return setPubStore(step, state, whatsappFormated, hasPhoneNumber);
+    }
+
+    if (state === 'instagram') {
+      const instagramFormated = formatInstagram(inputValue);
+
+      const maxLengthInstagram = 3;
+      const isValidInstagram = instagramFormated.length >= maxLengthInstagram;
+
+      return setPubStore(step, state, instagramFormated, isValidInstagram);
+    }
+
+    if (state === 'email') {
+      const isValidEmail = formatEmail(inputValue);
+
+      return setPubStore(step, state, inputValue, isValidEmail);
+    }
 
     setPubStore(step, state, inputValue, hasValueInserted);
   };

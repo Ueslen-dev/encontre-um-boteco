@@ -12,6 +12,7 @@ const ContactInformation = () => {
   const instagramMaxLength = 30;
 
   const step = 'contactInformation';
+  const maxNumberLength = 11;
 
   const { pubContext, handlePub } = usePub();
   const { checkInputError } = useFormStep();
@@ -59,6 +60,8 @@ const ContactInformation = () => {
           value={pubContext[step].whatsapp.value}
           hasError={checkInputError(step, 'whatsapp')}
           errorText={messagesForFormSteps.LABEL_WHATSAPP_IS_EMPTY}
+          required
+          maxLength={maxNumberLength}
         />
         <Input
           name="instagram"
@@ -69,6 +72,7 @@ const ContactInformation = () => {
           value={pubContext[step].instagram.value}
           hasError={checkInputError(step, 'instagram')}
           errorText={messagesForFormSteps.LABEL_INSTAGRAM_IS_EMPTY}
+          required
         />
       </S.InputGroup>
     </>
