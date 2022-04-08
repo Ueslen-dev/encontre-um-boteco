@@ -4,6 +4,7 @@ const GlobalStyles = createGlobalStyle`
 :root {
   --grey-color: #222222;
   --grey-color-lighter: #858585;
+  --grey-color-light: #ddd;
   --grey-color-dark: #101002;
   --yellow-color: #F1B916;
   --yellow-color-lighter: #FCC21A;
@@ -14,7 +15,6 @@ const GlobalStyles = createGlobalStyle`
   --pink-color-dark: #D12852;
   --white-color-snow: #EEEEEE;
   --white-color: #fff;
-  --mobile-device: 760px;
   --font-size-larger: 2.4rem;
   --font-size-small: 1.8rem;
   --font-weight-medium: 600;
@@ -36,6 +36,8 @@ html {
 
 html,body,#__next {
   height: 100%;
+  overflow-x: hidden;
+  background: var(--white-color-snow);
 }
 
 body {
@@ -59,6 +61,13 @@ h1, h2, h3, h4, h5, h6, p {
 .antd-select-option {
   color: var(--grey-color-lighter);
   font-weight: var(--font-weight-medium);
+}
+
+.errorField {
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector,
+  .ant-upload.ant-upload-drag, input {
+    border-color: var(--pink-color) !important;
+  }
 }
 
 `;

@@ -1,28 +1,25 @@
-import { useQuery } from 'react-query';
-
-import { State } from 'interfaces/State';
-
 import useModal from 'hooks/useModal';
-import useLocaleService from 'hooks/useLocaleService';
 
 import Button from 'components/Button';
+import Logo from 'components/Logo';
 import SelectStateAndCity from './SelectStateAndCity';
+
+import routes from 'routes';
 
 import * as S from './styles';
 
 const Main = () => {
   const { handleModal } = useModal();
-  const { fetchData } = useLocaleService();
 
-  const state = 'states';
+  /*  const state = 'states';
   const cache = 'statesCache';
   const endpoint = '/localidades/estados';
   const hour = 3600000; //1 hour;
 
-  useQuery<State[]>(cache, async () => await fetchData(state, endpoint), {
-    refetchOnWindowFocus: false,
-    staleTime: hour
-  });
+    useQuery<State[]>(cache, async () => await fetchData(state, endpoint), {
+      refetchOnWindowFocus: false,
+      staleTime: hour
+    }); */
 
   const openModal = () => {
     const modalProps = {
@@ -37,17 +34,15 @@ const Main = () => {
 
   return (
     <S.Wrapper>
-      <S.LogoFigure>
-        <S.Logo
-          src="/assets/img/logo.svg"
-          alt="Imagem de duas garrafas de cerveja amarela com garfo espetando
-      uma linguiça no meio."
-        />
-      </S.LogoFigure>
+      <Logo size="350" />
       <S.Content>
         <S.ButtonsContainer>
           <Button name="Encontrar um boteco" onClick={openModal} />
-          <Button name="Cadastrar um boteco" href="/" type="outlineWhite" />
+          <Button
+            name="Cadastrar um boteco"
+            href={routes.pubCreate}
+            type="outlineWhite"
+          />
         </S.ButtonsContainer>
         <S.TotalPub>
           Total de <strong>325</strong> botecos cadastrados
@@ -56,4 +51,5 @@ const Main = () => {
     </S.Wrapper>
   );
 };
+
 export default Main;

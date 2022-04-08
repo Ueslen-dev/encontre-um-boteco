@@ -9,7 +9,7 @@ type provider = {
 
 interface LocaleContextInterface {
   localeContext: Locale;
-  setLocale: (state: string, content: unknown) => void;
+  setLocaleStore: (state: string, content: unknown) => void;
 }
 
 const INITIAL_STATE = {
@@ -26,26 +26,27 @@ const LocaleContext = createContext<LocaleContextInterface>(
 );
 
 const LocaleProvider = ({ children }: provider) => {
-  const [localeContext, setLocaleContext] = useState<Locale>(INITIAL_STATE);
+  const [localeContext, setLocaleStoreContext] =
+    useState<Locale>(INITIAL_STATE);
 
-  const setLocale = useCallback(
+  const setLocaleStore = useCallback(
     (state: string, content: unknown) => {
-      setLocaleContext((values) => {
+      setLocaleStoreContext((values) => {
         return {
           ...values,
           [state]: content
         };
       });
     },
-    [setLocaleContext]
+    [setLocaleStoreContext]
   );
 
   const state = useMemo(
     () => ({
-      setLocale,
+      setLocaleStore,
       localeContext
     }),
-    [localeContext, setLocale]
+    [localeContext, setLocaleStore]
   );
 
   return (

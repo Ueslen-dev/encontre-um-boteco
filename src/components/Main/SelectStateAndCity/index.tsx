@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 
@@ -6,7 +5,7 @@ import Select from 'components/Select';
 import Button from 'components/Button';
 
 import useModal from 'hooks/useModal';
-import useLocaleService from 'hooks/useLocaleService';
+import useLocale from 'hooks/useLocale';
 
 import routes from 'routes';
 
@@ -14,22 +13,12 @@ import * as S from './styles';
 
 export const SelectStateAndCity = () => {
   const router = useRouter();
-  const { localeContext, setLocale, fetchData } = useLocaleService();
+
+  const { localeContext, handleLocale } = useLocale();
   const { handleModal } = useModal();
 
-  const { states, citys, isFetching, selectedCity } = localeContext;
-
-  const handleChange = (key: string, value: ChangeEvent<HTMLInputElement>) => {
-    if (key === 'selectedState') {
-      const endpoint = `/localidades/estados/${value}/municipios`;
-      const state = 'citys';
-
-      setLocale(key, value);
-      fetchData(state, endpoint);
-    }
-
-    setLocale(key, value);
-  };
+  const { states, citys, isFetching, selectedCity, selectedState } =
+    localeContext;
 
   const redirectToPage = () => {
     router.push(routes.pubs);
@@ -40,20 +29,24 @@ export const SelectStateAndCity = () => {
     <S.Wrapper>
       <S.SelectsGroup>
         <Select
+          name="state"
           placeholder="Estado"
           optionValue="id"
           optionName="nome"
           options={states}
-          onChange={(value) => handleChange('selectedState', value)}
+          onChange={(value) => handleLocale('selectedState', value)}
+          value={selectedState}
         />
         <Select
           disabled={_.isEmpty(citys)}
+          name="city"
           placeholder="Cidade"
           optionValue="id"
           optionName="nome"
           options={citys}
-          onChange={(value) => handleChange('selectedCity', value)}
+          onChange={(value) => handleLocale('selectedCity', value)}
           loading={isFetching}
+          value={selectedCity}
         />
       </S.SelectsGroup>
 
