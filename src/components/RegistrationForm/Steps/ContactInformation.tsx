@@ -14,7 +14,7 @@ const ContactInformation = () => {
   const step = 'contactInformation';
   const maxNumberLength = 11;
 
-  const { pubContext, handlePub } = usePub();
+  const { pubContext, handlePubForm } = usePub();
   const { checkInputError } = useFormStep();
 
   return (
@@ -30,7 +30,7 @@ const ContactInformation = () => {
           label="Qual o seu nome?"
           required
           maxLength={nameMaxLength}
-          onChange={(event) => handlePub(step, 'responsible', event)}
+          onChange={(event) => handlePubForm(step, 'responsible', event)}
           value={pubContext[step].responsible.value}
           hasError={checkInputError(step, 'responsible')}
           errorText={messagesForFormSteps.LABEL_RESPONSIBLE_IS_EMPTY}
@@ -40,7 +40,7 @@ const ContactInformation = () => {
           placeholder="Digite o seu email"
           label="Qual o seu email?"
           required
-          onChange={(event) => handlePub(step, 'email', event)}
+          onChange={(event) => handlePubForm(step, 'email', event)}
           value={pubContext[step].email.value}
           hasError={checkInputError(step, 'email')}
           errorText={messagesForFormSteps.LABEL_EMAIL_IS_EMPTY}
@@ -56,7 +56,7 @@ const ContactInformation = () => {
           name="whatsapp"
           placeholder="Digite o número de WhatsApp"
           label="Qual o número de WhatsApp do boteco?"
-          onChange={(event) => handlePub(step, 'whatsapp', event)}
+          onChange={(event) => handlePubForm(step, 'whatsapp', event)}
           value={pubContext[step].whatsapp.value}
           hasError={checkInputError(step, 'whatsapp')}
           errorText={messagesForFormSteps.LABEL_WHATSAPP_IS_EMPTY}
@@ -68,7 +68,7 @@ const ContactInformation = () => {
           placeholder="Digite o Instagram do boteco"
           label="Qual o Instagram do boteco?"
           maxLength={instagramMaxLength}
-          onChange={(event) => handlePub(step, 'instagram', event)}
+          onChange={(event) => handlePubForm(step, 'instagram', event)}
           value={pubContext[step].instagram.value}
           hasError={checkInputError(step, 'instagram')}
           errorText={messagesForFormSteps.LABEL_INSTAGRAM_IS_EMPTY}

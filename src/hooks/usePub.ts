@@ -15,7 +15,7 @@ export const usePub = () => {
 
   const { pubContext, setPubStore, setStepFormHasTouched } = context;
 
-  const handlePub = (
+  const handlePubForm = (
     step: string,
     state: string,
     value?: ChangeEvent<HTMLInputElement>
@@ -58,14 +58,10 @@ export const usePub = () => {
         return setPubStore(step, state, inputValue, isValidEmail);
       },
       photo: () => {
-        console.log(value, 'recebido do dragger');
+        const fileList = 'fileList';
+        const hasPhotoInserted = value[fileList].length > 0;
 
-        console.log(
-          (value.target as HTMLInputElement)?.fileList,
-          'value format'
-        );
-
-        setPubStore(step, state, inputValue, hasValueInserted);
+        setPubStore(step, state, value, hasPhotoInserted);
       },
       default: () => setPubStore(step, state, inputValue, hasValueInserted)
     };
@@ -78,7 +74,7 @@ export const usePub = () => {
   return {
     pubContext,
     setPubStore,
-    handlePub,
+    handlePubForm,
     setStepFormHasTouched
   };
 };

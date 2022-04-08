@@ -15,7 +15,7 @@ const PrincipalInformation = () => {
   const step = 'principalInformation';
 
   const { localeContext } = useLocale();
-  const { pubContext, handlePub } = usePub();
+  const { pubContext, handlePubForm } = usePub();
   const { checkInputError } = useFormStep();
 
   const maxLength = 60;
@@ -31,7 +31,7 @@ const PrincipalInformation = () => {
           label="Qual o estado do boteco?"
           required
           options={localeContext.states}
-          onChange={(value) => handlePub(step, 'state', value)}
+          onChange={(value) => handlePubForm(step, 'state', value)}
           value={pubContext[step].state.value}
           hasError={checkInputError(step, 'state')}
           errorText={messagesForFormSteps.LABEL_STATE_IS_EMPTY}
@@ -45,7 +45,7 @@ const PrincipalInformation = () => {
           label="Qual a cidade do boteco?"
           required
           options={localeContext.citys}
-          onChange={(value) => handlePub(step, 'city', value)}
+          onChange={(value) => handlePubForm(step, 'city', value)}
           loading={localeContext.isFetching}
           value={pubContext[step].city.value}
           hasError={checkInputError(step, 'city')}
@@ -59,7 +59,7 @@ const PrincipalInformation = () => {
           label="Qual o nome do boteco?"
           maxLength={maxLength}
           required
-          onChange={(event) => handlePub(step, 'name', event)}
+          onChange={(event) => handlePubForm(step, 'name', event)}
           value={pubContext[step].name.value}
           hasError={checkInputError(step, 'name')}
           errorText={messagesForFormSteps.LABEL_NAME_IS_EMPTY}

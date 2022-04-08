@@ -9,10 +9,15 @@ import messagesForFormSteps from './messagesForFormSteps';
 import * as S from './styles';
 
 const LocationInformation = () => {
+  const maxUpload = 1;
   const step = 'locationInformation';
+  const fileList = 'fileList';
+  const imageType = '.jpg, .png, .jpeg, .gif';
 
-  const { pubContext, handlePub } = usePub();
+  const { pubContext, handlePubForm } = usePub();
   const { checkInputError } = useFormStep();
+
+  const fileListDefaultValue = pubContext[step].photo.value[fileList];
 
   return (
     <>
@@ -26,7 +31,7 @@ const LocationInformation = () => {
           placeholder="Digite o endereço do boteco"
           label="Qual o endereço do boteco?"
           required
-          onChange={(value) => handlePub(step, 'address', value)}
+          onChange={(value) => handlePubForm(step, 'address', value)}
           value={pubContext[step].address.value}
           hasError={checkInputError(step, 'address')}
           errorText={messagesForFormSteps.LABEL_ADDRESS_IS_EMPTY}
@@ -35,7 +40,7 @@ const LocationInformation = () => {
           name="reference"
           placeholder="Digite um ponto de referência"
           label="Existe algum ponto de referência?"
-          onChange={(value) => handlePub(step, 'reference', value)}
+          onChange={(value) => handlePubForm(step, 'reference', value)}
           value={pubContext[step].reference.value}
           hasError={checkInputError(step, 'reference')}
           errorText={messagesForFormSteps.LABEL_REFERENCE_IS_EMPTY}
@@ -44,10 +49,14 @@ const LocationInformation = () => {
       </S.InputGroup>
       <S.InputGroup>
         <DraggerUpload
+          name="file"
           required
           errorText={messagesForFormSteps.LABEL_PHOTO_IS_EMPTY}
           hasError={checkInputError(step, 'photo')}
-          onChange={(value) => handlePub(step, 'photo', value)}
+          onChange={(value) => handlePubForm(step, 'photo', value)}
+          maxCount={maxUpload}
+          fileList={fileListDefaultValue}
+          accept={imageType}
         />
       </S.InputGroup>
     </>
