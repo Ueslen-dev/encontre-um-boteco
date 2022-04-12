@@ -28,7 +28,7 @@ import * as S from './styles';
 const { Step } = Steps;
 
 const RegistrationForm = () => {
-  const { pubContext } = usePub();
+  const { pubContext, submitPubForm } = usePub();
   const { validateStep, checkStepFormHasBeenTouched } = useFormStep();
 
   const formsSteps = useMemo(() => {
@@ -65,7 +65,7 @@ const RegistrationForm = () => {
     checkStepFormHasBeenTouched(formsSteps[current], true);
 
     return type === 'submit'
-      ? stepIsValid && console.log('cadastrado')
+      ? stepIsValid && submitPubForm()
       : stepIsValid && setCurrent(current + 1);
   };
 

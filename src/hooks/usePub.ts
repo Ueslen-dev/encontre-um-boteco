@@ -8,12 +8,31 @@ import {
 } from 'utils/formattingValues';
 
 import useLocale from './useLocale';
+import useAPi from './useApi';
+
+import PubData from 'interfaces/PubData';
 
 export const usePub = () => {
   const context = useContext(PubContext);
   const { handleLocale } = useLocale();
+  const { fetchDataPub } = useAPi();
 
   const { pubContext, setPubStore, setStepFormHasTouched } = context;
+
+  const fetchData = fetchDataPub();
+
+  const INITIAL_PUB_VALUES = {
+    name: '',
+    email: '',
+    whatsapp: '',
+    instagram: '',
+    state: null,
+    city: null,
+    address: '',
+    reference: '',
+    responsible: '',
+    photo: null
+  };
 
   const handlePubForm = (
     step: string,
@@ -71,11 +90,54 @@ export const usePub = () => {
     return validatField ? validatField() : validatFieldType.default();
   };
 
+  const organizingValues = (): PubData => {
+    const listValues = Object.values(pubContext);
+    listValues.pop();
+
+    const pubFormValues = INITIAL_PUB_VALUES;
+
+    listValues.map((steps) => {
+      return Object.keys(steps).filter((key) => {
+        if (key !== 'hasTouched')
+          return (pubFormValues[key] =
+            key === 'city' || key === 'state'
+              ? Number(steps[key].value)
+              : steps[key].value);
+      });
+    });
+
+    return pubFormValues;
+  };
+
+  const submitFile = (callback: () => void) => {
+    const endpoint = '/pub/upload';
+
+    const fileList = 'fileList';
+    const values = organizingValues();
+
+    const isUploadFile = true;
+    console.log(values.photo[fileList][0], 'foto');
+
+    fetchData.post(endpoint, values.photo[fileList][0], isUploadFile);
+
+    return callback();
+  };
+
+  const submitPubForm = () => {
+    const endpoint = '/pub';
+
+    const values = organizingValues();
+    delete values.photo;
+
+    return submitFile(() => fetchData.post(endpoint, values));
+  };
+
   return {
     pubContext,
     setPubStore,
     handlePubForm,
-    setStepFormHasTouched
+    setStepFormHasTouched,
+    submitPubForm
   };
 };
 
