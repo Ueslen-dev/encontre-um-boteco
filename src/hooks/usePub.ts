@@ -110,15 +110,12 @@ export const usePub = () => {
   };
 
   const submitFile = (callback: () => void) => {
-    const endpoint = '/pub/upload';
-
-    const fileList = 'fileList';
     const values = organizingValues();
 
+    const endpoint = '/pub/upload';
     const isUploadFile = true;
-    console.log(values.photo[fileList][0], 'foto');
 
-    fetchData.post(endpoint, values.photo[fileList][0], isUploadFile);
+    fetchData.post(endpoint, values, isUploadFile);
 
     return callback();
   };

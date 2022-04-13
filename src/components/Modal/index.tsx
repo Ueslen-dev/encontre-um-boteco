@@ -3,12 +3,21 @@ import { Modal as ModalAntd } from 'antd';
 import useModal from 'hooks/useModal';
 
 import Button from 'components/Button';
+import ResultMessage from './ResultMessage';
 
 import * as S from './styles';
 
 const Modal = () => {
   const { modalContext, handleModal } = useModal();
-  const { isVisible, content, title, subtitle, confirm, cancel } = modalContext;
+  const {
+    isVisible,
+    isResultMessage,
+    content,
+    title,
+    subtitle,
+    confirm,
+    cancel
+  } = modalContext;
 
   const closeModal = () => handleModal({ isVisible: false });
 
@@ -21,11 +30,17 @@ const Modal = () => {
       width={600}
     >
       <S.Content>
-        <S.Header>
-          <S.Title>{title}</S.Title>
-          <S.Subtitle>{subtitle}</S.Subtitle>
-        </S.Header>
-        {typeof content === 'string' ? renderHTML(content) : content}
+        {isResultMessage ? (
+          <ResultMessage />
+        ) : (
+          <>
+            <S.Header>
+              <S.Title>{title}</S.Title>
+              <S.Subtitle>{subtitle}</S.Subtitle>
+            </S.Header>
+            {typeof content === 'string' ? renderHTML(content) : content}
+          </>
+        )}
       </S.Content>
       {confirm ||
         (cancel && (
@@ -33,7 +48,7 @@ const Modal = () => {
             {confirm && (
               <Button
                 name={confirm.name}
-                size="medium"
+                buttonSize="medium"
                 type="primary"
                 onClick={!confirm.href && confirm.action}
                 href={!confirm.action && confirm.href}
@@ -42,7 +57,7 @@ const Modal = () => {
             {cancel && (
               <Button
                 name={cancel.name}
-                size="medium"
+                buttonSize="medium"
                 type="neutral"
                 onClick={
                   !cancel.href && !cancel.action ? closeModal : cancel.action

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Steps, Button as ButtonAntd, Form } from 'antd';
 
 import { GiBeerStein as GiBeerSteinIcon } from 'react-icons/gi';
@@ -28,7 +28,7 @@ import * as S from './styles';
 const { Step } = Steps;
 
 const RegistrationForm = () => {
-  const { pubContext, submitPubForm } = usePub();
+  const { submitPubForm } = usePub();
   const { validateStep, checkStepFormHasBeenTouched } = useFormStep();
 
   const formsSteps = useMemo(() => {
@@ -68,11 +68,6 @@ const RegistrationForm = () => {
       ? stepIsValid && submitPubForm()
       : stepIsValid && setCurrent(current + 1);
   };
-
-  useEffect(() => {
-    /* checkStepFormHasBeenTouched(formsSteps[current], false); */
-    console.log(pubContext, 'retorno pub context');
-  }, [pubContext, checkStepFormHasBeenTouched, formsSteps, current]);
 
   return (
     <Container>
