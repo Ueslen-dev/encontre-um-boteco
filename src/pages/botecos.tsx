@@ -14,7 +14,7 @@ export const Pubs = () => {
 Pubs.getLayout = function getLayout(page: ReactElement) {
   return (
     <>
-      <Header title="Botecos" />
+      <Header title="Botecos Cadastrados" />
       {page}
     </>
   );
