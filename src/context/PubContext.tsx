@@ -16,6 +16,7 @@ interface PubContextInterface {
     isValid?: boolean
   ) => void;
   setStepFormHasTouched: (step: string, hasTouched: boolean) => void;
+  setPubRequestService: (state: string, value: unknown) => void;
 }
 
 const INITIAL_STATE = {
@@ -67,6 +68,10 @@ const INITIAL_STATE = {
       isValid: false
     },
     hasTouched: false
+  },
+  pubRequestService: {
+    isFetching: false,
+    error: null
   }
 };
 
@@ -110,13 +115,29 @@ const PubProvider = ({ children }: Provider) => {
     [setPubContext]
   );
 
+  const setPubRequestService = useCallback(
+    (state: string, value: boolean) => {
+      setPubContext((values) => {
+        return {
+          ...values,
+          pubRequestService: {
+            ...values['pubRequestService'],
+            [state]: value
+          }
+        };
+      });
+    },
+    [setPubContext]
+  );
+
   const state = useMemo(() => {
     return {
       pubContext,
       setPubStore,
-      setStepFormHasTouched
+      setStepFormHasTouched,
+      setPubRequestService
     };
-  }, [pubContext, setPubStore, setStepFormHasTouched]);
+  }, [pubContext, setPubStore, setStepFormHasTouched, setPubRequestService]);
 
   return <PubContext.Provider value={state}>{children}</PubContext.Provider>;
 };

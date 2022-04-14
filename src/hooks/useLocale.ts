@@ -1,34 +1,18 @@
 import { useContext, ChangeEvent } from 'react';
 
-import ibgeAPI from 'services/ibgeApi';
+import useAPi from './useApi';
 
 import { LocaleContext } from 'context/LocaleContext';
 
 const useLocale = () => {
   const context = useContext(LocaleContext);
+  const { fetchDataLocale } = useAPi();
 
   const { localeContext, setLocaleStore } = context;
 
-  const fetchData = async (state: string, endpoint: string) => {
-    setLocaleStore('isFetching', true);
-
-    return await ibgeAPI
-      .get(endpoint)
-      .then((response) => {
-        const { data } = response;
-        setLocaleStore(state, data);
-
-        return data;
-      })
-      .catch((err) => {
-        setLocaleStore('error', err);
-      })
-      .finally(() => {
-        setLocaleStore('isFetching', false);
-      });
-  };
-
   const handleLocale = (key: string, value: ChangeEvent<HTMLInputElement>) => {
+    const fetchData = fetchDataLocale();
+
     if (key === 'selectedState') {
       const endpoint = `/localidades/estados/${value}/municipios`;
       const state = 'citys';
@@ -36,7 +20,7 @@ const useLocale = () => {
       setLocaleStore(key, value);
       setLocaleStore('selectedCity', null);
 
-      fetchData(state, endpoint);
+      fetchData.get(state, endpoint);
     }
 
     setLocaleStore(key, value);
@@ -45,7 +29,6 @@ const useLocale = () => {
   return {
     localeContext,
     setLocaleStore,
-    fetchData,
     handleLocale
   };
 };

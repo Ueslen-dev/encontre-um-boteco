@@ -48,4 +48,8 @@ export interface Pub {
     };
     hasTouched: boolean;
   };
+  pubRequestService?: {
+    isFetching?: boolean;
+    error: Error | null;
+  };
 }
