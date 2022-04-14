@@ -33,7 +33,6 @@ const DraggerUpload = ({
     maxCount,
     onChange(info) {
       onChange(info);
-      console.log(info, 'recebido no dragger');
 
       const { status } = info.file;
 

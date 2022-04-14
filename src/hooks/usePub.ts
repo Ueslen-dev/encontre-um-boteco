@@ -126,7 +126,9 @@ export const usePub = () => {
     const values = organizingValues();
     delete values.photo;
 
-    return submitFile(() => fetchData.post(endpoint, values));
+    const savePub = () => fetchData.post(endpoint, values);
+
+    return submitFile(savePub);
   };
 
   return {

@@ -1,9 +1,11 @@
 import { useContext } from 'react';
+import { useRouter } from 'next/router';
 import { AxiosResponse, AxiosError } from 'axios';
 
 import { PubContext } from 'context/PubContext';
 import { LocaleContext } from 'context/LocaleContext';
 import useFlashMessage from './useFlashMessage';
+import routes from 'routes';
 
 import encontreUmBotecoApi from 'services/encontreUmBotecoApi';
 import ibgeAPI from 'services/ibgeApi';
@@ -23,6 +25,9 @@ export const useAPi = () => {
   const { setFlashMessageStore } = useFlashMessage();
   const pubContext = useContext(PubContext);
   const localeContext = useContext(LocaleContext);
+  const router = useRouter();
+
+  const redirectToPage = (href: string) => router.push(href);
 
   const { setPubRequestService } = pubContext;
   const { setLocaleStore } = localeContext;
@@ -74,15 +79,22 @@ export const useAPi = () => {
         .then((response: AxiosResponse) => {
           const { data } = response;
 
-          console.log({ data, su: data.success }, 'dados inseridos');
+          if (!isUploadFile) {
+            setFlashMessageStore({
+              text: data.success,
+              isVisible: true,
+              type: 'success'
+            });
+            return redirectToPage(routes.pubs);
+          }
         })
         .catch((err: AxiosError) => {
-          console.log(err.response, 'quem é error');
           setPubRequestService('error', err);
 
           return setFlashMessageStore({
             text: err.response.data.error,
-            isVisible: true
+            isVisible: true,
+            type: 'error'
           });
         })
         .finally(() => {

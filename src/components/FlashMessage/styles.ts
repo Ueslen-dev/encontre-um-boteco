@@ -5,7 +5,7 @@ export const Wrapper = styled.main`
   right: 50px;
   top: 50px;
   width: 350px;
-  padding: 8px 20px;
+  padding: 5px 5px 5px 40px;
   z-index: 9;
   background: var(--white-color-snow);
   border-radius: 10px 0 0 10px;

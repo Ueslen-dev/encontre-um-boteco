@@ -14,8 +14,9 @@ interface FlashMessageContextInterface {
 
 const INITIAL_STATE = {
   text: '',
-  duration: 4000,
-  isVisible: false
+  duration: 5000,
+  isVisible: false,
+  type: 'success'
 };
 
 const FlashMessageContext = createContext<FlashMessageContextInterface>(

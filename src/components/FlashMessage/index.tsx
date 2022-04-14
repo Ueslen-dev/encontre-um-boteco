@@ -4,14 +4,14 @@ import Lottie from 'react-lottie';
 
 import useFlashMessage from 'hooks/useFlashMessage';
 
-import animationData from '../Animation/glass_emerging.json';
+import animation from '../Animation';
 
 import * as S from './styles';
 
 const FlashMessage = () => {
   const { flashMessageContext, setFlashMessageStore } = useFlashMessage();
 
-  const { text, duration, isVisible } = flashMessageContext;
+  const { text, type, duration, isVisible } = flashMessageContext;
 
   const close = useCallback(
     () => setFlashMessageStore({ isVisible: false }),
@@ -22,13 +22,13 @@ const FlashMessage = () => {
     return {
       loop: true,
       autoplay: true,
-      animationData: animationData,
+      animationData: animation[type],
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
     };
-  }, []);
-  console.log(flashMessageContext, 'valor duration');
+  }, [type]);
+
   useEffect(() => {
     const closeTimer: any = () =>
       setTimeout(() => {
@@ -40,20 +40,16 @@ const FlashMessage = () => {
 
   return (
     <>
-      {true && (
+      {isVisible && (
         <S.Wrapper>
           <S.Close onClick={close}>
             <AiOutlineCloseIcon />
           </S.Close>
           <S.Content>
             <S.Animation>
-              <Lottie options={lottieOptions} height={80} width={80} />
+              <Lottie options={lottieOptions} height={70} width={70} />
             </S.Animation>
-            {/*  <S.Text>{text}</S.Text> */}
-            <S.Text>
-              Poxa, infelizmente o boteco não existe ou você não é o
-              proprietário.
-            </S.Text>
+            <S.Text>{text}</S.Text>
           </S.Content>
         </S.Wrapper>
       )}
