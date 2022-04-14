@@ -3,21 +3,12 @@ import { Modal as ModalAntd } from 'antd';
 import useModal from 'hooks/useModal';
 
 import Button from 'components/Button';
-import ResultMessage from './ResultMessage';
 
 import * as S from './styles';
 
 const Modal = () => {
   const { modalContext, handleModal } = useModal();
-  const {
-    isVisible,
-    isResultMessage,
-    content,
-    title,
-    subtitle,
-    confirm,
-    cancel
-  } = modalContext;
+  const { isVisible, content, title, subtitle, confirm, cancel } = modalContext;
 
   const closeModal = () => handleModal({ isVisible: false });
 
@@ -30,17 +21,11 @@ const Modal = () => {
       width={600}
     >
       <S.Content>
-        {isResultMessage ? (
-          <ResultMessage />
-        ) : (
-          <>
-            <S.Header>
-              <S.Title>{title}</S.Title>
-              <S.Subtitle>{subtitle}</S.Subtitle>
-            </S.Header>
-            {typeof content === 'string' ? renderHTML(content) : content}
-          </>
-        )}
+        <S.Header>
+          <S.Title>{title}</S.Title>
+          <S.Subtitle>{subtitle}</S.Subtitle>
+        </S.Header>
+        {typeof content === 'string' ? renderHTML(content) : content}
       </S.Content>
       {confirm ||
         (cancel && (

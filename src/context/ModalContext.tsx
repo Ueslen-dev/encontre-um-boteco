@@ -17,7 +17,6 @@ const INITIAL_STATE = {
   content: '',
   title: '',
   subtitle: '',
-  isResultMessage: false,
   confirm: {
     action: null,
     name: '',

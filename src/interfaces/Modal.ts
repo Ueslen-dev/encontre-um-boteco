@@ -5,7 +5,6 @@ export interface Modal {
   content?: string | children;
   title?: string;
   subtitle?: string;
-  isResultMessage?: boolean;
   confirm?: {
     action?: (event: MouseEvent<HTMLButtonElement>) => void;
     name: string;

@@ -3,8 +3,7 @@ import { AxiosResponse, AxiosError } from 'axios';
 
 import { PubContext } from 'context/PubContext';
 import { LocaleContext } from 'context/LocaleContext';
-
-import useModal from 'hooks/useModal';
+import useFlashMessage from './useFlashMessage';
 
 import encontreUmBotecoApi from 'services/encontreUmBotecoApi';
 import ibgeAPI from 'services/ibgeApi';
@@ -21,9 +20,9 @@ type FetchDataPub = {
 };
 
 export const useAPi = () => {
+  const { setFlashMessageStore } = useFlashMessage();
   const pubContext = useContext(PubContext);
   const localeContext = useContext(LocaleContext);
-  const { handleModal } = useModal();
 
   const { setPubRequestService } = pubContext;
   const { setLocaleStore } = localeContext;
@@ -33,17 +32,6 @@ export const useAPi = () => {
     formData.append('file', file);
 
     return formData;
-  };
-
-  const handleResultMessage = () => {
-    const modalProps = {
-      isVisible: true,
-      title: 'err.response.data.error',
-      subtitle: 'teste',
-      isResultMessage: true
-    };
-
-    handleModal(modalProps);
   };
 
   const fetchDataPub = (): FetchDataPub => {
@@ -87,13 +75,15 @@ export const useAPi = () => {
           const { data } = response;
 
           console.log({ data, su: data.success }, 'dados inseridos');
-          return handleResultMessage();
         })
         .catch((err: AxiosError) => {
           console.log(err.response, 'quem é error');
           setPubRequestService('error', err);
 
-          return handleResultMessage();
+          return setFlashMessageStore({
+            text: err.response.data.error,
+            isVisible: true
+          });
         })
         .finally(() => {
           setPubRequestService('isFetching', false);
