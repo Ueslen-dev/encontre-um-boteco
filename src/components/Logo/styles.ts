@@ -11,9 +11,6 @@ const { tablet } = device;
 export const LogoFigure = styled.figure`
   text-align: center;
   cursor: pointer;
-  img {
-    border: 1px solid red;
-  }
 `;
 
 export const Logo = styled.img<Props>`

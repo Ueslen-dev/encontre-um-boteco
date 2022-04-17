@@ -36,11 +36,11 @@
 }
 
 .success {
-  background-color: var(--green-color-dark);
+  background-color: var(--green-color);
 }
 
 .success:hover {
-  background-color: var(--green-color);
+  background-color: var(--green-color-dark);
 }
 
 .primary {
@@ -49,6 +49,14 @@
 
 .primary:hover {
   background-color: var(--yellow-color-lighter);
+}
+
+.danger {
+  background-color: var(--pink-color);
+}
+
+.danger:hover {
+  background-color: var(--pink-color-dark);
 }
 
 .medium {
