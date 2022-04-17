@@ -11,6 +11,8 @@ import 'antd/dist/antd.css';
 
 import { ModalProvider } from 'context/ModalContext';
 import { LocaleProvider } from 'context/LocaleContext';
+import { PubProvider } from 'context/PubContext';
+
 import { FlashMessageProvider } from 'context/FlashMessageContext';
 import { queryClient } from 'services/queryClient';
 
@@ -48,16 +50,18 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Head>
       <QueryClientProvider client={queryClient}>
         <LocaleProvider>
-          <FlashMessageProvider>
-            <ModalProvider>
-              <ConfigProvider locale={ptBR}>
-                <GlobalStyles />
-                <FlashMessage />
-                <Modal />
-                {getLayout(<Component {...pageProps} />)}
-              </ConfigProvider>
-            </ModalProvider>
-          </FlashMessageProvider>
+          <PubProvider>
+            <FlashMessageProvider>
+              <ModalProvider>
+                <ConfigProvider locale={ptBR}>
+                  <GlobalStyles />
+                  <FlashMessage />
+                  <Modal />
+                  {getLayout(<Component {...pageProps} />)}
+                </ConfigProvider>
+              </ModalProvider>
+            </FlashMessageProvider>
+          </PubProvider>
         </LocaleProvider>
       </QueryClientProvider>
     </>

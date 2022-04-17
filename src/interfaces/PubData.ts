@@ -1,4 +1,5 @@
 interface PubData {
+  _id?: string;
   name: string;
   email: string;
   whatsapp: string;
@@ -7,8 +8,10 @@ interface PubData {
   city: number;
   address: string;
   reference: string;
-  responsible: string;
   photo?: string | Blob;
+  responsible: string;
+  code?: string;
+  __v?: number;
 }
 
 export default PubData;

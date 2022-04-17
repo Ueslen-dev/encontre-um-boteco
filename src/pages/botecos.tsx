@@ -1,22 +1,14 @@
-import type { ReactElement } from 'react';
-
-import { PubProvider } from 'context/PubContext';
-import useLocale from 'hooks/useLocale';
+import { ReactElement } from 'react';
 
 import Header from 'components/Header';
 import Wrapper from 'components/Wrapper';
 import ListPubs from 'components/Pubs';
 
 export const Pubs = () => {
-  const { localeContext } = useLocale();
-
-  console.log(localeContext, 'dados do context');
   return (
-    <PubProvider>
-      <Wrapper>
-        <ListPubs />
-      </Wrapper>
-    </PubProvider>
+    <Wrapper>
+      <ListPubs />
+    </Wrapper>
   );
 };
 

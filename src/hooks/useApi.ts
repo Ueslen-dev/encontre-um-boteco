@@ -4,6 +4,7 @@ import { AxiosResponse, AxiosError } from 'axios';
 
 import { PubContext } from 'context/PubContext';
 import { LocaleContext } from 'context/LocaleContext';
+
 import useFlashMessage from './useFlashMessage';
 import routes from 'routes';
 
@@ -52,6 +53,9 @@ export const useAPi = () => {
           return data;
         })
         .catch((err: AxiosError) => {
+          if (err.response.status === 500) {
+            redirectToPage(routes.error);
+          }
           setPubRequestService('error', err);
         })
         .finally(() => {
@@ -85,6 +89,11 @@ export const useAPi = () => {
               isVisible: true,
               type: 'success'
             });
+
+            const endpoint = `/pub?state=${pubData.state}&city=${pubData.city}`;
+
+            get('pubs', endpoint);
+
             return redirectToPage(routes.pubs);
           }
         })

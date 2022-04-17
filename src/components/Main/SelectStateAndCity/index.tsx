@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 
@@ -6,6 +7,7 @@ import Button from 'components/Button';
 
 import useModal from 'hooks/useModal';
 import useLocale from 'hooks/useLocale';
+import useAPi from 'hooks/useApi';
 
 import routes from 'routes';
 
@@ -16,14 +18,25 @@ export const SelectStateAndCity = () => {
 
   const { localeContext, handleLocale } = useLocale();
   const { handleModal } = useModal();
+  const { fetchDataPub } = useAPi();
+
+  const fetchData = fetchDataPub();
 
   const { states, citys, isFetching, selectedCity, selectedState } =
     localeContext;
 
-  const redirectToPage = () => {
+  const redirectToPage = useCallback(() => {
     router.push(routes.pubs);
     handleModal({ isVisible: false });
-  };
+  }, [handleModal, router]);
+
+  const getPubs = useCallback(() => {
+    const endpoint = `/pub?state=${selectedState}&city=${selectedCity}`;
+
+    fetchData.get('pubs', endpoint);
+
+    return redirectToPage();
+  }, [fetchData, selectedState, selectedCity, redirectToPage]);
 
   return (
     <S.Wrapper>
@@ -53,9 +66,8 @@ export const SelectStateAndCity = () => {
       <S.ButtonGroup>
         <Button
           name="Confirmar"
-          size="medium"
           type="primary"
-          onClick={redirectToPage}
+          onClick={getPubs}
           disabled={!selectedCity}
         />
       </S.ButtonGroup>

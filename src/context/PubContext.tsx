@@ -71,7 +71,8 @@ const INITIAL_STATE = {
   },
   pubRequestService: {
     isFetching: false,
-    error: null
+    error: null,
+    pubs: []
   }
 };
 
