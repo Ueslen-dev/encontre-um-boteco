@@ -90,7 +90,9 @@ export const useAPi = () => {
               type: 'success'
             });
 
-            const endpoint = `/pub?state=${pubData.state}&city=${pubData.city}`;
+            const endpoint = `/pub?state=${pubData.state}&city=${
+              pubData.city
+            }&page=${1}&limit=${10}`;
 
             get('pubs', endpoint);
 

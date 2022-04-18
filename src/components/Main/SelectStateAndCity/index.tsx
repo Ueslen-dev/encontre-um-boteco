@@ -31,7 +31,7 @@ export const SelectStateAndCity = () => {
   }, [handleModal, router]);
 
   const getPubs = useCallback(() => {
-    const endpoint = `/pub?state=${selectedState}&city=${selectedCity}`;
+    const endpoint = `/pub?state=${selectedState}&city=${selectedCity}&page=${1}&limit=${10}`;
 
     fetchData.get('pubs', endpoint);
 

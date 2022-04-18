@@ -20,8 +20,8 @@ const Pubs = () => {
           'Loading...'
         ) : (
           <>
-            {!_.isEmpty(pubRequestService.pubs) ? (
-              pubRequestService.pubs.map((pub) => {
+            {!_.isEmpty(pubRequestService.pubs.results) ? (
+              pubRequestService.pubs.results.map((pub) => {
                 const {
                   _id,
                   name,
