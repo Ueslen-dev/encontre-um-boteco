@@ -35,8 +35,8 @@ export const PubBoxList = ({
   const openInstagram = () => console.log(instagram, 'instagram');
   const openWhatsapp = () => console.log(whatsapp, 'whatsapp');
 
-  const stateName = filterStateById(state).sigla;
-  const cityName = filterCityById(city).nome;
+  const stateName = filterStateById(state)?.sigla;
+  const cityName = filterCityById(city)?.nome;
 
   return (
     <S.Wrapper>

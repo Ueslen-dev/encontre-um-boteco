@@ -53,7 +53,7 @@ export const useAPi = () => {
           return data;
         })
         .catch((err: AxiosError) => {
-          if (err.response.status === 500) {
+          if (err?.response?.status === 500) {
             redirectToPage(routes.error);
           }
           setPubRequestService('error', err);
@@ -85,7 +85,7 @@ export const useAPi = () => {
 
           if (!isUploadFile) {
             setFlashMessageStore({
-              text: data.success,
+              text: data?.success,
               isVisible: true,
               type: 'success'
             });
@@ -103,7 +103,7 @@ export const useAPi = () => {
           setPubRequestService('error', err);
 
           return setFlashMessageStore({
-            text: err.response.data.error,
+            text: err?.response?.data?.error,
             isVisible: true,
             type: 'error'
           });

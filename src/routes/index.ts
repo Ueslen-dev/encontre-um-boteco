@@ -2,7 +2,7 @@ const routes = {
   home: '/',
   pubs: '/botecos',
   pubCreate: '/cadastrar',
-  error: '/error'
+  error: '/500'
 };
 
 export default routes;

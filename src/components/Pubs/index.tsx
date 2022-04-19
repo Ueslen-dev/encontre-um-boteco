@@ -1,4 +1,6 @@
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useCallback, useEffect, useState } from 'react';
+
+import InfiniteScroll from 'components/InfiniteScroll';
 import _ from 'lodash';
 
 import Container from 'components/Container';
@@ -17,33 +19,38 @@ const Pubs = () => {
   const { fetchDataPub } = useAPi();
 
   const { pubRequestService } = pubContext;
+
   const fetchData = fetchDataPub();
+  /* const [allPubs, setAllPubs] = useState(pubRequestService.pubs.results); */
 
-  const totalResults = pubRequestService.pubs.results.length;
+  const fetchMorePubs = useCallback(() => {
+    if (!pubRequestService.isFetching) {
+      const endpoint = `/pub?state=${localeContext.selectedState}&city=${
+        localeContext.selectedCity
+      }&page=${2}&limit=${2}`;
 
-  const fetchMorePubs = () => {
-    console.log('retorno fim da página');
-    /* const endpoint = `/pub?state=${localeContext.selectedState}&city=${
-      localeContext.selectedCity
-    }&page=${1}&limit=${10}`;
+      setTimeout(() => {
+        fetchData.get('pubs', endpoint);
+      }, 500);
 
-    return fetchData.get('pubs', endpoint); */
-  };
+      console.log('vou chamar novamente');
+    }
+  }, [localeContext, pubRequestService, fetchData]);
+
+  /* useEffect(() => {
+    console.log([...allPubs, ...pubRequestService.pubs.results]);
+  }, [allPubs, pubRequestService]); */
 
   return (
     <Container>
       <S.Wrapper>
+        {/* {console.log('remontei')} */}
         {pubRequestService.isFetching ? (
           'Loading...'
         ) : (
           <>
             {!_.isEmpty(pubRequestService.pubs.results) ? (
-              <InfiniteScroll
-                dataLength={totalResults}
-                next={fetchMorePubs}
-                hasMore={true}
-                loader={<h4>Loading...</h4>}
-              >
+              <>
                 {pubRequestService.pubs.results.map((pub) => {
                   const {
                     _id,
@@ -70,7 +77,8 @@ const Pubs = () => {
                     />
                   );
                 })}
-              </InfiniteScroll>
+                <InfiniteScroll fetchMore={fetchMorePubs} />
+              </>
             ) : (
               <EmptyState />
             )}
