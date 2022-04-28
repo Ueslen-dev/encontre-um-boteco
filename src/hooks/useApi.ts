@@ -23,14 +23,15 @@ type FetchDataPub = {
 };
 
 export const useAPi = () => {
-  const { setFlashMessageStore } = useFlashMessage();
   const pubContext = useContext(PubContext);
   const localeContext = useContext(LocaleContext);
+
+  const { setFlashMessageStore } = useFlashMessage();
   const router = useRouter();
 
   const redirectToPage = (href: string) => router.push(href);
 
-  const { setPubRequestService } = pubContext;
+  const { setPubRequestService, pubContext: pubContextData } = pubContext;
   const { setLocaleStore } = localeContext;
 
   const mountFormData = (file: string | Blob) => {
@@ -48,9 +49,20 @@ export const useAPi = () => {
         .get(endpoint)
         .then((response: AxiosResponse) => {
           const { data } = response;
-          setPubRequestService(state, data);
 
-          return data;
+          if (state === 'pubs') {
+            const newData = {
+              ...data,
+              results: [
+                ...pubContextData.pubRequestService.pubs.results,
+                ...data['results']
+              ]
+            };
+
+            return setPubRequestService(state, newData);
+          }
+
+          return setPubRequestService(state, data);
         })
         .catch((err: AxiosError) => {
           if (err?.response?.status === 500) {

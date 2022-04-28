@@ -1,9 +1,14 @@
 import { useEffect, useRef } from 'react';
+import renderHTML from 'html-react-parser';
+
+import { children } from 'types/children';
 
 type Props = {
   fetchMore: () => void;
+  loading?: children;
 };
-const InfiniteScroll = ({ fetchMore }: Props) => {
+
+const InfiniteScroll = ({ fetchMore, loading }: Props) => {
   const containerRef = useRef();
 
   useEffect(() => {
@@ -13,9 +18,8 @@ const InfiniteScroll = ({ fetchMore }: Props) => {
       threshold: 1.0
     };
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        observer.disconnect();
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
         fetchMore();
       }
     }, options);
@@ -25,6 +29,11 @@ const InfiniteScroll = ({ fetchMore }: Props) => {
     return () => observer.disconnect();
   }, [fetchMore]);
 
-  return <div ref={containerRef} />;
+  return (
+    <>
+      {typeof loading === 'string' ? renderHTML(loading) : loading}
+      <div ref={containerRef} />
+    </>
+  );
 };
 export default InfiniteScroll;

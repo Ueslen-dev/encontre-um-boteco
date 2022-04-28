@@ -19,71 +19,71 @@ const Pubs = () => {
   const { fetchDataPub } = useAPi();
 
   const { pubRequestService } = pubContext;
+  const allPubs = pubRequestService.pubs.results;
 
   const fetchData = fetchDataPub();
-  /* const [allPubs, setAllPubs] = useState(pubRequestService.pubs.results); */
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const fetchMorePubs = useCallback(() => {
-    if (!pubRequestService.isFetching) {
-      const endpoint = `/pub?state=${localeContext.selectedState}&city=${
-        localeContext.selectedCity
-      }&page=${2}&limit=${2}`;
+    return (
+      !pubRequestService.isFetching && setCurrentPage((value) => value + 1)
+    );
+  }, []);
 
-      setTimeout(() => {
-        fetchData.get('pubs', endpoint);
-      }, 500);
+  useEffect(() => {
+    const endpoint = `/pub?state=${localeContext.selectedState}&city=${
+      localeContext.selectedCity
+    }&page=${currentPage}&limit=${2}`;
 
-      console.log('vou chamar novamente');
-    }
-  }, [localeContext, pubRequestService, fetchData]);
-
-  /* useEffect(() => {
-    console.log([...allPubs, ...pubRequestService.pubs.results]);
-  }, [allPubs, pubRequestService]); */
+    setTimeout(() => {
+      currentPage > 1 && fetchData.get('pubs', endpoint);
+    }, 500);
+  }, [currentPage]);
 
   return (
     <Container>
+      {console.log(pubRequestService, 'fora')}
       <S.Wrapper>
-        {/* {console.log('remontei')} */}
-        {pubRequestService.isFetching ? (
-          'Loading...'
-        ) : (
-          <>
-            {!_.isEmpty(pubRequestService.pubs.results) ? (
-              <>
-                {pubRequestService.pubs.results.map((pub) => {
-                  const {
-                    _id,
-                    name,
-                    state,
-                    city,
-                    photo,
-                    address,
-                    reference,
-                    whatsapp,
-                    instagram
-                  } = pub;
-                  return (
-                    <PubBoxList
-                      key={_id}
-                      name={name}
-                      state={state}
-                      city={city}
-                      photo={photo}
-                      address={address}
-                      reference={reference}
-                      whatsapp={whatsapp}
-                      instagram={instagram}
-                    />
-                  );
-                })}
+        <>
+          {!_.isEmpty(allPubs) ? (
+            <>
+              {allPubs.map((pub) => {
+                const {
+                  _id,
+                  name,
+                  state,
+                  city,
+                  photo,
+                  address,
+                  reference,
+                  whatsapp,
+                  instagram
+                } = pub;
+                return (
+                  <PubBoxList
+                    key={_id}
+                    name={name}
+                    state={state}
+                    city={city}
+                    photo={photo}
+                    address={address}
+                    reference={reference}
+                    whatsapp={whatsapp}
+                    instagram={instagram}
+                  />
+                );
+              })}
+              {pubRequestService.isFetching ? (
+                '...loading'
+              ) : (
                 <InfiniteScroll fetchMore={fetchMorePubs} />
-              </>
-            ) : (
-              <EmptyState />
-            )}
-          </>
-        )}
+              )}
+            </>
+          ) : (
+            <EmptyState />
+          )}
+        </>
       </S.Wrapper>
     </Container>
   );

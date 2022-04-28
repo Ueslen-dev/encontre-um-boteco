@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 
@@ -25,18 +24,18 @@ export const SelectStateAndCity = () => {
   const { states, citys, isFetching, selectedCity, selectedState } =
     localeContext;
 
-  const redirectToPage = useCallback(() => {
+  const redirectToPage = () => {
     router.push(routes.pubs);
     handleModal({ isVisible: false });
-  }, [handleModal, router]);
+  };
 
-  const getPubs = useCallback(() => {
+  const getPubs = () => {
     const endpoint = `/pub?state=${selectedState}&city=${selectedCity}&page=${1}&limit=${2}`;
 
     fetchData.get('pubs', endpoint);
 
     return redirectToPage();
-  }, [fetchData, selectedState, selectedCity, redirectToPage]);
+  };
 
   return (
     <S.Wrapper>
