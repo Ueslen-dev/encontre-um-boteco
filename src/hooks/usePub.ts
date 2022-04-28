@@ -128,16 +128,16 @@ export const usePub = () => {
     return callback();
   };
 
-  const submitPubForm = () => {
+  const submitPub = () => {
     const endpoint = '/pub';
 
     const values = organizingValues();
     delete values.photo;
 
-    const savePub = () => fetchData.post(endpoint, values);
-
-    return submitFile(savePub);
+    return fetchData.post(endpoint, values);
   };
+
+  const submitPubForm = () => submitFile(submitPub);
 
   return {
     pubContext,
