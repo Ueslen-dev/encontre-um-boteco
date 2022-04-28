@@ -26,10 +26,18 @@ const useLocale = () => {
     setLocaleStore(key, value);
   };
 
+  const filterStateById = (id: number) =>
+    localeContext.states.find((state) => state.id === id);
+
+  const filterCityById = (id: number) =>
+    localeContext.citys.find((city) => Number(city.id) === id);
+
   return {
     localeContext,
     setLocaleStore,
-    handleLocale
+    handleLocale,
+    filterStateById,
+    filterCityById
   };
 };
 

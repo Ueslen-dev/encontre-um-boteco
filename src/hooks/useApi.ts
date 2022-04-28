@@ -4,6 +4,7 @@ import { AxiosResponse, AxiosError } from 'axios';
 
 import { PubContext } from 'context/PubContext';
 import { LocaleContext } from 'context/LocaleContext';
+
 import useFlashMessage from './useFlashMessage';
 import routes from 'routes';
 
@@ -22,14 +23,15 @@ type FetchDataPub = {
 };
 
 export const useAPi = () => {
-  const { setFlashMessageStore } = useFlashMessage();
   const pubContext = useContext(PubContext);
   const localeContext = useContext(LocaleContext);
+
+  const { setFlashMessageStore } = useFlashMessage();
   const router = useRouter();
 
   const redirectToPage = (href: string) => router.push(href);
 
-  const { setPubRequestService } = pubContext;
+  const { setPubRequestService, pubContext: pubContextData } = pubContext;
   const { setLocaleStore } = localeContext;
 
   const mountFormData = (file: string | Blob) => {
@@ -47,11 +49,25 @@ export const useAPi = () => {
         .get(endpoint)
         .then((response: AxiosResponse) => {
           const { data } = response;
-          setPubRequestService(state, data);
 
-          return data;
+          if (state === 'pubs') {
+            const newData = {
+              ...data,
+              results: [
+                ...pubContextData.pubRequestService.pubs.results,
+                ...data['results']
+              ]
+            };
+
+            return setPubRequestService(state, newData);
+          }
+
+          return setPubRequestService(state, data);
         })
         .catch((err: AxiosError) => {
+          if (err?.response?.status === 500) {
+            redirectToPage(routes.error);
+          }
           setPubRequestService('error', err);
         })
         .finally(() => {
@@ -81,10 +97,18 @@ export const useAPi = () => {
 
           if (!isUploadFile) {
             setFlashMessageStore({
-              text: data.success,
+              text: data?.success,
               isVisible: true,
               type: 'success'
             });
+
+            const page = 1;
+            const limitResults = 2;
+
+            const endpoint = `/pub?state=${pubData.state}&city=${pubData.city}&page=${page}&limit=${limitResults}`;
+
+            get('pubs', endpoint);
+
             return redirectToPage(routes.pubs);
           }
         })
@@ -92,7 +116,7 @@ export const useAPi = () => {
           setPubRequestService('error', err);
 
           return setFlashMessageStore({
-            text: err.response.data.error,
+            text: err?.response?.data?.error,
             isVisible: true,
             type: 'error'
           });
