@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 import { AppProps } from 'next/app';
@@ -16,8 +17,8 @@ import { PubProvider } from 'context/PubContext';
 import { FlashMessageProvider } from 'context/FlashMessageContext';
 import { queryClient } from 'services/queryClient';
 
-import Modal from 'components/Modal';
-import FlashMessage from 'components/FlashMessage';
+const ModalDynamic = dynamic(() => import('components/Modal'));
+const FlashMessageDynamic = dynamic(() => import('components/FlashMessage'));
 
 import GlobalStyles from 'styles/global';
 
@@ -55,8 +56,8 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
               <ModalProvider>
                 <ConfigProvider locale={ptBR}>
                   <GlobalStyles />
-                  <FlashMessage />
-                  <Modal />
+                  <FlashMessageDynamic />
+                  <ModalDynamic />
                   {getLayout(<Component {...pageProps} />)}
                 </ConfigProvider>
               </ModalProvider>

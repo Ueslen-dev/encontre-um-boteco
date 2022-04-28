@@ -7,6 +7,7 @@ import { LocaleContext } from 'context/LocaleContext';
 
 import useFlashMessage from './useFlashMessage';
 import routes from 'routes';
+import { removeDuplicateObjectsFromArray } from 'utils/removeDuplicate';
 
 import encontreUmBotecoApi from 'services/encontreUmBotecoApi';
 import ibgeAPI from 'services/ibgeApi';
@@ -57,12 +58,19 @@ export const useAPi = () => {
             );
 
           if (state === 'pubs' && checkEqualCity) {
+            const incrementArrayResults = [
+              ...pubContextData.pubRequestService.pubs.results,
+              ...data['results']
+            ];
+
+            const newArray = removeDuplicateObjectsFromArray(
+              incrementArrayResults,
+              '_id'
+            );
+
             const newData = {
               ...data,
-              results: [
-                ...pubContextData.pubRequestService.pubs.results,
-                ...data['results']
-              ]
+              results: newArray
             };
 
             return setPubRequestService(state, newData);

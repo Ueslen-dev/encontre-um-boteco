@@ -6,7 +6,7 @@ import {
   InputHTMLAttributes
 } from 'react';
 import _ from 'lodash';
-import { Select as SelectAntd, Form } from 'antd';
+import { Select as SelectAntd } from 'antd';
 
 import * as S from './styles';
 
@@ -66,43 +66,35 @@ const Select = ({
 
   return (
     <S.Wrapper>
-      <Form.Item
-        name={['pub', name]}
-        rules={[
-          {
-            required
+      <S.Label>
+        {label} {required && <span>*</span>}
+      </S.Label>
+      <div className={hasError ? 'errorField' : undefined}>
+        <SelectAntd
+          name={name}
+          showSearch
+          placeholder={placeholder}
+          onChange={onChange}
+          loading={loading}
+          filterOption={(input: string, option: { children: string }) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
-        ]}
-      >
-        <S.Label>
-          {label} {required && <span>*</span>}
-        </S.Label>
-        <div className={hasError && 'errorField'}>
-          <SelectAntd
-            showSearch
-            placeholder={placeholder}
-            onChange={onChange}
-            loading={loading}
-            filterOption={(input: string, option: { children: string }) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-            {...remainProps}
-          >
-            {!_.isEmpty(selectOptions) &&
-              selectOptions.map((option) => (
-                <Option
-                  key={option.value}
-                  value={option.value}
-                  className="antd-select-option"
-                >
-                  {option.name}
-                </Option>
-              ))}
-          </SelectAntd>
-        </div>
+          {...remainProps}
+        >
+          {!_.isEmpty(selectOptions) &&
+            selectOptions.map((option) => (
+              <Option
+                key={option.value}
+                value={option.value}
+                className="antd-select-option"
+              >
+                {option.name}
+              </Option>
+            ))}
+        </SelectAntd>
+      </div>
 
-        {hasError && <S.ErrorText>{errorText}</S.ErrorText>}
-      </Form.Item>
+      {hasError && <S.ErrorText>{errorText}</S.ErrorText>}
     </S.Wrapper>
   );
 };
