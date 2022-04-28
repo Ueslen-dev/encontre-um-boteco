@@ -26,20 +26,26 @@ const DraggerUpload = ({
   onChange,
   ...remainProps
 }: Props) => {
+  const maxFileSize = 2 * 1024 * 1024; //2mb
+
   const draggerProps = {
     name,
     multiple: false,
     fileList,
     maxCount,
     onChange(info) {
-      onChange(info);
+      const { status, size } = info.file;
 
-      const { status } = info.file;
+      if (size > maxFileSize) {
+        return message.error(`A foto enviada é maior que 2mb`);
+      }
 
       if (status === 'done') {
         message.success(`${info.file.name} Recebemos a sua foto, obrigado!`);
+
+        onChange(info);
       } else if (status === 'error') {
-        message.success(
+        message.error(
           `${info.file.name} Ops, ocorreu um erro no envio da foto`
         );
       }

@@ -24,17 +24,27 @@ const Pubs = () => {
   const fetchData = fetchDataPub();
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLastResult, setIsLasResult] = useState(false);
 
   const fetchMorePubs = useCallback(() => {
     return (
-      !pubRequestService.isFetching && setCurrentPage((value) => value + 1)
+      !pubRequestService.isFetching &&
+      setCurrentPage((value) => {
+        if (value < pubRequestService.pubs.totalPages) {
+          return value + 1;
+        }
+
+        setIsLasResult(true);
+
+        return value;
+      })
     );
   }, []);
 
   useEffect(() => {
-    const endpoint = `/pub?state=${localeContext.selectedState}&city=${
-      localeContext.selectedCity
-    }&page=${currentPage}&limit=${2}`;
+    const limitResults = 2;
+
+    const endpoint = `/pub?state=${localeContext.selectedState}&city=${localeContext.selectedCity}&page=${currentPage}&limit=${limitResults}`;
 
     setTimeout(() => {
       currentPage > 1 && fetchData.get('pubs', endpoint);
@@ -79,6 +89,7 @@ const Pubs = () => {
               ) : (
                 <InfiniteScroll fetchMore={fetchMorePubs} />
               )}
+              {isLastResult && 'último resultado'}
             </>
           ) : (
             <EmptyState />

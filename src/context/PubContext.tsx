@@ -124,23 +124,6 @@ const PubProvider = ({ children }: Provider) => {
   const setPubRequestService = useCallback(
     (state: string, value: boolean) => {
       setPubContext((prevValues) => {
-        /*   if (state === 'pubs') {
-          return {
-            ...prevValues,
-            pubRequestService: {
-              ...prevValues['pubRequestService'],
-              [state]: {
-                page: value['page'],
-                totalResults: value['totalResults'],
-                totalPages: value['totalPages'],
-                results: [
-                  ...prevValues['pubRequestService'].pubs.results,
-                  ...value['results']
-                ]
-              }
-            }
-          };
-        } */
         return {
           ...prevValues,
           pubRequestService: {

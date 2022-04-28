@@ -102,9 +102,10 @@ export const useAPi = () => {
               type: 'success'
             });
 
-            const endpoint = `/pub?state=${pubData.state}&city=${
-              pubData.city
-            }&page=${1}&limit=${10}`;
+            const page = 1;
+            const limitResults = 2;
+
+            const endpoint = `/pub?state=${pubData.state}&city=${pubData.city}&page=${page}&limit=${limitResults}`;
 
             get('pubs', endpoint);
 

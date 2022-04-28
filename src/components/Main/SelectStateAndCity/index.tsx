@@ -30,7 +30,10 @@ export const SelectStateAndCity = () => {
   };
 
   const getPubs = () => {
-    const endpoint = `/pub?state=${selectedState}&city=${selectedCity}&page=${1}&limit=${2}`;
+    const limitResults = 2;
+    const page = 1;
+
+    const endpoint = `/pub?state=${selectedState}&city=${selectedCity}&page=${page}&limit=${limitResults}`;
 
     fetchData.get('pubs', endpoint);
 
