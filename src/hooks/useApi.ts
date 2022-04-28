@@ -32,7 +32,7 @@ export const useAPi = () => {
   const redirectToPage = (href: string) => router.push(href);
 
   const { setPubRequestService, pubContext: pubContextData } = pubContext;
-  const { setLocaleStore } = localeContext;
+  const { setLocaleStore, localeContext: localeContextData } = localeContext;
 
   const mountFormData = (file: string | Blob) => {
     const formData = new FormData();
@@ -50,7 +50,13 @@ export const useAPi = () => {
         .then((response: AxiosResponse) => {
           const { data } = response;
 
-          if (state === 'pubs') {
+          const checkEqualCity =
+            state === 'pubs' &&
+            pubContextData.pubRequestService.pubs.results.every(
+              (pub) => pub.city === Number(localeContextData.selectedCity)
+            );
+
+          if (state === 'pubs' && checkEqualCity) {
             const newData = {
               ...data,
               results: [

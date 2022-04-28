@@ -53,7 +53,6 @@ const Pubs = () => {
 
   return (
     <Container>
-      {console.log(pubRequestService, 'fora')}
       <S.Wrapper>
         <>
           {!_.isEmpty(allPubs) ? (
