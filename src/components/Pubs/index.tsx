@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 import Container from 'components/Container';
 import EmptyState from 'components/EmptyState';
+import Search from './Search';
 import PubBoxList from './PubBoxList';
 
 import usePub from 'hooks/usePub';
@@ -19,7 +20,14 @@ const Pubs = () => {
   const { fetchDataPub } = useAPi();
 
   const { pubRequestService } = pubContext;
-  const allPubs = pubRequestService.pubs.results;
+  const {
+    pubsSearchResults,
+    isSearch,
+    pubs: { results: allPubs }
+  } = pubRequestService;
+
+  const checkPubResult =
+    isSearch || !_.isEmpty(pubsSearchResults) ? pubsSearchResults : allPubs;
 
   const fetchData = fetchDataPub();
 
@@ -29,6 +37,7 @@ const Pubs = () => {
   const fetchMorePubs = useCallback(() => {
     return (
       !pubRequestService.isFetching &&
+      _.isEmpty(pubsSearchResults) &&
       setCurrentPage((value) => {
         if (value < pubRequestService.pubs.totalPages) {
           return value + 1;
@@ -39,7 +48,7 @@ const Pubs = () => {
         return value;
       })
     );
-  }, []);
+  }, [pubsSearchResults]);
 
   useEffect(() => {
     const limitResults = 2;
@@ -54,10 +63,11 @@ const Pubs = () => {
   return (
     <Container>
       <S.Wrapper>
+        <Search />
         <>
-          {!_.isEmpty(allPubs) ? (
+          {!_.isEmpty(checkPubResult) ? (
             <>
-              {allPubs.map((pub) => {
+              {checkPubResult.map((pub) => {
                 const {
                   _id,
                   name,
