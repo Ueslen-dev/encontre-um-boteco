@@ -1,0 +1,71 @@
+.buttonReset {
+  padding: 20px 40px;
+  background-color: var(--grey-color-dark);
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: 0.5s all;
+  margin-bottom: 12px;
+  font-size:  var(--font-size-larger);
+  text-decoration: none;
+  color: var(--white-color);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  border: none;
+  text-align: center;
+}
+
+.buttonReset:hover {
+  background-color: var(--grey-color);
+}
+
+.buttonReset a {
+  color: var(--white-color);
+}
+
+.outlineWhite {
+  background-color: var(--yellow-color);
+  border: 3px solid var(--white-color);
+ }
+
+.outlineWhite:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+.neutral {
+  background-color: #ddd;
+}
+
+.success {
+  background-color: var(--green-color);
+}
+
+.success:hover {
+  background-color: var(--green-color-dark);
+}
+
+.primary {
+  background-color: var(--yellow-color);
+}
+
+.primary:hover {
+  background-color: var(--yellow-color-lighter);
+}
+
+.danger {
+  background-color: var(--pink-color);
+}
+
+.danger:hover {
+  background-color: var(--pink-color-dark);
+}
+
+.medium {
+  font-size: 18px;
+  padding: 16px 25px;
+}
+
+.small {
+  font-size: 14px;
+  padding: 8px 25px;
+}
+
