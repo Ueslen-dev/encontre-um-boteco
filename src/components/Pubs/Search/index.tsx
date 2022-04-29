@@ -5,6 +5,7 @@ import Input from 'components/Input';
 
 import useAPi from 'hooks/useApi';
 import usePub from 'hooks/usePub';
+import useLocale from 'hooks/useLocale';
 
 import * as S from './styles';
 
@@ -14,6 +15,9 @@ const Search = () => {
 
   const { fetchDataPub } = useAPi();
   const { setPubRequestService } = usePub();
+  const { localeContext } = useLocale();
+
+  const { selectedState, selectedCity } = localeContext;
 
   const fetchData = fetchDataPub();
 
@@ -25,7 +29,7 @@ const Search = () => {
     setSearch(inputValue);
     setPubRequestService('isSearch', true);
 
-    const endpoint = `/pub/search?search=${inputValue}`;
+    const endpoint = `/pub/search?search=${inputValue}&state=${selectedState}&city=${selectedCity}`;
 
     if (inputValue === '') {
       setPubRequestService(state, []);

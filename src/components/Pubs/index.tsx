@@ -15,7 +15,7 @@ import useAPi from 'hooks/useApi';
 import * as S from './styles';
 
 const Pubs = () => {
-  const { pubContext } = usePub();
+  const { pubContext, setPubRequestService } = usePub();
   const { localeContext } = useLocale();
   const { fetchDataPub } = useAPi();
 
@@ -38,6 +38,7 @@ const Pubs = () => {
     return (
       !pubRequestService.isFetching &&
       _.isEmpty(pubsSearchResults) &&
+      !isSearch &&
       setCurrentPage((value) => {
         if (value < pubRequestService.pubs.totalPages) {
           return value + 1;
@@ -48,7 +49,7 @@ const Pubs = () => {
         return value;
       })
     );
-  }, [pubsSearchResults]);
+  }, [pubsSearchResults, isSearch, pubRequestService]);
 
   useEffect(() => {
     const limitResults = 2;
@@ -59,6 +60,11 @@ const Pubs = () => {
       currentPage > 1 && fetchData.get('pubs', endpoint);
     }, 500);
   }, [currentPage]);
+
+  useEffect(() => {
+    setPubRequestService('pubsSearchResults', []);
+    setPubRequestService('isSearch', false);
+  }, []);
 
   return (
     <Container>
