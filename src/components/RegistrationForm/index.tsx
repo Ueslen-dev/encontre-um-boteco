@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { useState, useMemo } from 'react';
 import { Steps, Button as ButtonAntd, Form } from 'antd';
 
@@ -17,8 +18,13 @@ import Container from 'components/Container';
 import Button from 'components/Button';
 
 import PrincipalInformation from './Steps/PrincipalInformation';
-import ContactInformation from './Steps/ContactInformation';
-import LocationInformation from './Steps/LocationInformation';
+
+const ContactInformationDynamic = dynamic(
+  () => import('./Steps/ContactInformation')
+);
+const LocationInformationDynamic = dynamic(
+  () => import('./Steps/LocationInformation')
+);
 
 import usePub from 'hooks/usePub';
 import useFormStep from 'hooks/useFormStep';
@@ -47,12 +53,12 @@ const RegistrationForm = () => {
     },
     {
       title: 'Queremos saber mais',
-      content: <ContactInformation />,
+      content: <ContactInformationDynamic />,
       icon: <IoIosChatboxesIcon className="iconSize" />
     },
     {
       title: 'Como podemos encontrar?',
-      content: <LocationInformation />,
+      content: <LocationInformationDynamic />,
       icon: <IoIosHomeIcon className="iconSize" />
     }
   ];

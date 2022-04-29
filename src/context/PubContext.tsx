@@ -71,7 +71,15 @@ const INITIAL_STATE = {
   },
   pubRequestService: {
     isFetching: false,
-    error: null
+    error: null,
+    isSearch: false,
+    pubs: {
+      page: null,
+      totalResults: null,
+      totalPages: null,
+      results: []
+    },
+    pubsSearchResults: []
   }
 };
 
@@ -117,11 +125,11 @@ const PubProvider = ({ children }: Provider) => {
 
   const setPubRequestService = useCallback(
     (state: string, value: boolean) => {
-      setPubContext((values) => {
+      setPubContext((prevValues) => {
         return {
-          ...values,
+          ...prevValues,
           pubRequestService: {
-            ...values['pubRequestService'],
+            ...prevValues['pubRequestService'],
             [state]: value
           }
         };

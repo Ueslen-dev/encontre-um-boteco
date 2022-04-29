@@ -9,7 +9,6 @@ import RegistrationForm from 'components/RegistrationForm';
 import { State } from 'interfaces/State';
 
 import useLocale from 'hooks/useLocale';
-import { PubProvider } from 'context/PubContext';
 
 import { getStates } from 'services/ibgeApi';
 
@@ -27,11 +26,10 @@ export const PubCreate = ({ states }: Props) => {
   }, [setLocaleStore, states]);
 
   return (
-    <PubProvider>
-      <Wrapper>
-        <RegistrationForm />
-      </Wrapper>
-    </PubProvider>
+    <Wrapper>
+      {/* <h1>olá</h1> */}
+      <RegistrationForm />
+    </Wrapper>
   );
 };
 

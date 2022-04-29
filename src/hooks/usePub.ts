@@ -17,7 +17,12 @@ export const usePub = () => {
   const { handleLocale } = useLocale();
   const { fetchDataPub } = useAPi();
 
-  const { pubContext, setPubStore, setStepFormHasTouched } = context;
+  const {
+    pubContext,
+    setPubStore,
+    setStepFormHasTouched,
+    setPubRequestService
+  } = context;
 
   const fetchData = fetchDataPub();
 
@@ -49,7 +54,10 @@ export const usePub = () => {
     const hasValueInserted = inputValue && inputValue !== '' && true;
 
     const validatFieldType = {
-      city: () => setPubStore(step, state, value, hasSelectedValue),
+      city: () => {
+        setPubStore(step, state, value, hasSelectedValue);
+        return handleLocale('selectedCity', value);
+      },
       state: () => {
         setPubStore(step, state, value, hasSelectedValue);
         return handleLocale('selectedState', value);
@@ -120,23 +128,24 @@ export const usePub = () => {
     return callback();
   };
 
-  const submitPubForm = () => {
+  const submitPub = () => {
     const endpoint = '/pub';
 
     const values = organizingValues();
     delete values.photo;
 
-    const savePub = () => fetchData.post(endpoint, values);
-
-    return submitFile(savePub);
+    return fetchData.post(endpoint, values);
   };
+
+  const submitPubForm = () => submitFile(submitPub);
 
   return {
     pubContext,
     setPubStore,
     handlePubForm,
     setStepFormHasTouched,
-    submitPubForm
+    submitPubForm,
+    setPubRequestService
   };
 };
 

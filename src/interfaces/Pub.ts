@@ -1,3 +1,5 @@
+import PubData from './PubData';
+
 export interface Pub {
   principalInformation: {
     state: {
@@ -51,5 +53,13 @@ export interface Pub {
   pubRequestService?: {
     isFetching?: boolean;
     error: Error | null;
+    isSearch?: boolean;
+    pubs: {
+      page: number;
+      totalPages: number;
+      totalResults: number;
+      results: PubData[];
+    };
+    pubsSearchResults?: PubData[];
   };
 }

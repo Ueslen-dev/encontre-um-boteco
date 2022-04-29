@@ -4,8 +4,10 @@ import { AxiosResponse, AxiosError } from 'axios';
 
 import { PubContext } from 'context/PubContext';
 import { LocaleContext } from 'context/LocaleContext';
+
 import useFlashMessage from './useFlashMessage';
 import routes from 'routes';
+import { removeDuplicateObjectsFromArray } from 'utils/removeDuplicate';
 
 import encontreUmBotecoApi from 'services/encontreUmBotecoApi';
 import ibgeAPI from 'services/ibgeApi';
@@ -22,15 +24,16 @@ type FetchDataPub = {
 };
 
 export const useAPi = () => {
-  const { setFlashMessageStore } = useFlashMessage();
   const pubContext = useContext(PubContext);
   const localeContext = useContext(LocaleContext);
+
+  const { setFlashMessageStore } = useFlashMessage();
   const router = useRouter();
 
   const redirectToPage = (href: string) => router.push(href);
 
-  const { setPubRequestService } = pubContext;
-  const { setLocaleStore } = localeContext;
+  const { setPubRequestService, pubContext: pubContextData } = pubContext;
+  const { setLocaleStore, localeContext: localeContextData } = localeContext;
 
   const mountFormData = (file: string | Blob) => {
     const formData = new FormData();
@@ -47,11 +50,38 @@ export const useAPi = () => {
         .get(endpoint)
         .then((response: AxiosResponse) => {
           const { data } = response;
-          setPubRequestService(state, data);
 
-          return data;
+          const checkEqualCity =
+            state === 'pubs' &&
+            pubContextData.pubRequestService.pubs.results.every(
+              (pub) => pub.city === Number(localeContextData.selectedCity)
+            );
+
+          if (state === 'pubs' && checkEqualCity) {
+            const incrementArrayResults = [
+              ...pubContextData.pubRequestService.pubs.results,
+              ...data['results']
+            ];
+
+            const newArray = removeDuplicateObjectsFromArray(
+              incrementArrayResults,
+              '_id'
+            );
+
+            const newData = {
+              ...data,
+              results: newArray
+            };
+
+            return setPubRequestService(state, newData);
+          }
+
+          return setPubRequestService(state, data);
         })
         .catch((err: AxiosError) => {
+          if (err?.response?.status === 500) {
+            redirectToPage(routes.error);
+          }
           setPubRequestService('error', err);
         })
         .finally(() => {
@@ -81,10 +111,18 @@ export const useAPi = () => {
 
           if (!isUploadFile) {
             setFlashMessageStore({
-              text: data.success,
+              text: data?.success,
               isVisible: true,
               type: 'success'
             });
+
+            const page = 1;
+            const limitResults = 2;
+
+            const endpoint = `/pub?state=${pubData.state}&city=${pubData.city}&page=${page}&limit=${limitResults}`;
+
+            get('pubs', endpoint);
+
             return redirectToPage(routes.pubs);
           }
         })
@@ -92,7 +130,7 @@ export const useAPi = () => {
           setPubRequestService('error', err);
 
           return setFlashMessageStore({
-            text: err.response.data.error,
+            text: err?.response?.data?.error,
             isVisible: true,
             type: 'error'
           });

@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 import { AppProps } from 'next/app';
@@ -11,11 +12,13 @@ import 'antd/dist/antd.css';
 
 import { ModalProvider } from 'context/ModalContext';
 import { LocaleProvider } from 'context/LocaleContext';
+import { PubProvider } from 'context/PubContext';
+
 import { FlashMessageProvider } from 'context/FlashMessageContext';
 import { queryClient } from 'services/queryClient';
 
-import Modal from 'components/Modal';
-import FlashMessage from 'components/FlashMessage';
+const ModalDynamic = dynamic(() => import('components/Modal'));
+const FlashMessageDynamic = dynamic(() => import('components/FlashMessage'));
 
 import GlobalStyles from 'styles/global';
 
@@ -48,16 +51,18 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Head>
       <QueryClientProvider client={queryClient}>
         <LocaleProvider>
-          <FlashMessageProvider>
-            <ModalProvider>
-              <ConfigProvider locale={ptBR}>
-                <GlobalStyles />
-                <FlashMessage />
-                <Modal />
-                {getLayout(<Component {...pageProps} />)}
-              </ConfigProvider>
-            </ModalProvider>
-          </FlashMessageProvider>
+          <PubProvider>
+            <FlashMessageProvider>
+              <ModalProvider>
+                <ConfigProvider locale={ptBR}>
+                  <GlobalStyles />
+                  <FlashMessageDynamic />
+                  <ModalDynamic />
+                  {getLayout(<Component {...pageProps} />)}
+                </ConfigProvider>
+              </ModalProvider>
+            </FlashMessageProvider>
+          </PubProvider>
         </LocaleProvider>
       </QueryClientProvider>
     </>

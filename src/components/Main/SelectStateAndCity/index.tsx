@@ -6,6 +6,7 @@ import Button from 'components/Button';
 
 import useModal from 'hooks/useModal';
 import useLocale from 'hooks/useLocale';
+import useAPi from 'hooks/useApi';
 
 import routes from 'routes';
 
@@ -16,6 +17,9 @@ export const SelectStateAndCity = () => {
 
   const { localeContext, handleLocale } = useLocale();
   const { handleModal } = useModal();
+  const { fetchDataPub } = useAPi();
+
+  const fetchData = fetchDataPub();
 
   const { states, citys, isFetching, selectedCity, selectedState } =
     localeContext;
@@ -23,6 +27,17 @@ export const SelectStateAndCity = () => {
   const redirectToPage = () => {
     router.push(routes.pubs);
     handleModal({ isVisible: false });
+  };
+
+  const getPubs = () => {
+    const limitResults = 2;
+    const page = 1;
+
+    const endpoint = `/pub?state=${selectedState}&city=${selectedCity}&page=${page}&limit=${limitResults}`;
+
+    fetchData.get('pubs', endpoint);
+
+    return redirectToPage();
   };
 
   return (
@@ -53,9 +68,8 @@ export const SelectStateAndCity = () => {
       <S.ButtonGroup>
         <Button
           name="Confirmar"
-          size="medium"
           type="primary"
-          onClick={redirectToPage}
+          onClick={getPubs}
           disabled={!selectedCity}
         />
       </S.ButtonGroup>

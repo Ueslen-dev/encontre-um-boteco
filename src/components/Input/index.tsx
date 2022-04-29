@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from 'react';
-import { Form, Input as InputAntd } from 'antd';
+import { Input as InputAntd } from 'antd';
 
 import * as S from './styles';
 
@@ -24,16 +24,19 @@ const Input = ({
   ...remainProps
 }: Props) => (
   <S.Wrapper>
-    <Form.Item name={['pub', name]} rules={[{ required }]}>
-      <S.Label>
-        {label} {required && <span>*</span>}
-      </S.Label>
-      <div className={hasError && 'errorField'}>
-        <InputAntd placeholder={placeholder} value={value} {...remainProps} />
-      </div>
+    <S.Label>
+      {label} {required && <span>*</span>}
+    </S.Label>
+    <div className={hasError ? 'errorField' : undefined}>
+      <InputAntd
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        {...remainProps}
+      />
+    </div>
 
-      {hasError && <S.ErrorText>{errorText}</S.ErrorText>}
-    </Form.Item>
+    {hasError && <S.ErrorText>{errorText}</S.ErrorText>}
   </S.Wrapper>
 );
 
