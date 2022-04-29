@@ -3,6 +3,7 @@ import Button from 'components/Button';
 import useLocale from 'hooks/useLocale';
 
 import getStaticsFilesFromServer from 'utils/getStaticsFilesFromServer';
+import { openWhatsapp, openInstagram } from 'utils/actionsForSocialNetworks';
 
 import * as S from './styles';
 
@@ -32,9 +33,6 @@ export const PubBoxList = ({
 
   const { filterStateById, filterCityById } = useLocale();
 
-  const openInstagram = () => console.log(instagram, 'instagram');
-  const openWhatsapp = () => console.log(whatsapp, 'whatsapp');
-
   const stateName = filterStateById(state)?.sigla;
   const cityName = filterCityById(city)?.nome;
 
@@ -60,8 +58,16 @@ export const PubBoxList = ({
           </S.MainInfos>
         </S.Infos>
         <S.Actions>
-          <Button name="INSTAGRAM" type="danger" onClick={openInstagram} />
-          <Button name="WHATSAPP" type="success" onClick={openWhatsapp} />
+          <Button
+            name="INSTAGRAM"
+            type="danger"
+            onClick={() => openInstagram(instagram)}
+          />
+          <Button
+            name="WHATSAPP"
+            type="success"
+            onClick={() => openWhatsapp(whatsapp)}
+          />
         </S.Actions>
       </S.Content>
     </S.Wrapper>

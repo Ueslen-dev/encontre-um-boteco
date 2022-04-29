@@ -44,6 +44,20 @@ body {
   font-family: ---apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--white-color-snow);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--yellow-color);
+  border-radius: 20px;
+  border: 3px solid var(--yellow-color);
+}
+
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0;

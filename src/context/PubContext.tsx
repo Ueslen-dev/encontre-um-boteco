@@ -72,12 +72,14 @@ const INITIAL_STATE = {
   pubRequestService: {
     isFetching: false,
     error: null,
+    isSearch: false,
     pubs: {
       page: null,
       totalResults: null,
       totalPages: null,
       results: []
-    }
+    },
+    pubsSearchResults: []
   }
 };
 

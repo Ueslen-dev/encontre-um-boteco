@@ -27,6 +27,7 @@ export const PubCreate = ({ states }: Props) => {
 
   return (
     <Wrapper>
+      {/* <h1>olá</h1> */}
       <RegistrationForm />
     </Wrapper>
   );

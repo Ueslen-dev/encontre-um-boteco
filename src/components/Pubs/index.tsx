@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 import Container from 'components/Container';
 import EmptyState from 'components/EmptyState';
+import Search from './Search';
 import PubBoxList from './PubBoxList';
 
 import usePub from 'hooks/usePub';
@@ -14,12 +15,19 @@ import useAPi from 'hooks/useApi';
 import * as S from './styles';
 
 const Pubs = () => {
-  const { pubContext } = usePub();
+  const { pubContext, setPubRequestService } = usePub();
   const { localeContext } = useLocale();
   const { fetchDataPub } = useAPi();
 
   const { pubRequestService } = pubContext;
-  const allPubs = pubRequestService.pubs.results;
+  const {
+    pubsSearchResults,
+    isSearch,
+    pubs: { results: allPubs }
+  } = pubRequestService;
+
+  const checkPubResult =
+    isSearch || !_.isEmpty(pubsSearchResults) ? pubsSearchResults : allPubs;
 
   const fetchData = fetchDataPub();
 
@@ -29,6 +37,8 @@ const Pubs = () => {
   const fetchMorePubs = useCallback(() => {
     return (
       !pubRequestService.isFetching &&
+      _.isEmpty(pubsSearchResults) &&
+      !isSearch &&
       setCurrentPage((value) => {
         if (value < pubRequestService.pubs.totalPages) {
           return value + 1;
@@ -39,7 +49,7 @@ const Pubs = () => {
         return value;
       })
     );
-  }, []);
+  }, [pubsSearchResults, isSearch, pubRequestService]);
 
   useEffect(() => {
     const limitResults = 2;
@@ -51,14 +61,19 @@ const Pubs = () => {
     }, 500);
   }, [currentPage]);
 
+  useEffect(() => {
+    setPubRequestService('pubsSearchResults', []);
+    setPubRequestService('isSearch', false);
+  }, []);
+
   return (
     <Container>
-      {console.log(pubRequestService, 'fora')}
       <S.Wrapper>
+        <Search />
         <>
-          {!_.isEmpty(allPubs) ? (
+          {!_.isEmpty(checkPubResult) ? (
             <>
-              {allPubs.map((pub) => {
+              {checkPubResult.map((pub) => {
                 const {
                   _id,
                   name,

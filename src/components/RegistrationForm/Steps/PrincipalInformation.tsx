@@ -22,7 +22,7 @@ const PrincipalInformation = () => {
 
   return (
     <>
-      <S.InputGroup gridTemplateColumns="1fr 1fr">
+      <S.InputGroup gridTemplateColumns="1fr 1fr" marginBottom="15px">
         <Select
           name="state"
           placeholder="Selecione um estado"

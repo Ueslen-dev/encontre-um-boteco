@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, ChangeEvent } from 'react';
-import { Upload, message, Form } from 'antd';
+import { Upload, message } from 'antd';
 import { CloudUploadOutlined as CloudUploadOutlinedIcon } from '@ant-design/icons';
 
 import * as S from './styles';
@@ -57,22 +57,20 @@ const DraggerUpload = ({
   };
 
   return (
-    <S.Wrapper className={hasError && 'errorField'}>
-      <Form.Item name={['pub', name]} rules={[{ required }]}>
-        <Dragger {...draggerProps}>
-          <p className="ant-upload-drag-icon">
-            <CloudUploadOutlinedIcon />
-          </p>
-          <p className="ant-upload-text">
-            Queremos uma foto do boteco, pode nos enviar?
-            {required && <span> *</span>}
-          </p>
-          <p className="ant-upload-hint">
-            Clique aqui ou arraste uma foto do boteco para o campo pontilhado
-          </p>
-        </Dragger>
-        {hasError && <S.ErrorText>{errorText}</S.ErrorText>}
-      </Form.Item>
+    <S.Wrapper className={hasError ? 'errorField' : undefined}>
+      <Dragger {...draggerProps}>
+        <p className="ant-upload-drag-icon">
+          <CloudUploadOutlinedIcon />
+        </p>
+        <p className="ant-upload-text">
+          Queremos uma foto do boteco, pode nos enviar?
+          {required && <span> *</span>}
+        </p>
+        <p className="ant-upload-hint">
+          Clique aqui ou arraste uma foto do boteco para o campo pontilhado
+        </p>
+      </Dragger>
+      {hasError && <S.ErrorText>{errorText}</S.ErrorText>}
     </S.Wrapper>
   );
 };

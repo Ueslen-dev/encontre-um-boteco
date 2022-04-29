@@ -53,11 +53,13 @@ export interface Pub {
   pubRequestService?: {
     isFetching?: boolean;
     error: Error | null;
+    isSearch?: boolean;
     pubs: {
       page: number;
       totalPages: number;
       totalResults: number;
       results: PubData[];
     };
+    pubsSearchResults?: PubData[];
   };
 }
