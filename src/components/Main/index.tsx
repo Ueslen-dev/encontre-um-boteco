@@ -45,7 +45,7 @@ const Main = () => {
           />
         </S.ButtonsContainer>
         <S.TotalPub>
-          Total de <strong>325</strong> botecos cadastrados
+          Total de <strong>0</strong> botecos cadastrados
         </S.TotalPub>
       </S.Content>
     </S.Wrapper>
