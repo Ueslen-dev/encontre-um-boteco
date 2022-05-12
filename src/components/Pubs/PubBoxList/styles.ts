@@ -3,11 +3,17 @@ import { device } from 'utils/devices';
 
 const { tablet } = device;
 
+type ButtonAction = {
+  variation: 'edit' | 'delete';
+};
+
+const editType = '#f0d995';
+const deleteType = '#ddd';
+
 export const Wrapper = styled.main`
   background: var(--white-color);
-  padding: 25px;
-  border-radius: 25px;
-  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 25px 25px 0 0;
 `;
 
 export const Content = styled.section`
@@ -88,4 +94,35 @@ export const Actions = styled.aside`
   button {
     margin: 0;
   }
+`;
+
+export const MoreActions = styled.div`
+  font-size: 25px;
+  background: var(--white-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+  margin-bottom: 30px;
+
+  @media ${tablet} {
+    flex-direction: row;
+    gap: 20px;
+  }
+`;
+
+export const ButtonAction = styled.button<ButtonAction>`
+  border: 1px solid
+    ${(props) => (props.variation === 'delete' ? deleteType : editType)};
+  cursor: pointer;
+  background: none;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+  border-radius: 10px;
+  color: ${(props) => (props.variation === 'delete' ? deleteType : editType)};
 `;

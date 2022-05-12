@@ -10,14 +10,14 @@ import PubBoxList from './PubBoxList';
 
 import usePub from 'hooks/usePub';
 import useLocale from 'hooks/useLocale';
-import useAPi from 'hooks/useApi';
+import useFetchPub from 'hooks/useFetchPub';
 
 import * as S from './styles';
 
 const Pubs = () => {
   const { pubContext, setPubRequestService } = usePub();
   const { localeContext } = useLocale();
-  const { fetchDataPub } = useAPi();
+  const { fetchGetPubs } = useFetchPub();
 
   const { pubRequestService } = pubContext;
   const {
@@ -28,8 +28,6 @@ const Pubs = () => {
 
   const checkPubResult =
     isSearch || !_.isEmpty(pubsSearchResults) ? pubsSearchResults : allPubs;
-
-  const fetchData = fetchDataPub();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [isLastResult, setIsLasResult] = useState(false);
@@ -54,10 +52,14 @@ const Pubs = () => {
   useEffect(() => {
     const limitResults = 2;
 
-    const endpoint = `/pub?state=${localeContext.selectedState}&city=${localeContext.selectedCity}&page=${currentPage}&limit=${limitResults}`;
-
     setTimeout(() => {
-      currentPage > 1 && fetchData.get('pubs', endpoint);
+      currentPage > 1 &&
+        fetchGetPubs(
+          localeContext.selectedState,
+          localeContext.selectedCity,
+          currentPage,
+          limitResults
+        );
     }, 500);
   }, [currentPage]);
 

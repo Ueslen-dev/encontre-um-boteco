@@ -6,7 +6,7 @@ import Button from 'components/Button';
 
 import useModal from 'hooks/useModal';
 import useLocale from 'hooks/useLocale';
-import useAPi from 'hooks/useApi';
+import useFetchPub from 'hooks/useFetchPub';
 
 import routes from 'routes';
 
@@ -17,9 +17,7 @@ export const SelectStateAndCity = () => {
 
   const { localeContext, handleLocale } = useLocale();
   const { handleModal } = useModal();
-  const { fetchDataPub } = useAPi();
-
-  const fetchData = fetchDataPub();
+  const { fetchGetPubs } = useFetchPub();
 
   const { states, citys, isFetching, selectedCity, selectedState } =
     localeContext;
@@ -33,9 +31,7 @@ export const SelectStateAndCity = () => {
     const limitResults = 2;
     const page = 1;
 
-    const endpoint = `/pub?state=${selectedState}&city=${selectedCity}&page=${page}&limit=${limitResults}`;
-
-    fetchData.get('pubs', endpoint);
+    fetchGetPubs(selectedState, selectedCity, page, limitResults);
 
     return redirectToPage();
   };

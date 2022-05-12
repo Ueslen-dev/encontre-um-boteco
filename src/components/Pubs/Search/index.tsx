@@ -3,7 +3,7 @@ import { GrClose as GrCloseIcon } from 'react-icons/gr';
 
 import Input from 'components/Input';
 
-import useAPi from 'hooks/useApi';
+import useFetchPub from 'hooks/useFetchPub';
 import usePub from 'hooks/usePub';
 import useLocale from 'hooks/useLocale';
 
@@ -13,13 +13,11 @@ const Search = () => {
   const maxLength = 60;
   const state = 'pubsSearchResults';
 
-  const { fetchDataPub } = useAPi();
+  const { fetchSearchPubs } = useFetchPub();
   const { setPubRequestService } = usePub();
   const { localeContext } = useLocale();
 
   const { selectedState, selectedCity } = localeContext;
-
-  const fetchData = fetchDataPub();
 
   const [search, setSearch] = useState('');
 
@@ -29,14 +27,15 @@ const Search = () => {
     setSearch(inputValue);
     setPubRequestService('isSearch', true);
 
-    const endpoint = `/pub/search?search=${inputValue}&state=${selectedState}&city=${selectedCity}`;
-
     if (inputValue === '') {
       setPubRequestService(state, []);
       setPubRequestService('isSearch', false);
     }
 
-    return inputValue.length > 2 && fetchData.get(state, endpoint);
+    return (
+      inputValue.length > 2 &&
+      fetchSearchPubs(inputValue, selectedState, selectedCity)
+    );
   };
 
   const clearSearch = () => {

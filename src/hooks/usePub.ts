@@ -8,14 +8,15 @@ import {
 } from 'utils/formattingValues';
 
 import useLocale from './useLocale';
-import useAPi from './useApi';
+import useFetchPub from './useFetchPub';
 
 import PubData from 'interfaces/PubData';
+import EmailBody from 'interfaces/EmailBody';
 
 export const usePub = () => {
   const context = useContext(PubContext);
   const { handleLocale } = useLocale();
-  const { fetchDataPub } = useAPi();
+  const { fetchSavePub, fetchUploadPubImage } = useFetchPub();
 
   const {
     pubContext,
@@ -23,8 +24,6 @@ export const usePub = () => {
     setStepFormHasTouched,
     setPubRequestService
   } = context;
-
-  const fetchData = fetchDataPub();
 
   const INITIAL_PUB_VALUES = {
     name: '',
@@ -120,24 +119,23 @@ export const usePub = () => {
   const submitFile = (callback: () => void) => {
     const values = organizingValues();
 
-    const endpoint = '/pub/upload';
-    const isUploadFile = true;
-
-    fetchData.post(endpoint, values, isUploadFile);
+    fetchUploadPubImage(values);
 
     return callback();
   };
 
   const submitPub = () => {
-    const endpoint = '/pub';
-
     const values = organizingValues();
     delete values.photo;
 
-    return fetchData.post(endpoint, values);
+    return fetchSavePub(values);
   };
 
   const submitPubForm = () => submitFile(submitPub);
+
+  const sendMail = (emailBody: EmailBody) => {
+    const endpoint = '/pub/email/send';
+  };
 
   return {
     pubContext,

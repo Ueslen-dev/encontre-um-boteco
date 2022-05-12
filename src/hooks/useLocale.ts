@@ -1,26 +1,21 @@
 import { useContext, ChangeEvent } from 'react';
 
-import useAPi from './useApi';
+import useFetchLocale from './useFetchLocale';
 
 import { LocaleContext } from 'context/LocaleContext';
 
 const useLocale = () => {
   const context = useContext(LocaleContext);
-  const { fetchDataLocale } = useAPi();
+  const { fetchGetCitys } = useFetchLocale();
 
   const { localeContext, setLocaleStore } = context;
 
   const handleLocale = (key: string, value: ChangeEvent<HTMLInputElement>) => {
-    const fetchData = fetchDataLocale();
-
     if (key === 'selectedState') {
-      const endpoint = `/localidades/estados/${value}/municipios`;
-      const state = 'citys';
-
       setLocaleStore(key, value);
       setLocaleStore('selectedCity', null);
 
-      fetchData.get(state, endpoint);
+      fetchGetCitys(Number(value));
     }
 
     setLocaleStore(key, value);
