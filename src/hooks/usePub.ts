@@ -11,7 +11,6 @@ import useLocale from './useLocale';
 import useFetchPub from './useFetchPub';
 
 import PubData from 'interfaces/PubData';
-import EmailBody from 'interfaces/EmailBody';
 
 export const usePub = () => {
   const context = useContext(PubContext);
@@ -132,10 +131,6 @@ export const usePub = () => {
   };
 
   const submitPubForm = () => submitFile(submitPub);
-
-  const sendMail = (emailBody: EmailBody) => {
-    const endpoint = '/pub/email/send';
-  };
 
   return {
     pubContext,

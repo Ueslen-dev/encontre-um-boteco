@@ -11,6 +11,7 @@ import routes from 'routes';
 
 import PubData from 'interfaces/PubData';
 import encontreUmBotecoApi from 'services/encontreUmBotecoApi';
+import EmailBody from 'interfaces/EmailBody';
 
 type FetchPub = {
   fetchGetPubs: (
@@ -26,11 +27,15 @@ type FetchPub = {
   ) => void;
   fetchUploadPubImage: (pubData: PubData) => void;
   fetchSavePub: (pubData: PubData) => void;
+  fetchSendEmail: (emailBody: EmailBody) => void;
+  fetchValidateCode: (id: string, code: string) => void;
+  fetchDeletePub: (id: string) => void;
 };
 
 const useFetchPub = (): FetchPub => {
   const pubContext = useContext(PubContext);
   const localeContext = useContext(LocaleContext);
+
   const { setFlashMessageStore } = useFlashMessage();
 
   const router = useRouter();
@@ -87,10 +92,11 @@ const useFetchPub = (): FetchPub => {
         }
       })
       .catch((err: AxiosError) => {
-        if (err?.response?.status === 500) {
+        if (!err?.response) {
           redirectToPage(routes.error);
         }
-        setPubRequestService('error', err);
+
+        return setPubRequestService('error', err);
       })
       .finally(() => {
         setPubRequestService('isFetching', false);
@@ -115,9 +121,10 @@ const useFetchPub = (): FetchPub => {
         return setPubRequestService(state, data);
       })
       .catch((err: AxiosError) => {
-        if (err?.response?.status === 500) {
-          redirectToPage(routes.error);
+        if (!err?.response) {
+          return redirectToPage(routes.error);
         }
+
         setPubRequestService('error', err);
       })
       .finally(() => {
@@ -143,11 +150,15 @@ const useFetchPub = (): FetchPub => {
       .catch((err: AxiosError) => {
         setPubRequestService('error', err);
 
-        return setFlashMessageStore({
-          text: err?.response?.data?.error,
-          isVisible: true,
-          type: 'error'
-        });
+        if (err?.response) {
+          return setFlashMessageStore({
+            text: err?.response?.data?.error,
+            isVisible: true,
+            type: 'error'
+          });
+        }
+
+        redirectToPage(routes.error);
       })
       .finally(() => {
         setPubRequestService('isFetching', false);
@@ -158,10 +169,9 @@ const useFetchPub = (): FetchPub => {
     setPubRequestService('isFetching', true);
 
     const endpoint = '/pub';
-    const headers = { 'Content-Type': 'application/json' };
 
     return await encontreUmBotecoApi
-      .post(endpoint, pubData, { headers })
+      .post(endpoint, pubData)
       .then((response: AxiosResponse) => {
         const { data } = response;
 
@@ -181,11 +191,130 @@ const useFetchPub = (): FetchPub => {
       .catch((err: AxiosError) => {
         setPubRequestService('error', err);
 
-        return setFlashMessageStore({
-          text: err?.response?.data?.error,
+        if (err?.response) {
+          return setFlashMessageStore({
+            text: err?.response?.data?.error,
+            isVisible: true,
+            type: 'error'
+          });
+        }
+
+        redirectToPage(routes.error);
+      })
+      .finally(() => {
+        setPubRequestService('isFetching', false);
+      });
+  };
+
+  const fetchSendEmail = async (emailBody: EmailBody) => {
+    setPubRequestService('isFetching', true);
+
+    const endpoint = '/pub/email/send';
+
+    return await encontreUmBotecoApi
+      .post(endpoint, emailBody)
+      .then((response: AxiosResponse) => {
+        const { data } = response;
+
+        setFlashMessageStore({
+          text: data?.success,
+          isVisible: true,
+          type: 'success'
+        });
+      })
+      .catch((err: AxiosError) => {
+        setPubRequestService('error', err);
+        if (err?.response) {
+          return setFlashMessageStore({
+            text: err?.response?.data?.error,
+            isVisible: true,
+            type: 'error'
+          });
+        }
+
+        redirectToPage(routes.error);
+      })
+      .finally(() => {
+        setPubRequestService('isFetching', false);
+      });
+  };
+
+  const fetchValidateCode = async (id: string, code: string) => {
+    setPubRequestService('isFetching', true);
+
+    const endpoint = `/pub/code/validate?id=${id}&code=${code}`;
+    const state = 'isCodeValide';
+
+    return await encontreUmBotecoApi
+      .get(endpoint)
+      .then((response: AxiosResponse) => {
+        const { data } = response;
+        const booleanData = !!data.pub;
+
+        setFlashMessageStore({
+          text: data?.success,
+          isVisible: true,
+          type: 'success'
+        });
+
+        return setPubRequestService(state, booleanData);
+      })
+      .catch((err: AxiosError) => {
+        if (!err?.response) {
+          return redirectToPage(routes.error);
+        }
+
+        setFlashMessageStore({
+          text: err?.response.data.error,
           isVisible: true,
           type: 'error'
         });
+
+        setPubRequestService('error', err);
+      })
+      .finally(() => {
+        setPubRequestService('isFetching', false);
+      });
+  };
+
+  const fetchDeletePub = async (id: string) => {
+    setPubRequestService('isFetching', true);
+
+    const endpoint = `/pub?id=${id}`;
+
+    return await encontreUmBotecoApi
+      .delete(endpoint)
+      .then((response: AxiosResponse) => {
+        const { data } = response;
+
+        setFlashMessageStore({
+          text: data?.success,
+          isVisible: true,
+          type: 'success'
+        });
+
+        const page = 1;
+        const limitResults = 2;
+
+        fetchGetPubs(
+          localeContextData.selectedState,
+          localeContextData.selectedCity,
+          page,
+          limitResults
+        );
+      })
+      .catch((err: AxiosError) => {
+        if (!err?.response) {
+          return redirectToPage(routes.error);
+        }
+
+        setFlashMessageStore({
+          text: err?.response.data.error,
+          isVisible: true,
+          type: 'error'
+        });
+
+        setPubRequestService('error', err);
       })
       .finally(() => {
         setPubRequestService('isFetching', false);
@@ -196,7 +325,10 @@ const useFetchPub = (): FetchPub => {
     fetchGetPubs,
     fetchSearchPubs,
     fetchUploadPubImage,
-    fetchSavePub
+    fetchSavePub,
+    fetchSendEmail,
+    fetchValidateCode,
+    fetchDeletePub
   };
 };
 

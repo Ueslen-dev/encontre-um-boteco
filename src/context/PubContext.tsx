@@ -79,7 +79,8 @@ const INITIAL_STATE = {
       totalPages: null,
       results: []
     },
-    pubsSearchResults: []
+    pubsSearchResults: [],
+    isCodeValide: false
   }
 };
 

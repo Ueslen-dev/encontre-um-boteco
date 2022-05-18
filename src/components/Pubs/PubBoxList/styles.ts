@@ -4,7 +4,7 @@ import { device } from 'utils/devices';
 const { tablet } = device;
 
 type ButtonAction = {
-  variation: 'edit' | 'delete';
+  variation: 'update' | 'delete';
 };
 
 const editType = '#f0d995';

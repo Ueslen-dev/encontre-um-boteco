@@ -1,7 +1,4 @@
-import {
-  FaRegTrashAlt as FaRegTrashAltIcon,
-  FaRegEdit as FaRegEditIcon
-} from 'react-icons/fa';
+import { FaRegTrashAlt as FaRegTrashAltIcon } from 'react-icons/fa';
 
 import Button from 'components/Button';
 
@@ -56,7 +53,7 @@ export const PubBoxList = ({
               />
             </S.Photo>
             <S.MainInfos>
-              <S.Name>{name} asdsadadasdadadadad</S.Name>
+              <S.Name>{name}</S.Name>
               <S.Location>{`${stateName} | ${cityName}`}</S.Location>
               <S.Address>{address}</S.Address>
               <S.Reference>
@@ -80,10 +77,7 @@ export const PubBoxList = ({
         </S.Content>
       </S.Wrapper>
       <S.MoreActions>
-        <S.ButtonAction variation="edit" type="button" onClick={deleteAction}>
-          <FaRegEditIcon />
-        </S.ButtonAction>
-        <S.ButtonAction variation="delete" type="button">
+        <S.ButtonAction variation="delete" type="button" onClick={deleteAction}>
           <FaRegTrashAltIcon />
         </S.ButtonAction>
       </S.MoreActions>

@@ -7,23 +7,28 @@ import Container from 'components/Container';
 import EmptyState from 'components/EmptyState';
 import Search from './Search';
 import PubBoxList from './PubBoxList';
+import InputConfirmateCode from './InputConfirmateCode';
 
 import usePub from 'hooks/usePub';
+import useModal from 'hooks/useModal';
 import useLocale from 'hooks/useLocale';
 import useFetchPub from 'hooks/useFetchPub';
 
 import * as S from './styles';
+import PubData from 'interfaces/PubData';
 
 const Pubs = () => {
+  const { handleModal } = useModal();
   const { pubContext, setPubRequestService } = usePub();
   const { localeContext } = useLocale();
-  const { fetchGetPubs } = useFetchPub();
+  const { fetchGetPubs, fetchSendEmail } = useFetchPub();
 
   const { pubRequestService } = pubContext;
   const {
     pubsSearchResults,
     isSearch,
-    pubs: { results: allPubs }
+    pubs: { results: allPubs },
+    isCodeValide
   } = pubRequestService;
 
   const checkPubResult =
@@ -49,6 +54,38 @@ const Pubs = () => {
     );
   }, [pubsSearchResults, isSearch, pubRequestService]);
 
+  const openModal = (type: string, pubId: string) => {
+    const modalProps = {
+      isVisible: true,
+      content: <InputConfirmateCode type={type} pubId={pubId} />,
+      title: 'Precisamos saber se você é o proprietário(a) do boteco.',
+      subtitle:
+        'Enviamos para o seu e-mail um código de verificação, informa ele pra gente validar, por favorzinho!'
+    };
+
+    return handleModal(modalProps);
+  };
+
+  const sendEmailWithVerificationCode = (pub: PubData, type: string) => {
+    setPubRequestService('isCodeValide', false);
+
+    const { code, name, responsible, email, _id } = pub;
+
+    const emailBody = {
+      to: email,
+      subject: `Código de verificação - ${name}`,
+      code,
+      owner: responsible,
+      pub: name
+    };
+
+    if (pub) {
+      fetchSendEmail(emailBody);
+    }
+
+    return openModal(type, _id);
+  };
+
   useEffect(() => {
     const limitResults = 2;
 
@@ -67,6 +104,10 @@ const Pubs = () => {
     setPubRequestService('pubsSearchResults', []);
     setPubRequestService('isSearch', false);
   }, []);
+
+  useEffect(() => {
+    return isCodeValide && handleModal({ isVisible: false });
+  }, [isCodeValide, handleModal]);
 
   return (
     <Container>
@@ -98,6 +139,9 @@ const Pubs = () => {
                     reference={reference}
                     whatsapp={whatsapp}
                     instagram={instagram}
+                    deleteAction={() =>
+                      sendEmailWithVerificationCode(pub, 'delete')
+                    }
                   />
                 );
               })}

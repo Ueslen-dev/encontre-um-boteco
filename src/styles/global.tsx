@@ -84,6 +84,10 @@ h1, h2, h3, h4, h5, h6, p {
   }
 }
 
+.ant-spin {
+  color: var(--white-color-snow);
+}
+
 `;
 
 export default GlobalStyles;
