@@ -20,9 +20,15 @@ export const Content = styled.section`
 `;
 
 export const ButtonsContainer = styled.div`
+  padding: 25px;
+
   @media ${tablet} {
     display: flex;
     gap: 20px;
+
+    button {
+      width: auto;
+    }
   }
 `;
 

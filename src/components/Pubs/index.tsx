@@ -5,6 +5,8 @@ import _ from 'lodash';
 
 import Container from 'components/Container';
 import EmptyState from 'components/EmptyState';
+import Loading from 'components/Loading';
+
 import Search from './Search';
 import PubBoxList from './PubBoxList';
 import InputConfirmateCode from './InputConfirmateCode';
@@ -170,11 +172,13 @@ const Pubs = () => {
                 );
               })}
               {pubRequestService.isFetching ? (
-                '...loading'
+                <Loading />
               ) : (
                 <InfiniteScroll fetchMore={fetchMorePubs} />
               )}
-              {isLastResult && 'último resultado'}
+              {isLastResult && (
+                <S.LastResult>Não temos mais resultados</S.LastResult>
+              )}
             </>
           ) : (
             <EmptyState />

@@ -46,7 +46,7 @@ export const SelectStateAndCity = () => {
           optionName="nome"
           options={states}
           onChange={(value) => handleLocale('selectedState', value)}
-          value={selectedState}
+          value={Number(selectedState) || null}
         />
         <Select
           disabled={_.isEmpty(citys)}
