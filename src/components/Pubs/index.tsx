@@ -20,7 +20,7 @@ import PubData from 'interfaces/PubData';
 const Pubs = () => {
   const { handleModal } = useModal();
   const { pubContext, setPubRequestService } = usePub();
-  const { localeContext } = useLocale();
+  const { localeContext, setValuesLocaStorageInLocaleContext } = useLocale();
   const { fetchGetPubs, fetchSendEmail } = useFetchPub();
 
   const { pubRequestService } = pubContext;
@@ -28,14 +28,13 @@ const Pubs = () => {
     pubsSearchResults,
     isSearch,
     pubs: { results: allPubs },
-    isCodeValide
+    isCodeValide,
+    idDeletePubCurrent
   } = pubRequestService;
-
-  const checkPubResult =
-    isSearch || !_.isEmpty(pubsSearchResults) ? pubsSearchResults : allPubs;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [isLastResult, setIsLasResult] = useState(false);
+  const [pubsList, setPubsLists] = useState([]);
 
   const fetchMorePubs = useCallback(() => {
     return (
@@ -86,11 +85,21 @@ const Pubs = () => {
     return openModal(type, _id);
   };
 
+  const removePubFromList = useCallback(() => {
+    if (idDeletePubCurrent) {
+      const filterPubList = pubsList.filter((pub: PubData) => {
+        return pub._id !== idDeletePubCurrent;
+      });
+
+      return setPubsLists(filterPubList);
+    }
+  }, [idDeletePubCurrent, pubsList]);
+
   useEffect(() => {
     const limitResults = 2;
 
     setTimeout(() => {
-      currentPage > 1 &&
+      (currentPage > 1 || localeContext.selectedCity) &&
         fetchGetPubs(
           localeContext.selectedState,
           localeContext.selectedCity,
@@ -98,7 +107,7 @@ const Pubs = () => {
           limitResults
         );
     }, 500);
-  }, [currentPage]);
+  }, [currentPage, localeContext]);
 
   useEffect(() => {
     setPubRequestService('pubsSearchResults', []);
@@ -109,14 +118,29 @@ const Pubs = () => {
     return isCodeValide && handleModal({ isVisible: false });
   }, [isCodeValide, handleModal]);
 
+  useEffect(() => {
+    const result =
+      isSearch || !_.isEmpty(pubsSearchResults) ? pubsSearchResults : allPubs;
+
+    setPubsLists(result);
+  }, [isSearch, pubsSearchResults, allPubs]);
+
+  useEffect(() => {
+    removePubFromList();
+  }, [idDeletePubCurrent]);
+
+  useEffect(() => {
+    setValuesLocaStorageInLocaleContext();
+  }, []);
+
   return (
     <Container>
       <S.Wrapper>
         <Search />
         <>
-          {!_.isEmpty(checkPubResult) ? (
+          {!_.isEmpty(pubsList) ? (
             <>
-              {checkPubResult.map((pub) => {
+              {pubsList.map((pub) => {
                 const {
                   _id,
                   name,

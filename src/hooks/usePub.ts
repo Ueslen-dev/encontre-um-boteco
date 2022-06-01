@@ -21,7 +21,8 @@ export const usePub = () => {
     pubContext,
     setPubStore,
     setStepFormHasTouched,
-    setPubRequestService
+    setPubRequestService,
+    clearPubContext
   } = context;
 
   const INITIAL_PUB_VALUES = {
@@ -84,7 +85,7 @@ export const usePub = () => {
       },
       photo: () => {
         const fileList = 'fileList';
-        const hasPhotoInserted = value[fileList].length > 0;
+        const hasPhotoInserted = value[fileList]?.length > 0;
 
         setPubStore(step, state, value, hasPhotoInserted);
       },
@@ -138,7 +139,8 @@ export const usePub = () => {
     handlePubForm,
     setStepFormHasTouched,
     submitPubForm,
-    setPubRequestService
+    setPubRequestService,
+    clearPubContext
   };
 };
 

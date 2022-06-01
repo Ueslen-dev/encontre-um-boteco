@@ -62,5 +62,6 @@ export interface Pub {
     };
     pubsSearchResults?: PubData[];
     isCodeValide?: boolean;
+    idDeletePubCurrent?: string;
   };
 }

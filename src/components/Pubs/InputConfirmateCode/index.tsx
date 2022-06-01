@@ -57,7 +57,7 @@ const InputConfirmateCode: React.FC<Props> = ({ type, pubId }) => {
         return setPubRequestService('isCodeValide', false);
       }
     }, 2000);
-  }, [isCodeValide, type, fetchDeletePub, pubId, setPubRequestService]);
+  }, [isCodeValide]);
 
   return (
     <S.Wrapper>

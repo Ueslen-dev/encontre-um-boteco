@@ -41,7 +41,11 @@ const useFetchPub = (): FetchPub => {
   const router = useRouter();
   const redirectToPage = (href: string) => router.push(href);
 
-  const { setPubRequestService, pubContext: pubContextData } = pubContext;
+  const {
+    setPubRequestService,
+    pubContext: pubContextData,
+    clearPubContext
+  } = pubContext;
   const { localeContext: localeContextData } = localeContext;
 
   const mountFormData = (file: string | Blob) => {
@@ -186,6 +190,8 @@ const useFetchPub = (): FetchPub => {
 
         fetchGetPubs(pubData.state, pubData.city, page, limitResults);
 
+        clearPubContext();
+
         return redirectToPage(routes.pubs);
       })
       .catch((err: AxiosError) => {
@@ -293,15 +299,7 @@ const useFetchPub = (): FetchPub => {
           type: 'success'
         });
 
-        const page = 1;
-        const limitResults = 2;
-
-        fetchGetPubs(
-          localeContextData.selectedState,
-          localeContextData.selectedCity,
-          page,
-          limitResults
-        );
+        return setPubRequestService('idDeletePubCurrent', id);
       })
       .catch((err: AxiosError) => {
         if (!err?.response) {
