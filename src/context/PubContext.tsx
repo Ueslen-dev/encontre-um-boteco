@@ -17,6 +17,7 @@ interface PubContextInterface {
   ) => void;
   setStepFormHasTouched: (step: string, hasTouched: boolean) => void;
   setPubRequestService: (state: string, value: unknown) => void;
+  clearPubContext: () => void;
 }
 
 const INITIAL_STATE = {
@@ -79,7 +80,9 @@ const INITIAL_STATE = {
       totalPages: null,
       results: []
     },
-    pubsSearchResults: []
+    pubsSearchResults: [],
+    isCodeValide: false,
+    idDeletePubCurrent: null
   }
 };
 
@@ -138,14 +141,25 @@ const PubProvider = ({ children }: Provider) => {
     [setPubContext]
   );
 
+  const clearPubContext = useCallback(() => {
+    return setPubContext(INITIAL_STATE);
+  }, []);
+
   const state = useMemo(() => {
     return {
       pubContext,
       setPubStore,
       setStepFormHasTouched,
-      setPubRequestService
+      setPubRequestService,
+      clearPubContext
     };
-  }, [pubContext, setPubStore, setStepFormHasTouched, setPubRequestService]);
+  }, [
+    pubContext,
+    setPubStore,
+    setStepFormHasTouched,
+    setPubRequestService,
+    clearPubContext
+  ]);
 
   return <PubContext.Provider value={state}>{children}</PubContext.Provider>;
 };

@@ -20,13 +20,14 @@ export const Content = styled.section`
 `;
 
 export const ButtonsContainer = styled.div`
+  padding: 25px;
+
   @media ${tablet} {
     display: flex;
     gap: 20px;
-  }
-`;
 
-export const TotalPub = styled.p`
-  font-size: var(--font-size-small);
-  margin-top: 25px;
+    button {
+      width: auto;
+    }
+  }
 `;

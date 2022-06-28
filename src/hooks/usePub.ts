@@ -8,23 +8,22 @@ import {
 } from 'utils/formattingValues';
 
 import useLocale from './useLocale';
-import useAPi from './useApi';
+import useFetchPub from './useFetchPub';
 
 import PubData from 'interfaces/PubData';
 
 export const usePub = () => {
   const context = useContext(PubContext);
   const { handleLocale } = useLocale();
-  const { fetchDataPub } = useAPi();
+  const { fetchSavePub, fetchUploadPubImage } = useFetchPub();
 
   const {
     pubContext,
     setPubStore,
     setStepFormHasTouched,
-    setPubRequestService
+    setPubRequestService,
+    clearPubContext
   } = context;
-
-  const fetchData = fetchDataPub();
 
   const INITIAL_PUB_VALUES = {
     name: '',
@@ -86,7 +85,7 @@ export const usePub = () => {
       },
       photo: () => {
         const fileList = 'fileList';
-        const hasPhotoInserted = value[fileList].length > 0;
+        const hasPhotoInserted = value[fileList]?.length > 0;
 
         setPubStore(step, state, value, hasPhotoInserted);
       },
@@ -120,21 +119,16 @@ export const usePub = () => {
   const submitFile = (callback: () => void) => {
     const values = organizingValues();
 
-    const endpoint = '/pub/upload';
-    const isUploadFile = true;
-
-    fetchData.post(endpoint, values, isUploadFile);
+    fetchUploadPubImage(values);
 
     return callback();
   };
 
   const submitPub = () => {
-    const endpoint = '/pub';
-
     const values = organizingValues();
     delete values.photo;
 
-    return fetchData.post(endpoint, values);
+    return fetchSavePub(values);
   };
 
   const submitPubForm = () => submitFile(submitPub);
@@ -145,7 +139,8 @@ export const usePub = () => {
     handlePubForm,
     setStepFormHasTouched,
     submitPubForm,
-    setPubRequestService
+    setPubRequestService,
+    clearPubContext
   };
 };
 

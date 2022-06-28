@@ -12,6 +12,7 @@
   text-transform: uppercase;
   border: none;
   text-align: center;
+  width: 100%;
 }
 
 .buttonReset:hover {

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Input from 'components/Input';
 import DraggerUpload from 'components/DraggerUpload';
 
@@ -17,7 +18,13 @@ const LocationInformation = () => {
   const { pubContext, handlePubForm } = usePub();
   const { checkInputError } = useFormStep();
 
-  const fileListDefaultValue = pubContext[step].photo.value[fileList];
+  const [fileListDefaultValue, setFileListDefaultValue] = useState();
+
+  const onRemovePhoto = () => handlePubForm(step, 'photo', '');
+
+  useEffect(() => {
+    setFileListDefaultValue(pubContext[step].photo.value[fileList]);
+  }, [pubContext]);
 
   return (
     <>
@@ -57,6 +64,7 @@ const LocationInformation = () => {
           maxCount={maxUpload}
           fileList={fileListDefaultValue}
           accept={imageType}
+          onRemove={onRemovePhoto}
         />
       </S.InputGroup>
     </>

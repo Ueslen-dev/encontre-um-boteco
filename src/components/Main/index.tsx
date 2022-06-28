@@ -11,16 +11,6 @@ import * as S from './styles';
 const Main = () => {
   const { handleModal } = useModal();
 
-  /*  const state = 'states';
-  const cache = 'statesCache';
-  const endpoint = '/localidades/estados';
-  const hour = 3600000; //1 hour;
-
-    useQuery<State[]>(cache, async () => await fetchData(state, endpoint), {
-      refetchOnWindowFocus: false,
-      staleTime: hour
-    }); */
-
   const openModal = () => {
     const modalProps = {
       isVisible: true,
@@ -44,9 +34,6 @@ const Main = () => {
             type="outlineWhite"
           />
         </S.ButtonsContainer>
-        <S.TotalPub>
-          Total de <strong>325</strong> botecos cadastrados
-        </S.TotalPub>
       </S.Content>
     </S.Wrapper>
   );

@@ -14,6 +14,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   fileList?: unknown[];
   maxCount?: number;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onRemove?: () => void;
 }
 
 const DraggerUpload = ({
@@ -24,6 +25,7 @@ const DraggerUpload = ({
   fileList,
   maxCount,
   onChange,
+  onRemove,
   ...remainProps
 }: Props) => {
   const maxFileSize = 2 * 1024 * 1024; //2mb
@@ -39,19 +41,20 @@ const DraggerUpload = ({
       if (size > maxFileSize) {
         return message.error(`A foto enviada é maior que 2mb`);
       }
-
       if (status === 'done') {
         message.success(`${info.file.name} Recebemos a sua foto, obrigado!`);
-
-        onChange(info);
       } else if (status === 'error') {
-        message.error(
+        return message.error(
           `${info.file.name} Ops, ocorreu um erro no envio da foto`
         );
       }
+
+      return onChange(info);
     },
     onRemove() {
-      return message.error(`Foto removida!`);
+      message.error(`Foto removida!`);
+
+      return onRemove();
     },
     ...remainProps
   };

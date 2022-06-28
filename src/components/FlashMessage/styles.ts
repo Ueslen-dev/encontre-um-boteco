@@ -6,7 +6,7 @@ export const Wrapper = styled.main`
   top: 50px;
   width: 350px;
   padding: 5px 5px 5px 40px;
-  z-index: 9;
+  z-index: 9999;
   background: var(--white-color-snow);
   border-radius: 10px 0 0 10px;
   -webkit-box-shadow: 0px 3px 19px 2px #b5b5b5;
