@@ -70,9 +70,9 @@ const RegistrationForm = () => {
     const stepIsValid = validateStep(formsSteps[current]);
     checkStepFormHasBeenTouched(formsSteps[current], true);
 
-    return type === 'submit'
-      ? stepIsValid && submitPubForm()
-      : stepIsValid && setCurrent(current + 1);
+    if (stepIsValid) {
+      return type === 'submit' ? submitPubForm() : setCurrent(current + 1);
+    }
   };
 
   return (

@@ -1,29 +1,45 @@
 import { useContext, ChangeEvent } from 'react';
 
-import useAPi from './useApi';
+import useFetchLocale from './useFetchLocale';
+import { getStates } from 'services/ibgeApi';
 
 import { LocaleContext } from 'context/LocaleContext';
 
 const useLocale = () => {
   const context = useContext(LocaleContext);
-  const { fetchDataLocale } = useAPi();
+  const { fetchGetCitys } = useFetchLocale();
 
   const { localeContext, setLocaleStore } = context;
 
+  const saveFilterInLocalStorage = (key: string, value: string) => {
+    return localStorage.setItem(key, value);
+  };
+
   const handleLocale = (key: string, value: ChangeEvent<HTMLInputElement>) => {
-    const fetchData = fetchDataLocale();
-
     if (key === 'selectedState') {
-      const endpoint = `/localidades/estados/${value}/municipios`;
-      const state = 'citys';
-
       setLocaleStore(key, value);
       setLocaleStore('selectedCity', null);
 
-      fetchData.get(state, endpoint);
+      fetchGetCitys(Number(value));
     }
 
+    saveFilterInLocalStorage(key, String(value));
     setLocaleStore(key, value);
+  };
+
+  const setValuesLocaStorageInLocaleContext = async () => {
+    const storageItems = ['selectedState', 'selectedCity'];
+
+    const states = await getStates();
+    setLocaleStore('states', states);
+
+    fetchGetCitys(Number(localStorage.getItem(storageItems[0])));
+
+    return storageItems.map((item: string) => {
+      const localStorageItemValue = localStorage.getItem(item);
+
+      return setLocaleStore(item, localStorageItemValue);
+    });
   };
 
   const filterStateById = (id: number) =>
@@ -37,7 +53,8 @@ const useLocale = () => {
     setLocaleStore,
     handleLocale,
     filterStateById,
-    filterCityById
+    filterCityById,
+    setValuesLocaStorageInLocaleContext
   };
 };
 
