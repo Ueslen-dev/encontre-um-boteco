@@ -8,9 +8,10 @@ const Wrapper = styled.main`
   position: relative;
   border-radius: 5rem 5rem 0 0;
   top: -50px;
-  padding: 50px;
+
   @media ${tablet} {
     border-radius: 5% 5% 0 0;
+    padding: 50px;
   }
 `;
 

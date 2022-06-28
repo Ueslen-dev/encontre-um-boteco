@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.main`
   width: 100%;
+  margin-bottom: 20px;
 
   .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     padding: 18px;

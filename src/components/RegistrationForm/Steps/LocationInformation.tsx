@@ -23,15 +23,15 @@ const LocationInformation = () => {
   const onRemovePhoto = () => handlePubForm(step, 'photo');
 
   useEffect(() => {
-    setFileListDefaultValue(pubContext[step].photo.value?.[fileList]);
+    setFileListDefaultValue(pubContext[step].photo?.value[fileList]);
   }, [pubContext]);
 
   return (
     <>
       <S.InputGroup
         gridTemplateColumns="1fr 1fr"
-        marginBottom="60px"
-        gap="50px"
+        marginBottom="30px"
+        gap="20px"
       >
         <Input
           name="address"

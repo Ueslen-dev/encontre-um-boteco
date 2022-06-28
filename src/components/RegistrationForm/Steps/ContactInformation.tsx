@@ -22,7 +22,7 @@ const ContactInformation = () => {
       <S.InputGroup
         gridTemplateColumns="1fr 2fr"
         gap="20px"
-        marginBottom="30px"
+        marginBottom="25px"
       >
         <Input
           name="responsible"
@@ -49,7 +49,7 @@ const ContactInformation = () => {
       <S.InputGroup
         gridTemplateColumns="2fr 1fr"
         className="marginAndGap"
-        gap="50px"
+        gap="20px"
         marginBottom="20px"
       >
         <Input
