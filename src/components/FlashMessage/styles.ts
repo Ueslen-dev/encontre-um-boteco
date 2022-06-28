@@ -1,8 +1,11 @@
 import styled from 'styled-components';
+import { device } from 'utils/devices';
+
+const { tablet } = device;
 
 export const Wrapper = styled.main`
   position: fixed;
-  right: 50px;
+  right: 0;
   top: 50px;
   width: 350px;
   padding: 5px 5px 5px 40px;
@@ -12,6 +15,10 @@ export const Wrapper = styled.main`
   -webkit-box-shadow: 0px 3px 19px 2px #b5b5b5;
   box-shadow: 0px 3px 19px 2px #b5b5b5;
   border-right: 5px solid var(--yellow-color);
+
+  @media ${tablet} {
+    right: 50px;
+  }
 `;
 
 export const Close = styled.button`
