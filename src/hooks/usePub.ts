@@ -85,7 +85,7 @@ export const usePub = () => {
       },
       photo: () => {
         const fileList = 'fileList';
-        const hasPhotoInserted = value[fileList]?.length > 0;
+        const hasPhotoInserted = value && value[fileList]?.length > 0;
 
         setPubStore(step, state, value, hasPhotoInserted);
       },
