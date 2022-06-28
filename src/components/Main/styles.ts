@@ -22,12 +22,17 @@ export const Content = styled.section`
 export const ButtonsContainer = styled.div`
   padding: 25px;
 
+  button {
+    font-size: 1.8rem;
+  }
+
   @media ${tablet} {
     display: flex;
     gap: 20px;
 
     button {
       width: auto;
+      font-size: var(--font-size-larger);
     }
   }
 `;
