@@ -20,10 +20,10 @@ const LocationInformation = () => {
 
   const [fileListDefaultValue, setFileListDefaultValue] = useState();
 
-  const onRemovePhoto = () => handlePubForm(step, 'photo', '');
+  const onRemovePhoto = () => handlePubForm(step, 'photo');
 
   useEffect(() => {
-    setFileListDefaultValue(pubContext[step].photo.value[fileList]);
+    setFileListDefaultValue(pubContext[step].photo.value?.[fileList]);
   }, [pubContext]);
 
   return (
