@@ -10,10 +10,10 @@ export const Wrapper = styled.main`
 export const SelectsGroup = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 15px;
 
   @media ${tablet} {
     flex-direction: row;
+    gap: 15px;
   }
 `;
 
