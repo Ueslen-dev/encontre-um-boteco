@@ -94,6 +94,15 @@ const useFetchPub = (): FetchPub => {
 
           return setPubRequestService(state, newData);
         }
+
+        const INITIAL_PUB_STATE = {
+          page: 0,
+          totalPages: 0,
+          totalResults: 0,
+          results: []
+        };
+
+        return setPubRequestService(state, INITIAL_PUB_STATE);
       })
       .catch((err: AxiosError) => {
         if (!err?.response) {

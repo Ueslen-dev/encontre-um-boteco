@@ -109,7 +109,7 @@ const Pubs = () => {
           limitResults
         );
     }, 500);
-  }, [currentPage, localeContext]);
+  }, [currentPage, localeContext.selectedCity]);
 
   useEffect(() => {
     setPubRequestService('pubsSearchResults', []);
@@ -171,6 +171,7 @@ const Pubs = () => {
                   />
                 );
               })}
+
               {pubRequestService.isFetching ? (
                 <Loading />
               ) : (

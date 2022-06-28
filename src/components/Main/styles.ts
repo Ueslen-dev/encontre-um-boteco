@@ -31,8 +31,3 @@ export const ButtonsContainer = styled.div`
     }
   }
 `;
-
-export const TotalPub = styled.p`
-  font-size: var(--font-size-small);
-  margin-top: 25px;
-`;
