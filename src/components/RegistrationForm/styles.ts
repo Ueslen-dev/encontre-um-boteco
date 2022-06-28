@@ -1,8 +1,11 @@
 import styled from 'styled-components';
+import { device } from 'utils/devices';
+
+const { tablet } = device;
 
 export const Wrapper = styled.main`
   background-color: var(--white-color);
-  padding: 50px;
+  padding: 30px;
   border-radius: 25px;
 
   .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
@@ -37,6 +40,10 @@ export const Wrapper = styled.main`
 
   .steps-content {
     margin-top: 40px;
+  }
+
+  @media ${tablet} {
+    padding: 50px;
   }
 `;
 

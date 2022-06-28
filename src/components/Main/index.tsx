@@ -24,7 +24,7 @@ const Main = () => {
 
   return (
     <S.Wrapper>
-      <Logo size="350" />
+      <Logo size="280" />
       <S.Content>
         <S.ButtonsContainer>
           <Button name="Encontrar um boteco" onClick={openModal} />
