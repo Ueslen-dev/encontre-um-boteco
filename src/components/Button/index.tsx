@@ -37,7 +37,12 @@ const Button = ({
   return (
     <button
       onClick={href ? redirectToPage : onClick}
-      className={`${styles.buttonReset} ${styles[type]} ${styles[buttonSize]}`}
+      className={`
+      ${styles.buttonReset}
+      ${styles[type]}
+      ${styles[buttonSize]}
+      ${disabled && styles.disabled}
+      `}
       disabled={disabled}
       type={htmlType}
       {...remainProps}

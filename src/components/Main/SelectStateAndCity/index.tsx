@@ -28,7 +28,7 @@ export const SelectStateAndCity = () => {
   };
 
   const getPubs = () => {
-    const limitResults = 2;
+    const limitResults = 3;
     const page = 1;
 
     fetchGetPubs(selectedState, selectedCity, page, limitResults);

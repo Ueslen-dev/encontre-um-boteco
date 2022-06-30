@@ -98,7 +98,7 @@ const Pubs = () => {
   }, [idDeletePubCurrent, pubsList]);
 
   useEffect(() => {
-    const limitResults = 2;
+    const limitResults = 3;
 
     setTimeout(() => {
       (currentPage > 1 || localeContext.selectedCity) &&
@@ -142,35 +142,37 @@ const Pubs = () => {
         <>
           {!_.isEmpty(pubsList) ? (
             <>
-              {pubsList.map((pub) => {
-                const {
-                  _id,
-                  name,
-                  state,
-                  city,
-                  photo,
-                  address,
-                  reference,
-                  whatsapp,
-                  instagram
-                } = pub;
-                return (
-                  <PubBoxList
-                    key={_id}
-                    name={name}
-                    state={state}
-                    city={city}
-                    photo={photo}
-                    address={address}
-                    reference={reference}
-                    whatsapp={whatsapp}
-                    instagram={instagram}
-                    deleteAction={() =>
-                      sendEmailWithVerificationCode(pub, 'delete')
-                    }
-                  />
-                );
-              })}
+              <S.PubBoxListGroup>
+                {pubsList.map((pub) => {
+                  const {
+                    _id,
+                    name,
+                    state,
+                    city,
+                    photo,
+                    address,
+                    reference,
+                    whatsapp,
+                    instagram
+                  } = pub;
+                  return (
+                    <PubBoxList
+                      key={_id}
+                      name={name}
+                      state={state}
+                      city={city}
+                      photo={photo}
+                      address={address}
+                      reference={reference}
+                      whatsapp={whatsapp}
+                      instagram={instagram}
+                      deleteAction={() =>
+                        sendEmailWithVerificationCode(pub, 'delete')
+                      }
+                    />
+                  );
+                })}
+              </S.PubBoxListGroup>
 
               {pubRequestService.isFetching ? (
                 <Loading />

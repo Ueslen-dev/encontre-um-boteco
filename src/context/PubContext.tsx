@@ -39,7 +39,7 @@ const INITIAL_STATE = {
   contactInformation: {
     responsible: {
       value: '',
-      isValid: false
+      isValid: true
     },
     email: {
       value: '',
@@ -47,26 +47,26 @@ const INITIAL_STATE = {
     },
     whatsapp: {
       value: '',
-      isValid: false
+      isValid: true
     },
     instagram: {
       value: '',
-      isValid: false
+      isValid: true
     },
     hasTouched: false
   },
   locationInformation: {
     address: {
       value: '',
-      isValid: false
+      isValid: true
     },
     reference: {
       value: '',
-      isValid: false
+      isValid: true
     },
     photo: {
       value: '',
-      isValid: false
+      isValid: true
     },
     hasTouched: false
   },

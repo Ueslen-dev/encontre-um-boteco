@@ -56,31 +56,44 @@ export const PubBoxList = ({
               <S.Name>{name}</S.Name>
               <S.Location>{`${stateName} | ${cityName}`}</S.Location>
               <S.Address>{address}</S.Address>
-              <S.Reference>
-                <S.ReferenceTitle>Ponto de Referência</S.ReferenceTitle>
-                <S.ReferenceDescription>{reference}</S.ReferenceDescription>
-              </S.Reference>
+              {reference && (
+                <S.Reference>
+                  <S.ReferenceTitle>Ponto de Referência</S.ReferenceTitle>
+                  <S.ReferenceDescription>{reference}</S.ReferenceDescription>
+                </S.Reference>
+              )}
             </S.MainInfos>
+
+            <S.Actions>
+              {instagram && (
+                <Button
+                  name="INSTAGRAM"
+                  type="danger"
+                  onClick={() => openInstagram(instagram)}
+                  buttonSize="small"
+                />
+              )}
+
+              {whatsapp && (
+                <Button
+                  name="WHATSAPP"
+                  type="success"
+                  onClick={() => openWhatsapp(whatsapp)}
+                  buttonSize="small"
+                />
+              )}
+
+              <S.ButtonAction
+                variation="delete"
+                type="button"
+                onClick={deleteAction}
+              >
+                <FaRegTrashAltIcon size="20" />
+              </S.ButtonAction>
+            </S.Actions>
           </S.Infos>
-          <S.Actions>
-            <Button
-              name="INSTAGRAM"
-              type="danger"
-              onClick={() => openInstagram(instagram)}
-            />
-            <Button
-              name="WHATSAPP"
-              type="success"
-              onClick={() => openWhatsapp(whatsapp)}
-            />
-          </S.Actions>
         </S.Content>
       </S.Wrapper>
-      <S.MoreActions>
-        <S.ButtonAction variation="delete" type="button" onClick={deleteAction}>
-          <FaRegTrashAltIcon />
-        </S.ButtonAction>
-      </S.MoreActions>
     </>
   );
 };

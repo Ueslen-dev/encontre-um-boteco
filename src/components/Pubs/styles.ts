@@ -15,3 +15,11 @@ export const LastResult = styled.h2`
   text-align: center;
   color: var(--grey-color);
 `;
+
+export const PubBoxListGroup = styled.section`
+  @media ${tablet} {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+`;
