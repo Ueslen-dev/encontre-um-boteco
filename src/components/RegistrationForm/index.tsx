@@ -16,6 +16,7 @@ import {
 
 import Container from 'components/Container';
 import Button from 'components/Button';
+import Loading from 'components/Loading';
 
 import PrincipalInformation from './Steps/PrincipalInformation';
 
@@ -34,8 +35,12 @@ import * as S from './styles';
 const { Step } = Steps;
 
 const RegistrationForm = () => {
-  const { submitPubForm } = usePub();
+  const { submitPubForm, pubContext } = usePub();
   const { validateStep, checkStepFormHasBeenTouched } = useFormStep();
+
+  const {
+    pubRequestService: { isFetching }
+  } = pubContext;
 
   const formsSteps = useMemo(() => {
     return {
@@ -91,35 +96,41 @@ const RegistrationForm = () => {
           {steps[current].content}
         </Form>
         <S.StepsAction>
-          {current > 0 && (
-            <ButtonAntd
-              type="primary"
-              shape="circle"
-              icon={<LeftOutlinedIcon className="icon" />}
-              onClick={() => prev()}
-              size="large"
-              className="previousButton"
-            />
-          )}
+          {isFetching ? (
+            <Loading />
+          ) : (
+            <>
+              {current > 0 && (
+                <ButtonAntd
+                  type="primary"
+                  shape="circle"
+                  icon={<LeftOutlinedIcon className="icon" />}
+                  onClick={() => prev()}
+                  size="large"
+                  className="previousButton"
+                />
+              )}
 
-          {current < steps.length - 1 && (
-            <ButtonAntd
-              type="primary"
-              shape="circle"
-              icon={<RightOutlinedIcon className="icon" />}
-              onClick={() => next()}
-              size="large"
-            />
-          )}
+              {current < steps.length - 1 && (
+                <ButtonAntd
+                  type="primary"
+                  shape="circle"
+                  icon={<RightOutlinedIcon className="icon" />}
+                  onClick={() => next()}
+                  size="large"
+                />
+              )}
 
-          {current === steps.length - 1 && (
-            <Button
-              type="primary"
-              name="Cadastrar"
-              buttonSize="medium"
-              htmlType="submit"
-              onClick={() => next('submit')}
-            />
+              {current === steps.length - 1 && (
+                <Button
+                  type="primary"
+                  name="Cadastrar"
+                  buttonSize="medium"
+                  htmlType="submit"
+                  onClick={() => next('submit')}
+                />
+              )}
+            </>
           )}
         </S.StepsAction>
       </S.Wrapper>
