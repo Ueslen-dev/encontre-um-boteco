@@ -28,12 +28,9 @@ const ContactInformation = () => {
           name="responsible"
           placeholder="Digite o seu nome"
           label="Qual o seu nome?"
-          required
           maxLength={nameMaxLength}
           onChange={(event) => handlePubForm(step, 'responsible', event)}
           value={pubContext[step].responsible.value}
-          hasError={checkInputError(step, 'responsible')}
-          errorText={messagesForFormSteps.LABEL_RESPONSIBLE_IS_EMPTY}
         />
         <Input
           name="email"
@@ -58,9 +55,6 @@ const ContactInformation = () => {
           label="Qual o número de WhatsApp do boteco?"
           onChange={(event) => handlePubForm(step, 'whatsapp', event)}
           value={pubContext[step].whatsapp.value}
-          hasError={checkInputError(step, 'whatsapp')}
-          errorText={messagesForFormSteps.LABEL_WHATSAPP_IS_EMPTY}
-          required
           maxLength={maxNumberLength}
         />
         <Input
@@ -70,9 +64,6 @@ const ContactInformation = () => {
           maxLength={instagramMaxLength}
           onChange={(event) => handlePubForm(step, 'instagram', event)}
           value={pubContext[step].instagram.value}
-          hasError={checkInputError(step, 'instagram')}
-          errorText={messagesForFormSteps.LABEL_INSTAGRAM_IS_EMPTY}
-          required
         />
       </S.InputGroup>
     </>

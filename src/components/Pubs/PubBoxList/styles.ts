@@ -14,36 +14,30 @@ export const Wrapper = styled.main`
   background: var(--white-color);
   padding: 20px;
   border-radius: 25px 25px 0 0;
+  margin-bottom: 30px;
 `;
 
 export const Content = styled.section`
   grid-template-columns: 1fr;
-
-  @media ${tablet} {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-  }
 `;
 
 export const Infos = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 30px;
 
   @media ${tablet} {
-    flex-direction: row;
+    height: 750px;
   }
 `;
 
 export const MainInfos = styled.section`
   text-align: center;
   margin: 10px 0 20px 0;
-  width: 350px;
-
-  @media ${tablet} {
-    text-align: left;
-  }
+  width: 100%;
+  max-width: 250px;
 `;
 
 export const Photo = styled.figure`
@@ -60,6 +54,8 @@ export const Name = styled.h1`
   color: var(--yellow-color);
   font-size: var(--font-size-larger);
   font-weight: var(--font-weight-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Location = styled.h2`
@@ -72,6 +68,8 @@ export const Address = styled.p`
   font-weight: var(--font-weight-medium);
   color: var(--grey-color);
   margin: 20px 0 10px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Reference = styled.section``;
@@ -84,14 +82,17 @@ export const ReferenceTitle = styled.h2`
 export const ReferenceDescription = styled.p`
   font-size: 1.6rem;
   color: var(--grey-color-lighter);
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Actions = styled.aside`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  width: 100%;
   gap: 10px;
-  button {
+
+  button:nth-child(1) {
     margin: 0;
   }
 `;
@@ -107,12 +108,7 @@ export const MoreActions = styled.div`
   width: 100%;
   padding: 10px;
   border-radius: 0 0 10px 10px;
-  margin-bottom: 30px;
-
-  @media ${tablet} {
-    flex-direction: row;
-    gap: 20px;
-  }
+  margin-top: 80px;
 `;
 
 export const ButtonAction = styled.button<ButtonAction>`
@@ -122,7 +118,7 @@ export const ButtonAction = styled.button<ButtonAction>`
   background: none;
   width: 100%;
   text-align: center;
-  padding: 5px;
   border-radius: 10px;
   color: ${(props) => (props.variation === 'delete' ? deleteType : editType)};
+  padding: 5px;
 `;

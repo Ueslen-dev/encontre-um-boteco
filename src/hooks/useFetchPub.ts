@@ -151,7 +151,9 @@ const useFetchPub = (): FetchPub => {
     const endpoint = '/pub/upload';
     const headers = { 'Content-Type': 'multipart/form-data' };
 
-    const image = mountFormData(pubData.photo['fileList'][0]['originFileObj']);
+    const image =
+      pubData.photo &&
+      mountFormData(pubData.photo['fileList'][0]['originFileObj']);
 
     return await encontreUmBotecoApi
       .post(endpoint, image, { headers })
@@ -195,7 +197,7 @@ const useFetchPub = (): FetchPub => {
         });
 
         const page = 1;
-        const limitResults = 2;
+        const limitResults = 3;
 
         fetchGetPubs(pubData.state, pubData.city, page, limitResults);
 

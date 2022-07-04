@@ -18,7 +18,7 @@ const PrincipalInformation = () => {
   const { pubContext, handlePubForm } = usePub();
   const { checkInputError } = useFormStep();
 
-  const maxLength = 60;
+  const maxLength = 45;
 
   return (
     <>
