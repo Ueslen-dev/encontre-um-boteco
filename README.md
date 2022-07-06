@@ -27,7 +27,7 @@ Tecnologias que foram utilizadas no projeto:
 
 ## 👀 Observação
 
-O projeto é plugado a uma API externa, para executar a aplicação sem problemas serpa necessário clonar
+O projeto é plugado a uma API externa, para executar a aplicação sem problemas será necessário clonar
 o repositório da API: [Encontre um boteco - API](https://github.com/Ueslen-dev/encontre-um-boteco-api)
 
 
