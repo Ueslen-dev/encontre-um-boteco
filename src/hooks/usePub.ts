@@ -116,22 +116,17 @@ export const usePub = () => {
     return pubFormValues;
   };
 
-  const submitFile = (callback: () => void) => {
-    const values = organizingValues();
+  const values = organizingValues();
 
-    fetchUploadPubImage(values);
+  const submitPubForm = () => {
+    if (values.photo) {
+      return fetchUploadPubImage(values);
+    }
 
-    return callback();
-  };
-
-  const submitPub = () => {
-    const values = organizingValues();
     delete values.photo;
 
     return fetchSavePub(values);
   };
-
-  const submitPubForm = () => submitFile(submitPub);
 
   return {
     pubContext,

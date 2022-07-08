@@ -145,44 +145,6 @@ const useFetchPub = (): FetchPub => {
       });
   };
 
-  const fetchUploadPubImage = async (pubData: PubData) => {
-    setPubRequestService('isFetching', true);
-
-    const endpoint = '/pub/upload';
-    const headers = { 'Content-Type': 'multipart/form-data' };
-
-    const image =
-      pubData.photo &&
-      mountFormData(pubData.photo['fileList'][0]['originFileObj']);
-
-    return (
-      image &&
-      (await encontreUmBotecoApi
-        .post(endpoint, image, { headers })
-        .then((response: AxiosResponse) => {
-          const { data } = response;
-
-          return data;
-        })
-        .catch((err: AxiosError) => {
-          setPubRequestService('error', err);
-
-          if (err?.response) {
-            return setFlashMessageStore({
-              text: err?.response?.data?.error,
-              isVisible: true,
-              type: 'error'
-            });
-          }
-
-          redirectToPage(routes.error);
-        })
-        .finally(() => {
-          setPubRequestService('isFetching', false);
-        }))
-    );
-  };
-
   const fetchSavePub = async (pubData: PubData) => {
     setPubRequestService('isFetching', true);
 
@@ -224,6 +186,47 @@ const useFetchPub = (): FetchPub => {
       .finally(() => {
         setPubRequestService('isFetching', false);
       });
+  };
+
+  const fetchUploadPubImage = async (pubData: PubData) => {
+    setPubRequestService('isFetching', true);
+
+    const endpoint = '/pub/upload';
+    const headers = { 'Content-Type': 'multipart/form-data' };
+
+    const image =
+      pubData.photo &&
+      mountFormData(pubData.photo['fileList'][0]['originFileObj']);
+
+    return (
+      image &&
+      (await encontreUmBotecoApi
+        .post(endpoint, image, { headers })
+        .then((response: AxiosResponse) => {
+          const { data } = response;
+
+          return fetchSavePub({
+            ...pubData,
+            photo: data.filename
+          });
+        })
+        .catch((err: AxiosError) => {
+          setPubRequestService('error', err);
+
+          if (err?.response) {
+            return setFlashMessageStore({
+              text: err?.response?.data?.error,
+              isVisible: true,
+              type: 'error'
+            });
+          }
+
+          redirectToPage(routes.error);
+        })
+        .finally(() => {
+          setPubRequestService('isFetching', false);
+        }))
+    );
   };
 
   const fetchSendEmail = async (emailBody: EmailBody) => {

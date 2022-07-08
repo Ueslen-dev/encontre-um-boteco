@@ -81,6 +81,7 @@ const INITIAL_STATE = {
       results: []
     },
     pubsSearchResults: [],
+    photoFilename: '',
     isCodeValide: false,
     idDeletePubCurrent: null
   }
