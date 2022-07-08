@@ -61,6 +61,7 @@ export interface Pub {
       results: PubData[];
     };
     pubsSearchResults?: PubData[];
+    photoFilename?: string;
     isCodeValide?: boolean;
     idDeletePubCurrent?: string;
   };
