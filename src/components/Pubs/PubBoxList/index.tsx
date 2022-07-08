@@ -34,6 +34,8 @@ export const PubBoxList = ({
 }: Props) => {
   const imageHeight = 200;
   const photoPathStatic = getStaticsFilesFromServer(photo);
+  const defaultImagePub =
+    'https://user-images.githubusercontent.com/65665108/177899855-aaf87566-9983-42c4-8553-7a94c9694bf1.jpg';
 
   const { filterStateById, filterCityById } = useLocale();
 
@@ -47,7 +49,7 @@ export const PubBoxList = ({
           <S.Infos>
             <S.Photo>
               <img
-                src={photoPathStatic}
+                src={photo ? photoPathStatic : defaultImagePub}
                 alt="Foto para identificar o boteco"
                 height={imageHeight}
               />

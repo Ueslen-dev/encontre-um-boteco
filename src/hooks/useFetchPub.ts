@@ -155,29 +155,32 @@ const useFetchPub = (): FetchPub => {
       pubData.photo &&
       mountFormData(pubData.photo['fileList'][0]['originFileObj']);
 
-    return await encontreUmBotecoApi
-      .post(endpoint, image, { headers })
-      .then((response: AxiosResponse) => {
-        const { data } = response;
+    return (
+      image &&
+      (await encontreUmBotecoApi
+        .post(endpoint, image, { headers })
+        .then((response: AxiosResponse) => {
+          const { data } = response;
 
-        return data;
-      })
-      .catch((err: AxiosError) => {
-        setPubRequestService('error', err);
+          return data;
+        })
+        .catch((err: AxiosError) => {
+          setPubRequestService('error', err);
 
-        if (err?.response) {
-          return setFlashMessageStore({
-            text: err?.response?.data?.error,
-            isVisible: true,
-            type: 'error'
-          });
-        }
+          if (err?.response) {
+            return setFlashMessageStore({
+              text: err?.response?.data?.error,
+              isVisible: true,
+              type: 'error'
+            });
+          }
 
-        redirectToPage(routes.error);
-      })
-      .finally(() => {
-        setPubRequestService('isFetching', false);
-      });
+          redirectToPage(routes.error);
+        })
+        .finally(() => {
+          setPubRequestService('isFetching', false);
+        }))
+    );
   };
 
   const fetchSavePub = async (pubData: PubData) => {
